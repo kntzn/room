@@ -42,18 +42,25 @@ class StripController
             FREQ_3,
             FREQ_FULL
             };
+        enum freqences
+            {
+            lows,
+            mids,
+            highs
+            };
 
     private:
         // parameters
         float palette_speed = 0.1f;
 
-        byte table_mode = VU_rain;
+        byte table_mode = FREQ_5;
         byte mode = mono;
 
         // internal variables
         float palette_offset = 0.f;
         int VU_val = 0;
-
+        float freqency_3 [3] = {};
+        float freqency_full [3] = {};
 
         CRGB leds_main [N_LEDS_MAIN] = {};
         CRGB leds_table [N_LEDS_TABLE] = {};
@@ -70,7 +77,7 @@ class StripController
         void setMode (byte newMode);
         void setTableMode (byte newMode); 
         void setVU_val (int newVU_val);
-
+        void setFreq3values (float newFreqVal [3]);
     };
 
 #endif

@@ -78,6 +78,31 @@ void StripController::update (float dt)
 
             break;
             }
+        case FREQ_5:
+            {
+            float segment_size = N_LEDS_TABLE / 5.f;
+
+            for (int i = 0; i < N_LEDS_TABLE; i++)
+                {
+                if (i < int (segment_size))
+                    leds_table [i] = CHSV (HSV_HIGH_FREQ_COLOR, MAX_SATURATION, 
+                                           map (freqency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                else if (i < int (2*segment_size))
+                    leds_table [i] = CHSV (HSV_MID_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                else if (i < int (3 * segment_size))
+                    leds_table [i] = CHSV (HSV_LOW_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [lows], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                else if (i < int (4*segment_size))
+                    leds_table [i] = CHSV (HSV_MID_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                else
+                    leds_table [i] = CHSV (HSV_HIGH_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                }
+
+            break;
+            }
 
         default:
             break;
@@ -89,6 +114,12 @@ void StripController::update (float dt)
 void StripController::setVU_val (int newVU_val)
     {
     VU_val = map (newVU_val, 0, VU_OUT_MAX, 0, ANALOG_VU_MAX);
+    }
+
+void StripController::setFreq3values (float newFreqVal [3])
+    {
+    for (int i = 0; i < 3; i++)
+        freqency_3 [i] = newFreqVal [i];
     }
 
 void StripController::display () 
