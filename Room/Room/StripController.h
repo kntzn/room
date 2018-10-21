@@ -53,7 +53,7 @@ class StripController
         // parameters
         float palette_speed = 0.1f;
 
-        byte table_mode = FREQ_5;
+        byte table_mode = FREQ_3;
         byte mode = mono;
 
         // internal variables

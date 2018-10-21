@@ -26,7 +26,7 @@ int main ()
         float dt = float (millis ()) - prev_t;
         prev_t += dt;
 
-        float values [3] = { 0, 1000 - analogRead (A0), analogRead (A0) };
+        float values [3] = { analogRead (A0), 1000 - analogRead (A0), analogRead (A0) };
 
         //controller.setVU_val ();
         controller.setFreq3values (values);

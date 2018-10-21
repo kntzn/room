@@ -103,6 +103,25 @@ void StripController::update (float dt)
 
             break;
             }
+        case FREQ_3:
+            {
+            float segment_size = N_LEDS_TABLE / 3.f;
+
+            for (int i = 0; i < N_LEDS_TABLE; i++)
+                {
+                if (i < int (segment_size))
+                    leds_table [i] = CHSV (HSV_HIGH_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                else if (i < int (2 * segment_size))
+                    leds_table [i] = CHSV (HSV_MID_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                else
+                    leds_table [i] = CHSV (HSV_LOW_FREQ_COLOR, MAX_SATURATION,
+                                           map (freqency_3 [lows], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                }
+
+            break;
+            }
 
         default:
             break;
