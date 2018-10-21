@@ -52,7 +52,6 @@ class StripController
 
         // internal variables
         float palette_offset = 0.f;
-
         int VU_val = 0;
 
 
@@ -62,9 +61,15 @@ class StripController
     public:
         StripController ();
         
+        // strips' funcions
         void update (float dt);
-        void setVU_val (int newVU_val);
+        
         void display ();
+
+        // setters
+        void setMode (byte newMode);
+        void setTableMode (byte newMode); 
+        void setVU_val (int newVU_val);
 
     };
 

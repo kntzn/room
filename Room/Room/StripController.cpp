@@ -25,8 +25,6 @@ void StripController::update (float dt)
             break;
         }
 
-
-
     LEDS.setBrightness (MAX_BRIGHTNESS);
 
     switch (table_mode)
@@ -55,7 +53,7 @@ void StripController::update (float dt)
             for (int i = 0; i <= N_LEDS_TABLE/2; i++)
                 {
                 if (i >= N_LEDS_TABLE / 2 - len)
-                    leds_table [i] = CHSV (0 + HSV_VU_END * i / (N_LEDS_TABLE / 2), 255, 255);
+                    leds_table [i] = CHSV (HSV_VU_START + HSV_VU_END * i / (N_LEDS_TABLE / 2), 255, MAX_BRIGHTNESS);
                 else
                     leds_table [i] = CRGB::Black;
 
@@ -71,7 +69,7 @@ void StripController::update (float dt)
             for (int i = 0; i <= N_LEDS_TABLE / 2; i++)
                 {
                 if (i >= N_LEDS_TABLE / 2 - len)
-                    leds_table [i] = CHSV (int (palette_offset + HSV_VU_END * i / (N_LEDS_TABLE / 2)), 255, 255);
+                    leds_table [i] = CHSV (int (palette_offset + HSV_VU_END * i / (N_LEDS_TABLE / 2)), 255, MAX_BRIGHTNESS);
                 else
                     leds_table [i] = CRGB::Black;
 
@@ -96,4 +94,14 @@ void StripController::setVU_val (int newVU_val)
 void StripController::display () 
     { 
     LEDS.show (); 
+    }
+
+void StripController::setMode (byte newMode)
+    {
+    mode = newMode;
+    }
+
+void StripController::setTableMode (byte newMode)
+    {
+    table_mode = newMode;
     }
