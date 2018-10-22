@@ -82,23 +82,23 @@ void StripController::update (float dt)
                 }
 
             // Generates new color at low brightness
-            if (brightness < SWITCH_BRIGHTNESS && !switchedColorFlag)
+            if (brightness < float (SWITCH_BRIGHTNESS)/float (MAX_BRIGHTNESS))
                 {
-                switchedColorFlag = true;
-                byte r = rand()%255, g = rand()%255, b = rand()%255;
-                while (r + g + b < 255)
+                brightness = 0;
+                if (!switchedColorFlag)
                     {
-                    r = rand () % 255;
-                    g = rand () % 255;
-                    b = rand () % 255;
-                    }
+                    switchedColorFlag = true;
 
-                fadeSwitchColor = CRGB (r, g, b);
+                    fadeSwitchColor = CRGB (CHSV (rand ()%360, MAX_SATURATION, MAX_BRIGHTNESS));
+                    }
                 }
-            if (brightness > SWITCH_BRIGHTNESS && switchedColorFlag)
+            else if (switchedColorFlag)
                 switchedColorFlag = false;
 
+            
+
             break;
+
             }
         case rainbow_Sine:
             {

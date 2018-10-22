@@ -18,20 +18,33 @@ int main ()
     Serial.begin (9600);
 
     StripController controller;
+    controller.setMode (StripController::fade_switch_random);
+    controller.setTableMode (StripController::sync);
+    controller.setRainbowSpeed (0.3f);
+    controller.setRainbowFrequency (1);
+    controller.setColor (CRGB::Aquamarine);
+    byte mode = 0;
+
+
 
     float prev_t = float (millis ());
 
     while (true)
         {
-        float dt = float (millis ()) - prev_t;
-        prev_t += dt;
+        float dt = (float (millis ()) - prev_t)/1000.f;
+        prev_t += dt*1000.f;
 
-        float values [3] = { analogRead (A0), 1000 - analogRead (A0), analogRead (A0) };
+        if (!digitalRead (BUT_PIN))
+            {
+            while (digitalRead (BUT_PIN))
+                {
+                }
 
-        controller.setMode (StripController::mono);
-        controller.setTableMode (StripController::sync);
-        //controller.setVU_val ();
-        controller.setFreq3values (values);
+            controller.setMode (mode);
+            mode = (mode + 1) % 7;
+            Serial.println (mode);
+            }
+
         controller.update (dt);
         
         controller.display ();
