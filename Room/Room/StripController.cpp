@@ -49,25 +49,29 @@ void StripController::update (float dt)
                 }
 
             // Generates new color at low brightness
-            if (brightness < SWITCH_BRIGHTNESS && !switchedColorFlag)
+            if (brightness < float (SWITCH_BRIGHTNESS) / float (MAX_BRIGHTNESS))
                 {
-                switchedColorFlag = true;
-                if (fadeSwitchColor == CRGB (CRGB::Red))
-                    fadeSwitchColor = CRGB::Yellow;
-                else if (fadeSwitchColor == CRGB (CRGB::Yellow))
-                    fadeSwitchColor = CRGB::Green;
-                else if (fadeSwitchColor == CRGB (CRGB::Green))
-                    fadeSwitchColor = CRGB::LightBlue;
-                else if (fadeSwitchColor == CRGB (CRGB::LightBlue))
-                    fadeSwitchColor = CRGB::Blue;
-                else if (fadeSwitchColor == CRGB (CRGB::Blue))
-                    fadeSwitchColor = CRGB::Violet;
-                else if (fadeSwitchColor == CRGB (CRGB::Violet))
-                    fadeSwitchColor = CRGB::Red;
-                }
-            if (brightness > SWITCH_BRIGHTNESS && switchedColorFlag)
-                switchedColorFlag = false;
+                brightness = 0;
+                if (!switchedColorFlag)
+                    {
+                    switchedColorFlag = true;
 
+                    if (fadeSwitchColor == CRGB (CRGB::Red))
+                        fadeSwitchColor = CRGB::Yellow;
+                    else if (fadeSwitchColor == CRGB (CRGB::Yellow))
+                        fadeSwitchColor = CRGB::Green;
+                    else if (fadeSwitchColor == CRGB (CRGB::Green))
+                        fadeSwitchColor = CRGB::LightBlue;
+                    else if (fadeSwitchColor == CRGB (CRGB::LightBlue))
+                        fadeSwitchColor = CRGB::Blue;
+                    else if (fadeSwitchColor == CRGB (CRGB::Blue))
+                        fadeSwitchColor = CRGB::Violet;
+                    else
+                        fadeSwitchColor = CRGB::Red;
+                    }
+                }
+            else if (switchedColorFlag)
+                switchedColorFlag = false;
             break;
             }
         case fade_switch_random:

@@ -18,7 +18,7 @@ int main ()
     Serial.begin (9600);
 
     StripController controller;
-    controller.setMode (StripController::fade_switch_random);
+    controller.setMode (StripController::fade_switch);
     controller.setTableMode (StripController::sync);
     controller.setRainbowSpeed (0.3f);
     controller.setRainbowFrequency (1);
