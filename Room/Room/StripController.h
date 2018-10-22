@@ -9,30 +9,26 @@
 	#include "WProgram.h"
 #endif
 
-#include <FastLED.h>
-
-
-
 #include "Predefined.h"
 
-
+#include <FastLED.h>
 
 class StripController
     {
     public:
-        enum modes
+        enum mainStripMode
             {
             off,
             mono,
             fade,
             fade_switch,
-            rainbow_short,
-            rainbow,
-            rainbow_long,
+            rainbow_SineWheel,
+            rainbow_HSV,
+            rainbow_Wheel,
             matrix,
             night
             };
-        enum tableStripPower
+        enum tableStripMode
             {
             sync,
             VU,
@@ -50,32 +46,63 @@ class StripController
             };
 
     private:
-        // parameters
+        // ----------------------------------------
+        // Parameters
         float palette_speed = 0.1f;
+        float rainbow_speed = 0;
 
-        byte table_mode = FREQ_3;
-        byte mode = mono;
+        // Mode of main strip
+        byte mode = off;
+        // Mode of table strip
+        byte table_mode = sync;
+        
+        // ----------------------------------------
+        // Internal Variables
 
-        // internal variables
+        // Offset of hue in VU_rain mode
         float palette_offset = 0.f;
+
+        // Volume fou VU and VU_rain
         int VU_val = 0;
+
+        // Freqences arrays
         float freqency_3 [3] = {};
         float freqency_full [3] = {};
 
+        // Hue offset for rainbow/gradient modes
+        float rainbow_offset = 0.f;
+
+        // ----------------------------------------
+        // Leds Arrays
         CRGB leds_main [N_LEDS_MAIN] = {};
         CRGB leds_table [N_LEDS_TABLE] = {};
 
     public:
+        // ----------------------------------------
+        // Constructor
+        // Initializes led strips
         StripController ();
         
-        // strips' funcions
+        // ----------------------------------------
+        // Update function
+        // Fills and updates the arrays
         void update (float dt);
         
+        // ----------------------------------------
+        // Display function
+        // Shows the array
         void display ();
 
+        // -----------------UTIL-------------------
+        // ----------------------------------------
+        // Sync function
+        void sync_strips ();
+
+        
         // setters
         void setMode (byte newMode);
         void setTableMode (byte newMode); 
+
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
     };

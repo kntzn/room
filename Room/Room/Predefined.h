@@ -2,6 +2,9 @@
 
 // LED strip controller predefined parameters
 
+// FastLED lib defines
+#define FASTLED_ALLOW_INTERRUPTS 1
+
 // Number of leds
 #define N_LEDS_MAIN 164
 #define N_LEDS_TABLE 42
@@ -15,6 +18,10 @@
 #define MAX_SATURATION 255
 #define HSV_VU_START HUE_RED
 #define HSV_VU_END HUE_GREEN
+
+// VU mode parameters
+#define VU_BRIGHTNESS_MIN 127
+#define VU_BRIGHTNESS_MAX 255
 
 // FREQ mode parameters
 

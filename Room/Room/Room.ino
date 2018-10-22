@@ -28,6 +28,8 @@ int main ()
 
         float values [3] = { analogRead (A0), 1000 - analogRead (A0), analogRead (A0) };
 
+        controller.setMode (StripController::mono);
+        controller.setMode (StripController::sync);
         //controller.setVU_val ();
         controller.setFreq3values (values);
         controller.update (dt);

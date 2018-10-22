@@ -8,7 +8,9 @@ StripController::StripController ()
 
 void StripController::update (float dt)
     {
+    // updating offsets
     palette_offset += palette_speed*dt;
+    rainbow_offset += rainbow_speed*dt;
 
     switch (mode)
         {
@@ -25,25 +27,22 @@ void StripController::update (float dt)
             break;
         }
 
-    LEDS.setBrightness (MAX_BRIGHTNESS);
-
+    // VU_bright mode sets it's own brightness
+    // Otherwise, brightness is maximal
+    if (mode != VU_bright)
+        LEDS.setBrightness (MAX_BRIGHTNESS);
+    
     switch (table_mode)
         {
         case sync:
             {
-            for (int i = 0; i < N_LEDS_TABLE; i++)
-                leds_table [N_LEDS_TABLE - 1 - i] = leds_main [i];
+            sync_strips ();
             break;
             }
         case VU_bright:
             {
-            for (int i = 0; i < N_LEDS_TABLE; i++)
-                leds_table [N_LEDS_TABLE - 1 - i] = leds_main [i];
-            
-            LEDS.setBrightness (map (VU_val, 0, ANALOG_VU_MAX, 0, 128) + 127);
-
-            Serial.println (LEDS.getBrightness ());
-
+            sync_strips ();
+            LEDS.setBrightness (map (VU_val, 0, ANALOG_VU_MAX, 0, VU_BRIGHTNESS_MAX - VU_BRIGHTNESS_MIN) + VU_BRIGHTNESS_MIN);
             break;
             }
         case VU:
@@ -126,8 +125,6 @@ void StripController::update (float dt)
         default:
             break;
         }
-
-
     }
 
 void StripController::setVU_val (int newVU_val)
@@ -144,6 +141,12 @@ void StripController::setFreq3values (float newFreqVal [3])
 void StripController::display () 
     { 
     LEDS.show (); 
+    }
+
+void StripController::sync_strips ()
+    {
+    for (int i = 0; i < N_LEDS_TABLE; i++)
+        leds_table [N_LEDS_TABLE - 1 - i] = leds_main [i];
     }
 
 void StripController::setMode (byte newMode)
