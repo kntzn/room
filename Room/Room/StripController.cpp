@@ -22,6 +22,20 @@ void StripController::update (float dt)
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 leds_main [i] = CRGB::Red;
             break;
+        case rainbow_SineWheel:
+            {
+            CRGB color;
+            
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                {
+                color.r = 128 + 127 * sinf (double (rainbow_freq*i*(2 * PI) / N_LEDS_MAIN + 2 * PI*rainbow_offset + 2*PI/3));
+                color.g = 128 + 127 * sinf (double (rainbow_freq*i*(2 * PI) / N_LEDS_MAIN + 2 * PI*rainbow_offset + 4*PI/3));
+                color.b = 128 + 127 * sinf (double (rainbow_freq*i*(2 * PI) / N_LEDS_MAIN + 2 * PI*rainbow_offset));
+                leds_main [i] = color;
+                }
+
+            break;
+            }
 
         default:
             break;

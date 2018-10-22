@@ -49,7 +49,11 @@ class StripController
         // ----------------------------------------
         // Parameters
         float palette_speed = 0.1f;
+        // Number of full rainbows shift
+        // Values: [0; 1]
         float rainbow_speed = 0;
+        // Number of full rainbows in strip
+        float rainbow_freq = 0;
 
         // Mode of main strip
         byte mode = off;
