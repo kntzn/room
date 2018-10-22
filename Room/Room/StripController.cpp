@@ -28,14 +28,22 @@ void StripController::update (float dt)
             
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 {
-                color.r = 128 + 127 * sinf (double (rainbow_freq*i*(2 * PI) / N_LEDS_MAIN + 2 * PI*rainbow_offset + 2*PI/3));
-                color.g = 128 + 127 * sinf (double (rainbow_freq*i*(2 * PI) / N_LEDS_MAIN + 2 * PI*rainbow_offset + 4*PI/3));
-                color.b = 128 + 127 * sinf (double (rainbow_freq*i*(2 * PI) / N_LEDS_MAIN + 2 * PI*rainbow_offset));
+                color.r = 128 + 127 * sinf (double (rainbow_freq*i*(2*PI) / N_LEDS_MAIN + (2*PI)*rainbow_offset + 2*PI/3));
+                color.g = 128 + 127 * sinf (double (rainbow_freq*i*(2*PI) / N_LEDS_MAIN + (2*PI)*rainbow_offset + 4*PI/3));
+                color.b = 128 + 127 * sinf (double (rainbow_freq*i*(2*PI) / N_LEDS_MAIN + (2*PI)*rainbow_offset));
                 leds_main [i] = color;
                 }
 
             break;
             }
+        case rainbow_HSV:
+            {
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                leds_main [i] = CHSV (i*(360/N_LEDS_MAIN)*rainbow_freq + rainbow_offset*360, MAX_SATURATION, MAX_BRIGHTNESS);
+                
+            break;
+            }
+
 
         default:
             break;
