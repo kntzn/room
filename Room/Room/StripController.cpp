@@ -19,18 +19,63 @@ void StripController::update (float dt)
                 leds_main [i] = CRGB::Black;
             break;
         case mono:
+            {
             for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CRGB::Red;
+                leds_main [i] = currColor;
             break;
-        case rainbow_SineWheel:
+            }
+        case fade:
+            {
+            float brightness = (1 + sinf (double (rainbow_freq * (2 * PI)*rainbow_offset))) / 2.f;
+
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                {
+                leds_main [i].r = currColor.r * brightness;
+                leds_main [i].g = currColor.g * brightness;
+                leds_main [i].b = currColor.b * brightness;
+                }
+
+            break;
+            }
+        case fade_switch_random:
+            {
+            float brightness = (1 + sinf (double (rainbow_freq * (2 * PI)*rainbow_offset))) / 2.f;
+
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                {
+                leds_main [i].r = fadeSwitchColor.r * brightness;
+                leds_main [i].g = fadeSwitchColor.g * brightness;
+                leds_main [i].b = fadeSwitchColor.b * brightness;
+                }
+
+            // Generates new color at low brightness
+            if (brightness < SWITCH_BRIGHTNESS && !switchedColorFlag)
+                {
+                switchedColorFlag = true;
+                byte r = rand()%255, g = rand()%255, b = rand()%255;
+                while (r + g + b < 255)
+                    {
+                    r = rand () % 255;
+                    g = rand () % 255;
+                    b = rand () % 255;
+                    }
+
+                fadeSwitchColor = CRGB (r, g, b);
+                }
+            if (brightness > SWITCH_BRIGHTNESS && switchedColorFlag)
+                switchedColorFlag = false;
+
+            break;
+            }
+        case rainbow_Sine:
             {
             CRGB color;
             
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 {
-                color.r = 128 + 127 * sinf (double (rainbow_freq*i*(2*PI) / N_LEDS_MAIN + (2*PI)*rainbow_offset + 2*PI/3));
-                color.g = 128 + 127 * sinf (double (rainbow_freq*i*(2*PI) / N_LEDS_MAIN + (2*PI)*rainbow_offset + 4*PI/3));
-                color.b = 128 + 127 * sinf (double (rainbow_freq*i*(2*PI) / N_LEDS_MAIN + (2*PI)*rainbow_offset));
+                color.r = 128 + 127 * sinf (double (rainbow_freq * i * (2*PI)/N_LEDS_MAIN + (2*PI)*rainbow_offset + 2*PI/3));
+                color.g = 128 + 127 * sinf (double (rainbow_freq * i * (2*PI)/N_LEDS_MAIN + (2*PI)*rainbow_offset + 4*PI/3));
+                color.b = 128 + 127 * sinf (double (rainbow_freq * i * (2*PI)/N_LEDS_MAIN + (2*PI)*rainbow_offset));
                 leds_main [i] = color;
                 }
 
@@ -43,8 +88,6 @@ void StripController::update (float dt)
                 
             break;
             }
-
-
         default:
             break;
         }

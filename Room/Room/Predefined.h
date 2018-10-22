@@ -19,6 +19,9 @@
 #define HSV_VU_START HUE_RED
 #define HSV_VU_END HUE_GREEN
 
+// Modes defines
+#define SWITCH_BRIGHTNESS 25
+
 // VU mode parameters
 #define VU_BRIGHTNESS_MIN 127
 #define VU_BRIGHTNESS_MAX 255

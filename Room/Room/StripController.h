@@ -22,9 +22,9 @@ class StripController
             mono,
             fade,
             fade_switch,
-            rainbow_SineWheel,
+            fade_switch_random,
+            rainbow_Sine,
             rainbow_HSV,
-            rainbow_Wheel,
             matrix,
             night
             };
@@ -49,8 +49,7 @@ class StripController
         // ----------------------------------------
         // Parameters
         float palette_speed = 0.1f;
-        // Number of full rainbows shift
-        // Values: [0; 1]
+        // Speed of rainbow (rainbow_offset)
         float rainbow_speed = 0;
         // Number of full rainbows in strip
         float rainbow_freq = 0;
@@ -60,6 +59,14 @@ class StripController
         // Mode of table strip
         byte table_mode = sync;
         
+        // Color of fade and mono modes
+        CRGB currColor = CRGB::Black;
+
+        // Current color for fade_switch mode
+        CRGB fadeSwitchColor = CRGB::Black;
+        bool switchedColorFlag = false;
+
+
         // ----------------------------------------
         // Internal Variables
 
