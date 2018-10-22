@@ -26,7 +26,7 @@ void StripController::update (float dt)
             }
         case fade:
             {
-            float brightness = (1 + sinf (double (rainbow_freq * (2 * PI)*rainbow_offset))) / 2.f;
+            float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
 
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 {
@@ -39,7 +39,7 @@ void StripController::update (float dt)
             }
         case fade_switch_random:
             {
-            float brightness = (1 + sinf (double (rainbow_freq * (2 * PI)*rainbow_offset))) / 2.f;
+            float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
 
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 {
@@ -203,6 +203,12 @@ void StripController::setFreq3values (float newFreqVal [3])
         freqency_3 [i] = newFreqVal [i];
     }
 
+void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
+    {
+    for (int i = 0; i < SPECTRUM_SIZE; i++)
+        freqency_full [i] = newFreqVal [i];
+    }
+
 void StripController::display () 
     { 
     LEDS.show (); 
@@ -222,4 +228,24 @@ void StripController::setMode (byte newMode)
 void StripController::setTableMode (byte newMode)
     {
     table_mode = newMode;
+    }
+
+void StripController::setColor (CRGB newColor)
+    {
+    currColor = newColor;
+    }
+
+void StripController::setRainbowFrequency (float newFreq)
+    {
+    rainbow_freq = newFreq;
+    }
+
+void StripController::setRainbowSpeed (float newSpeed)
+    {
+    rainbow_speed = newSpeed;
+    }
+
+void StripController::setPaletteSpeed (float newSpeed)
+    {
+    palette_speed = newSpeed;
     }

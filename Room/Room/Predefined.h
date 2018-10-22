@@ -48,6 +48,9 @@
 
 // VU meter parameters
 
+// Spectrum size
+#define SPECTRUM_SIZE 32
+#define FHT_N SPECTRUM_SIZE*2
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer

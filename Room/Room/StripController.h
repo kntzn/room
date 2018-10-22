@@ -62,24 +62,17 @@ class StripController
         // Color of fade and mono modes
         CRGB currColor = CRGB::Black;
 
+        // ----------------------------------------
+        // Internal Variables
+
         // Current color for fade_switch mode
         CRGB fadeSwitchColor = CRGB::Black;
         bool switchedColorFlag = false;
 
-
-        // ----------------------------------------
-        // Internal Variables
-
         // Offset of hue in VU_rain mode
         float palette_offset = 0.f;
 
-        // Volume fou VU and VU_rain
-        int VU_val = 0;
-
-        // Freqences arrays
-        float freqency_3 [3] = {};
-        float freqency_full [3] = {};
-
+        
         // Hue offset for rainbow/gradient modes
         float rainbow_offset = 0.f;
 
@@ -87,6 +80,16 @@ class StripController
         // Leds Arrays
         CRGB leds_main [N_LEDS_MAIN] = {};
         CRGB leds_table [N_LEDS_TABLE] = {};
+
+        // ----------------------------------------
+        // Communication
+
+        // Volume fou VU and VU_rain
+        int VU_val = 0;
+
+        // Freqences arrays
+        float freqency_3 [3] = {};
+        float freqency_full [3] = {};
 
     public:
         // ----------------------------------------
@@ -110,12 +113,20 @@ class StripController
         void sync_strips ();
 
         
-        // setters
+        // ----------SETTERS and GETTERS-----------
         void setMode (byte newMode);
         void setTableMode (byte newMode); 
+        
+        void setColor (CRGB newColor);
 
+        void setRainbowFrequency (float newFreq);
+        void setRainbowSpeed (float newSpeed);
+        void setPaletteSpeed (float newSpeed);
+        
+        // --------------COMMUNICATION-------------
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
+        void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);
     };
 
 #endif
