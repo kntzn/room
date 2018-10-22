@@ -37,6 +37,39 @@ void StripController::update (float dt)
 
             break;
             }
+        case fade_switch:
+            {
+            float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                {
+                leds_main [i].r = fadeSwitchColor.r * brightness;
+                leds_main [i].g = fadeSwitchColor.g * brightness;
+                leds_main [i].b = fadeSwitchColor.b * brightness;
+                }
+
+            // Generates new color at low brightness
+            if (brightness < SWITCH_BRIGHTNESS && !switchedColorFlag)
+                {
+                switchedColorFlag = true;
+                if (fadeSwitchColor == CRGB (CRGB::Red))
+                    fadeSwitchColor = CRGB::Yellow;
+                else if (fadeSwitchColor == CRGB (CRGB::Yellow))
+                    fadeSwitchColor = CRGB::Green;
+                else if (fadeSwitchColor == CRGB (CRGB::Green))
+                    fadeSwitchColor = CRGB::LightBlue;
+                else if (fadeSwitchColor == CRGB (CRGB::LightBlue))
+                    fadeSwitchColor = CRGB::Blue;
+                else if (fadeSwitchColor == CRGB (CRGB::Blue))
+                    fadeSwitchColor = CRGB::Violet;
+                else if (fadeSwitchColor == CRGB (CRGB::Violet))
+                    fadeSwitchColor = CRGB::Red;
+                }
+            if (brightness > SWITCH_BRIGHTNESS && switchedColorFlag)
+                switchedColorFlag = false;
+
+            break;
+            }
         case fade_switch_random:
             {
             float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
@@ -222,6 +255,8 @@ void StripController::sync_strips ()
 
 void StripController::setMode (byte newMode)
     {
+    fadeSwitchColor = CRGB::Red;
+    switchedColorFlag = false;
     mode = newMode;
     }
 
