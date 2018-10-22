@@ -25,8 +25,8 @@ class StripController
             fade_switch_random,
             rainbow_Sine,
             rainbow_HSV,
-            matrix,
-            night
+            //matrix,
+            //night
             };
         enum tableStripMode
             {

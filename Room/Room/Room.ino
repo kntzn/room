@@ -18,10 +18,10 @@ int main ()
     Serial.begin (9600);
 
     StripController controller;
-    controller.setMode (StripController::fade_switch);
-    controller.setTableMode (StripController::sync);
-    controller.setRainbowSpeed (0.3f);
-    controller.setRainbowFrequency (1);
+    controller.setMode (StripController::rainbow_HSV);
+    controller.setTableMode (StripController::VU_bright);
+    controller.setRainbowSpeed (0.1f);
+    controller.setRainbowFrequency (0.5f);
     controller.setColor (CRGB::Aquamarine);
     byte mode = 0;
 
@@ -45,6 +45,7 @@ int main ()
             Serial.println (mode);
             }
 
+        controller.setVU_val (analogRead (A0));
         controller.update (dt);
         
         controller.display ();
