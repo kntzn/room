@@ -2,12 +2,16 @@
 
 Analyzer::Analyzer ()
     {
+    // Increasing measurements frequency
     sbi (ADCSRA, ADPS2);
     cbi (ADCSRA, ADPS1);
     sbi (ADCSRA, ADPS0);
-
     }
 
-Analyzer::~Analyzer ()
+void Analyzer::update ()
+    {
+    }
+
+void Analyzer::measureVol ()
     {
     }

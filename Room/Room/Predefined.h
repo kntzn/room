@@ -1,6 +1,6 @@
 #pragma once
 
-// LED strip controller predefined parameters
+// LED strip controller defines
 
 // FastLED lib defines
 #define FASTLED_ALLOW_INTERRUPTS 1
@@ -42,10 +42,14 @@
 // Low freqences color
 #define HSV_LOW_FREQ_COLOR HUE_RED
 
-// !LED strip controller predefined parameters
+// !LED strip controller defines
 
 
-// Analyzer predefined parameters
+// Analyzer defines
+
+// Defines for increasement of analog measurements frequency up to 38kHz
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#define sbi(sfr, bit) (_SFR_BYTE(sfr) |=  _BV(bit))
 
 // VU meter parameters
 
@@ -65,3 +69,7 @@
 #define FREQ_MAX 1024
 
 // !Analyzer predefined parameters
+
+// Other
+#define BAUD_RATE_SERIAL 9600
+// !Other

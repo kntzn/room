@@ -1,20 +1,16 @@
 #pragma once
-#include "Util.h"
-
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
 class Analyzer
     {
     public:
         Analyzer ();
-        ~Analyzer ();
-
+        
         void update ();
 
     private:
-        void measure ();
-        void analyze ();
+
+
+        void measureVol ();
         
         float volume_filt = 0;
         float freq_max_filt = 0;

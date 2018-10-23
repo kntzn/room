@@ -8,9 +8,13 @@
 
 int main ()
     {
+    // Microcontroller initiaalization
     init ();
-    Serial.begin (9600);
+    
+    // Serial initialization
+    Serial.begin (BAUD_RATE_SERIAL);
 
+    // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_HSV);
     controller.setTableMode (StripController::FREQ_FULL);
@@ -22,11 +26,17 @@ int main ()
 
     while (true)
         {
+        // Clock
         float dt = (float (millis ()) - prev_t)/1000.f;
         prev_t += dt*1000.f;
+        // !Clock
 
+
+        // Strip controller
         controller.update (dt);
         controller.display ();
+        // !Strip coontroller
+
         }
 
     return 0;
