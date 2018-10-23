@@ -10,8 +10,8 @@
 #define N_LEDS_TABLE 42
 
 // Pinout
-#define STRIP_DATA_MAIN 13
-#define STRIP_DATA_TABLE 12
+#define STRIP_DATA_MAIN 35
+#define STRIP_DATA_TABLE 37
 
 // HSV parameters
 #define MAX_BRIGHTNESS 255

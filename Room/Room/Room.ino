@@ -17,7 +17,7 @@ int main ()
     // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_HSV);
-    controller.setTableMode (StripController::FREQ_FULL);
+    controller.setTableMode (StripController::sync);
     controller.setRainbowSpeed (0.1f);
     controller.setRainbowFrequency (0.5f);
     controller.setColor (CRGB::DeepPink);
