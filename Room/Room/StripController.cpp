@@ -1,11 +1,13 @@
 #include "StripController.h"
 
+// Constructor
 StripController::StripController ()
     {
     LEDS.addLeds <WS2811, STRIP_DATA_MAIN, GRB> (leds_main, N_LEDS_MAIN);
     LEDS.addLeds <WS2811, STRIP_DATA_TABLE, GRB> (leds_table, N_LEDS_TABLE);
     }
 
+// Visuals
 void StripController::update (float dt)
     {
     // updating offsets
@@ -15,9 +17,11 @@ void StripController::update (float dt)
     switch (mode)
         {
         case off:
+            {
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 leds_main [i] = CRGB::Black;
             break;
+            }
         case mono:
             {
             for (int i = 0; i < N_LEDS_MAIN; i++)
@@ -158,6 +162,7 @@ void StripController::update (float dt)
                 else
                     leds_table [i] = CRGB::Black;
 
+
                 leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
                 }
 
@@ -223,68 +228,84 @@ void StripController::update (float dt)
 
             break;
             }
+        case FREQ_FULL:
+            {
+            for (int i = 0; i < N_LEDS_TABLE / 2; i++)
+                {
+                float brightness = freqency_full [int (i * SPECTRUM_SIZE / (N_LEDS_TABLE/2))];
+                leds_table [i] = CHSV (freq_full_offset + freq_full_freq * i / (N_LEDS_TABLE / 2), 255, brightness);
+                
+                leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
+                }
+
+
+            break;
+            }
 
         default:
             break;
         }
     }
-
-void StripController::setVU_val (int newVU_val)
-    {
-    VU_val = map (newVU_val, 0, VU_OUT_MAX, 0, ANALOG_VU_MAX);
-    }
-
-void StripController::setFreq3values (float newFreqVal [3])
-    {
-    for (int i = 0; i < 3; i++)
-        freqency_3 [i] = newFreqVal [i];
-    }
-
-void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
-    {
-    for (int i = 0; i < SPECTRUM_SIZE; i++)
-        freqency_full [i] = newFreqVal [i];
-    }
-
 void StripController::display () 
     { 
     LEDS.show (); 
     }
 
+// Util
 void StripController::sync_strips ()
     {
     for (int i = 0; i < N_LEDS_TABLE; i++)
         leds_table [N_LEDS_TABLE - 1 - i] = leds_main [i];
     }
 
+// Setters
 void StripController::setMode (byte newMode)
     {
     fadeSwitchColor = CRGB::Red;
     switchedColorFlag = false;
     mode = newMode;
     }
-
 void StripController::setTableMode (byte newMode)
     {
     table_mode = newMode;
     }
-
 void StripController::setColor (CRGB newColor)
     {
     currColor = newColor;
     }
-
 void StripController::setRainbowFrequency (float newFreq)
     {
     rainbow_freq = newFreq;
     }
-
 void StripController::setRainbowSpeed (float newSpeed)
     {
     rainbow_speed = newSpeed;
     }
-
 void StripController::setPaletteSpeed (float newSpeed)
     {
     palette_speed = newSpeed;
+    }
+void StripController::setFreqModeRainFreq (float newFreq)
+    {
+    freq_full_rainbow_freq = newFreq;
+    }
+void StripController::setFreqModeRainOffset (float newOffset)
+    {
+    freq_full_rainbow_offset = newOffset;
+    }
+
+// Communication
+void StripController::setVU_val (int newVU_val)
+    {
+    VU_val = map (newVU_val, 0, VU_OUT_MAX, 0, ANALOG_VU_MAX);
+    }
+void StripController::setFreq3values (float newFreqVal [3])
+    {
+    for (int i = 0; i < 3; i++)
+        freqency_3 [i] = newFreqVal [i];
+    }
+void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
+    {
+    for (int i = 0; i < SPECTRUM_SIZE; i++)
+        freqency_full [i] = newFreqVal [i];
     }

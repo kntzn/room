@@ -16,6 +16,8 @@
 class StripController
     {
     public:
+        // ----------------------------------------
+        // Enums
         enum mainStripMode
             {
             off,
@@ -46,13 +48,16 @@ class StripController
             };
 
     private:
-        // ----------------------------------------
-        // Parameters
+        // Speed of rainbow palette (palette_offset)
         float palette_speed = 0.1f;
         // Speed of rainbow (rainbow_offset)
         float rainbow_speed = 0;
         // Number of full rainbows in strip
         float rainbow_freq = 0;
+        // Offset of freq_full rainbow [0; 360]
+        float freq_full_rainbow_offset = 0;
+        // Number of full rainbow in freq_full mode
+        float freq_full_rainbow_freq = 0;
 
         // Mode of main strip
         byte mode = off;
@@ -112,7 +117,6 @@ class StripController
         // Sync function
         void sync_strips ();
 
-        
         // ----------SETTERS and GETTERS-----------
         void setMode (byte newMode);
         void setTableMode (byte newMode); 
@@ -122,7 +126,9 @@ class StripController
         void setRainbowFrequency (float newFreq);
         void setRainbowSpeed (float newSpeed);
         void setPaletteSpeed (float newSpeed);
-        
+        void setFreqModeRainFreq (float newFreq);
+        void setFreqModeRainOffset (float newOffset);
+
         // --------------COMMUNICATION-------------
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
