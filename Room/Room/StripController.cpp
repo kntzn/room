@@ -132,12 +132,14 @@ void StripController::update (float dt)
             }
         case night:
             {
-            float brightness = float (NIGHT_BRIGHTNESS_MAX)* float (1 - ((millis () - night_activation_time)/1000)/(NIGHT_FADE_TIME*60));
+            float brightness = float (NIGHT_BRIGHTNESS_MAX)* 
+                               float (1.f - float (millis () - night_activation_time) / float(NIGHT_FADE_TIME*60*1000));
             if (brightness < 0)
                 brightness = 0;
 
             for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, brightness);
+                leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, int (brightness));
+
             }
         default:
             break;
