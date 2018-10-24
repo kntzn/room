@@ -27,8 +27,9 @@ class StripController
             fade_switch_random,
             rainbow_Sine,
             rainbow_HSV,
+            night
             //matrix,
-            //night
+            
             };
         enum tableStripMode
             {
@@ -59,6 +60,7 @@ class StripController
         // Number of full rainbow in freq_full mode
         float freq_full_rainbow_freq = 0;
 
+
         // Mode of main strip
         byte mode = off;
         // Mode of table strip
@@ -69,6 +71,11 @@ class StripController
 
         // ----------------------------------------
         // Internal Variables
+
+        // Night mode activation time
+        unsigned long int night_activation_time = 0;
+        
+
 
         // Current color for fade_switch mode
         CRGB fadeSwitchColor = CRGB::Black;

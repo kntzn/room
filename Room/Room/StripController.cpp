@@ -14,6 +14,7 @@ void StripController::update (float dt)
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;
 
+
     switch (mode)
         {
         case off:
@@ -128,6 +129,15 @@ void StripController::update (float dt)
                 leds_main [i] = CHSV (i*(360/N_LEDS_MAIN)*rainbow_freq + rainbow_offset*360, MAX_SATURATION, MAX_BRIGHTNESS);
                 
             break;
+            }
+        case night:
+            {
+            float brightness = float (NIGHT_BRIGHTNESS_MAX)* float (1 - ((millis () - night_activation_time)/1000)/(NIGHT_FADE_TIME*60));
+            if (brightness < 0)
+                brightness = 0;
+
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, brightness);
             }
         default:
             break;
@@ -264,6 +274,10 @@ void StripController::setMode (byte newMode)
     fadeSwitchColor = CRGB::Red;
     switchedColorFlag = false;
     mode = newMode;
+
+    if (mode == mainStripMode::night)
+        night_activation_time = millis ();
+
     }
 void StripController::setTableMode (byte newMode)
     {

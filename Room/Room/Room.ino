@@ -14,6 +14,8 @@ int main ()
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
+    pinMode (29, INPUT_PULLUP);
+
     // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_HSV);
@@ -33,6 +35,9 @@ int main ()
 
 
         // Strip controller
+        if (!digitalRead (29))
+            controller.setMode (StripController::night);
+        
         controller.update (dt);
         controller.display ();
         // !Strip coontroller

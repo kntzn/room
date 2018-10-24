@@ -42,7 +42,23 @@
 // Low freqences color
 #define HSV_LOW_FREQ_COLOR HUE_RED
 
+// Night mode color
+#define NIGHT_COLOR HUE_PURPLE
+// Night fade time (min)
+#define NIGHT_FADE_TIME 10
+// Max brightness of night mode strip
+#define NIGHT_BRIGHTNESS_MAX 100
+
 // !LED strip controller defines
+
+
+
+
+
+
+
+
+
 
 
 // Analyzer defines
