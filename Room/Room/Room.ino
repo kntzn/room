@@ -8,19 +8,10 @@
 #include "StripController.h"
 #include "Analyzer.h"
 
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |=  _BV(bit))
-
-
 int main ()
     {
     // Microcontroller initiaalization
     init ();
-    
-    sbi (ADCSRA, ADPS2);
-    cbi (ADCSRA, ADPS1);
-    sbi (ADCSRA, ADPS0);
-
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
@@ -51,14 +42,6 @@ int main ()
 
         analyzer.update ();
         controller.setVU_val (analyzer.getVUout ());
-
-        int res = 0;
-        for (byte i = 0; i < 100; i++)
-            {
-            int measured = analogRead (JACK_INPUT);
-            if (res < measured) res = measured;
-            }
-        //Serial.println (res);
 
         // Strip controller
         if (!digitalRead (29))

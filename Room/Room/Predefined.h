@@ -1,6 +1,8 @@
 #pragma once
-
 #ifndef PREDEFINED_OFF
+
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#define sbi(sfr, bit) (_SFR_BYTE(sfr) |=  _BV(bit))
 
 // ----------------------------------------
 // LED strip controller defines
@@ -44,11 +46,11 @@
 #define FREQ_BRIGHTNESS_MAX 255
 // Minimum brightness of leds in Freq mode
 #define FREQ_BRIGHTNESS_MIN 50
-// High freqences color
+// High frequences color
 #define HSV_HIGH_FREQ_COLOR HUE_YELLOW
-// Mid freqences color
+// Mid frequences color
 #define HSV_MID_FREQ_COLOR HUE_GREEN
-// Low freqences color
+// Low frequences color
 #define HSV_LOW_FREQ_COLOR HUE_RED
 // ----------------------------------------
 
@@ -66,7 +68,6 @@
 
 // ----------------------------------------
 // Analyzer defines
-
 
 #define LOG_OUT 1
 
@@ -93,13 +94,32 @@
 #define VU_OUT_MAX pow (ANALOG_VU_MAX, EXP)
 // ----------------------------------------
 
-// Freqences analyzer's parameters
+// frequences analyzer's parameters
 
 // Spectrum size
 #define SPECTRUM_SIZE 32
 #define FHT_N SPECTRUM_SIZE*2
-// Max output of freqences analyzer
-#define FREQ_MAX 1024
+// Max output of frequences analyzer
+#define FREQ_MAX 1000
+
+// Number of low freqs
+#define N_LOW 6
+// Number of mid freqs
+#define N_MID 5
+// Number of high freqs
+#define N_HIGH 21
+
+// Check for incorrect ranges
+#if N_LOW + N_MID + N_HIGH != SPECTRUM_SIZE
+#error Incorrect frequencies ranges
+#endif // N_LOW + N_MID + N_HIGH != SPECTRUM_SIZE
+
+// Average frequency volume smoothness
+#define AVER_FREQ_VOLUME_SMOOTH 0.8f
+
+#define FREQ_MODE_FADE_C 0.9f
+
+
 // ----------------------------------------
 
 // !Analyzer predefined parameters

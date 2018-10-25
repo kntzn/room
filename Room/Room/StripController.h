@@ -41,7 +41,7 @@ class StripController
             FREQ_3,
             FREQ_FULL
             };
-        enum freqences
+        enum frequences
             {
             lows,
             mids,
@@ -62,7 +62,6 @@ class StripController
         float freq_full_rainbow_offset = 0;
         // Number of full rainbow in freq_full mode
         float freq_full_rainbow_freq = 0;
-
 
         // Mode of main strip
         byte mode = off;
@@ -100,9 +99,9 @@ class StripController
         // Volume fou VU, VU_bright and VU_rain
         int VU_val = 0;
 
-        // Freqences arrays
-        float freqency_3 [3] = {};
-        float freqency_full [3] = {};
+        // frequences arrays
+        float frequency_3 [3] = {};
+        float frequency_full [3] = {};
 
     public:
         // ----------------------------------------
