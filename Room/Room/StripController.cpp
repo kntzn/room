@@ -207,19 +207,19 @@ void StripController::update (float dt)
                 {
                 if (i < int (segment_size))
                     leds_table [i] = CHSV (HSV_HIGH_FREQ_COLOR, MAX_SATURATION, 
-                                           map (freqency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 else if (i < int (2*segment_size))
                     leds_table [i] = CHSV (HSV_MID_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 else if (i < int (3 * segment_size))
                     leds_table [i] = CHSV (HSV_LOW_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [lows], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [lows], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 else if (i < int (4*segment_size))
                     leds_table [i] = CHSV (HSV_MID_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 else
                     leds_table [i] = CHSV (HSV_HIGH_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 }
 
             break;
@@ -232,13 +232,13 @@ void StripController::update (float dt)
                 {
                 if (i < int (segment_size))
                     leds_table [i] = CHSV (HSV_HIGH_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [highs], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 else if (i < int (2 * segment_size))
                     leds_table [i] = CHSV (HSV_MID_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [mids], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 else
                     leds_table [i] = CHSV (HSV_LOW_FREQ_COLOR, MAX_SATURATION,
-                                           map (freqency_3 [lows], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
+                                           map (frequency_3 [lows], 0, FREQ_MAX, FREQ_BRIGHTNESS_MIN, FREQ_BRIGHTNESS_MAX));
                 }
 
             break;
@@ -247,7 +247,7 @@ void StripController::update (float dt)
             {
             for (int i = 0; i < N_LEDS_TABLE / 2; i++)
                 {
-                float brightness = freqency_full [int (i * SPECTRUM_SIZE / (N_LEDS_TABLE/2))];
+                float brightness = frequency_full [int (i * SPECTRUM_SIZE / (N_LEDS_TABLE/2))];
                 leds_table [i] = CHSV (freq_full_rainbow_offset + freq_full_rainbow_freq * i / (N_LEDS_TABLE / 2), 255, brightness);
                 
                 leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
@@ -321,10 +321,10 @@ void StripController::setVU_val (int newVU_val)
 void StripController::setFreq3values (float newFreqVal [3])
     {
     for (int i = 0; i < 3; i++)
-        freqency_3 [i] = newFreqVal [i];
+        frequency_3 [i] = newFreqVal [i];
     }
 void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
     {
     for (int i = 0; i < SPECTRUM_SIZE; i++)
-        freqency_full [i] = newFreqVal [i];
+        frequency_full [i] = newFreqVal [i];
     }

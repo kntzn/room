@@ -11,8 +11,6 @@
 
 #include "Predefined.h"
 
-//#include <FHT.h>
-
 class Analyzer
     {
     public:
@@ -23,13 +21,22 @@ class Analyzer
             microphone,
             headphones
             };
+        enum freq_peak_type
+            {
+            low_f,
+            mid_f,
+            high_f
+            };
     private:
         // ----------------------------------------
         // Parameters
 
         // Source of signal
         byte source = headphones;
-        int low_pass_filter = 10;
+        // level of noise if VU mode
+        int low_pass_filter_VU = 0;
+        // level of noise in freq mode
+        int low_pass_filter_FREQ = 0;
 
         // ----------------------------------------
         // Internal values
@@ -40,16 +47,24 @@ class Analyzer
         float volume_filt = 0.f;
         // Average volume
         float averVolume = 0.f;
-        
+
+        // Raw frequencies array
+        float freq [SPECTRUM_SIZE] = {};
+        // Raw frequencies types array
+        float freq_peaks [SPECTRUM_SIZE] = {};
+
+        // The loudest frequency
+        float freq_max_filt = 0.f;
+
         // ----------------------------------------
         // Communication
         // VU meter output
         int VU_out = 0;
 
 
-        // normalized freqencies volume in range [0; 1]
+        // normalized frequencies volume in range [0; 1]
         float freq_filt [SPECTRUM_SIZE] = {};
-        // normalized types of freqencies volume in range [0; 1]
+        // normalized types of frequencies volume in range [0; 1]
         float freq_peaks_filt [3] = {};
 
     public:
@@ -67,29 +82,24 @@ class Analyzer
         // ----------------------------------------
         // Measures volume
         float measureVol ();
+        // Powers and filters the volume
         int VUmeter ();
 
-        void analyzer ();
+        // Divides signal into array of frequencies
         void analyzeAudio ();
-
+        // Divides array into 3 types of frequencies
+        void analyzer ();
+        
         // ----------SETTERS and GETTERS-----------
-        void calibrateLowPass ()
-            {
-            byte source_pin = JACK_INPUT;
-            if (source == soundSource::microphone)
-                source_pin = MIC_INPUT;
-
-            for (byte i = 0; i < 100; i++)
-                {
-                int measured = analogRead (MIC_INPUT);
-                if (low_pass_filter < measured) low_pass_filter = measured;
-                }
-            }
+        void calibrateLowPass ();
 
         int getVUout ()
             {
             return VU_out;
             }
+
+        float* getFreqPeaksArray ();
+        float* getFreqArray ();
 
         // --------------COMMUNICATION-------------
     };
@@ -101,33 +111,7 @@ class Analyzer
 /*
 // 3-5 режим - цветомузыка
 if (this_mode == 2 || this_mode == 3 || this_mode == 4 || this_mode == 7 || this_mode == 8) {
-analyzeAudio();
-colorMusic[0] = 0;
-colorMusic[1] = 0;
-colorMusic[2] = 0;
-for (int i = 0 ; i < 32 ; i++) {
-if (fht_log_out[i] < SPEKTR_LOW_PASS) fht_log_out[i] = 0;
-}
-// низкие частоты, выборка со 2 по 5 тон (0 и 1 зашумленные!)
-for (byte i = 2; i < 6; i++) {
-if (fht_log_out[i] > colorMusic[0]) colorMusic[0] = fht_log_out[i];
-}
-// средние частоты, выборка с 6 по 10 тон
-for (byte i = 6; i < 11; i++) {
-if (fht_log_out[i] > colorMusic[1]) colorMusic[1] = fht_log_out[i];
-}
-// высокие частоты, выборка с 11 по 31 тон
-for (byte i = 11; i < 32; i++) {
-if (fht_log_out[i] > colorMusic[2]) colorMusic[2] = fht_log_out[i];
-}
-freq_max = 0;
-for (byte i = 0; i < 30; i++) {
-if (fht_log_out[i + 2] > freq_max) freq_max = fht_log_out[i + 2];
-if (freq_max < 5) freq_max = 5;
 
-if (freq_f[i] < fht_log_out[i + 2]) freq_f[i] = fht_log_out[i + 2];
-if (freq_f[i] > 0) freq_f[i] -= LIGHT_SMOOTH;
-else freq_f[i] = 0;
 }
 freq_max_f = freq_max * averK + freq_max_f * (1 - averK);
 for (byte i = 0; i < 3; i++) {
