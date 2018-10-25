@@ -132,8 +132,11 @@ void StripController::update (float dt)
             }
         case night:
             {
-            float brightness = float (NIGHT_BRIGHTNESS_MAX)* 
-                               float (1.f - float (millis () - night_activation_time) / float(NIGHT_FADE_TIME*60*1000));
+            float dt = float (millis () - night_activation_time);
+            float full_time = float (NIGHT_FADE_TIME) * 60.f * 1000.f;
+            float brightness = float (NIGHT_BRIGHTNESS_MAX)*
+                               float (1.f -  (dt/full_time));
+            
             if (brightness < 0)
                 brightness = 0;
 
