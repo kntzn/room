@@ -1,6 +1,7 @@
 #pragma once
 
-#ifndef _STRIPCONTROLLER_h
+#ifndef PREDEFINED_OFF
+
 // ----------------------------------------
 // LED strip controller defines
 
@@ -62,9 +63,7 @@
 
 // !LED strip controller defines
 // ----------------------------------------
-#endif // !_STRIPCONTROLLER_h
 
-#ifndef _ANALYZER_h
 // ----------------------------------------
 // Analyzer defines
 
@@ -74,8 +73,8 @@
 #define LOG_OUT 1
 
 // Pinout
-#define MIC_INPUT A0
-#define MIC_INPUT_FREQ A1
+#define MIC_INPUT A1
+#define MIC_INPUT_FREQ A0
 #define JACK_INPUT A2
 #define JACK_INPUT_FREQ A3
 // ----------------------------------------
@@ -107,10 +106,13 @@
 
 // !Analyzer predefined parameters
 // ----------------------------------------
-#endif // !_ANALYZER_h
 
 // ----------------------------------------
 // Other
 #define BAUD_RATE_SERIAL 9600
 // !Other
 // ----------------------------------------
+
+#endif // !PREDEFINED_OFF
+
+

@@ -3,10 +3,7 @@
 Analyzer::Analyzer ()
     {
     // Increasing measurements frequency
-    sbi (ADCSRA, ADPS2);
-    cbi (ADCSRA, ADPS1);
-    sbi (ADCSRA, ADPS0);
-
+    
     pinMode (MIC_INPUT, INPUT);
     pinMode (MIC_INPUT_FREQ, INPUT);
     pinMode (JACK_INPUT, INPUT);
@@ -18,8 +15,8 @@ void Analyzer::update ()
     // Measuring the volume
     VU_out = VUmeter ();
 
-    // Dividing sound into freqencies
-
+    // Dividing the sound into freqencies
+    analyzer ();
     }
 
 float Analyzer::measureVol ()

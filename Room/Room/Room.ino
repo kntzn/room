@@ -7,12 +7,18 @@
 
 
 #include "StripController.h"
+#include "Analyzer.h"
 
 int main ()
     {
     // Microcontroller initiaalization
     init ();
     
+    sbi (ADCSRA, ADPS2);
+    cbi (ADCSRA, ADPS1);
+    sbi (ADCSRA, ADPS0);
+
+
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
@@ -21,10 +27,12 @@ int main ()
     // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_HSV);
-    controller.setTableMode (StripController::sync);
+    controller.setTableMode (StripController::VU);
     controller.setRainbowSpeed (0.1f);
     controller.setRainbowFrequency (0.5f);
     controller.setColor (CRGB::DeepPink);
+
+    Analyzer analyzer;
 
     float prev_t = float (millis ());
 
@@ -35,6 +43,9 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
 
+
+        analyzer.update ();
+        controller.setVU_val (analyzer.getVUout ());
 
         // Strip controller
         if (!digitalRead (29))

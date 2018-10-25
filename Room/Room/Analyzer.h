@@ -28,7 +28,7 @@ class Analyzer
         // Parameters
 
         // Source of signal
-        byte source = microphone;
+        byte source = headphones;
         int low_pass_filter = 0;
 
         // ----------------------------------------
@@ -44,7 +44,7 @@ class Analyzer
         // ----------------------------------------
         // Communication
         // VU meter output
-        float VU_out = 0.f;
+        int VU_out = 0;
 
 
         // normalized freqencies volume in range [0; 1]
@@ -73,6 +73,11 @@ class Analyzer
         void analyzeAudio ();
 
         // ----------SETTERS and GETTERS-----------
+
+        int getVUout ()
+            {
+            return VU_out;
+            }
 
         // --------------COMMUNICATION-------------
     };
