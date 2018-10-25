@@ -16,7 +16,7 @@ void Analyzer::update ()
     VU_out = VUmeter ();
 
     // Dividing the sound into freqencies
-    analyzer ();
+    //analyzer ();
     }
 
 float Analyzer::measureVol ()
