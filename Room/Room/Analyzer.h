@@ -11,7 +11,7 @@
 
 #include "Predefined.h"
 
-#include <FHT.h>
+//#include <FHT.h>
 
 class Analyzer
     {
@@ -29,7 +29,7 @@ class Analyzer
 
         // Source of signal
         byte source = headphones;
-        int low_pass_filter = 0;
+        int low_pass_filter = 10;
 
         // ----------------------------------------
         // Internal values
@@ -73,6 +73,18 @@ class Analyzer
         void analyzeAudio ();
 
         // ----------SETTERS and GETTERS-----------
+        void calibrateLowPass ()
+            {
+            byte source_pin = JACK_INPUT;
+            if (source == soundSource::microphone)
+                source_pin = MIC_INPUT;
+
+            for (byte i = 0; i < 100; i++)
+                {
+                int measured = analogRead (MIC_INPUT);
+                if (low_pass_filter < measured) low_pass_filter = measured;
+                }
+            }
 
         int getVUout ()
             {

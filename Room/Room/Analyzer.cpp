@@ -29,7 +29,7 @@ float Analyzer::measureVol ()
 
     for (byte i = 0; i < 100; i++)
         {
-        int measured = analogRead (MIC_INPUT);
+        int measured = analogRead (source_pin);
         if (volume < measured) volume = measured;
         }
 
@@ -62,6 +62,7 @@ void Analyzer::analyzer ()
 
 void Analyzer::analyzeAudio () 
     {
+    /*
     byte source_pin = JACK_INPUT_FREQ;
     if (source == soundSource::microphone)
         source_pin = MIC_INPUT_FREQ;
@@ -79,4 +80,5 @@ void Analyzer::analyzeAudio ()
     fht_run ();     
     // Getting the output of the FHT
     fht_mag_log (); 
+    */
     }

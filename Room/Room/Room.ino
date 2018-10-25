@@ -5,9 +5,12 @@
 */
 #include "Predefined.h"
 
-
 #include "StripController.h"
 #include "Analyzer.h"
+
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#define sbi(sfr, bit) (_SFR_BYTE(sfr) |=  _BV(bit))
+
 
 int main ()
     {
@@ -33,6 +36,7 @@ int main ()
     controller.setColor (CRGB::DeepPink);
 
     Analyzer analyzer;
+    //analyzer.calibrateLowPass ();
 
     float prev_t = float (millis ());
 
@@ -46,6 +50,14 @@ int main ()
 
         analyzer.update ();
         controller.setVU_val (analyzer.getVUout ());
+
+        int res = 0;
+        for (byte i = 0; i < 100; i++)
+            {
+            int measured = analogRead (JACK_INPUT);
+            if (res < measured) res = measured;
+            }
+        //Serial.println (res);
 
         // Strip controller
         if (!digitalRead (29))

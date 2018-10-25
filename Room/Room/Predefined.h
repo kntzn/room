@@ -67,8 +67,6 @@
 // ----------------------------------------
 // Analyzer defines
 
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |=  _BV(bit))
 
 #define LOG_OUT 1
 
@@ -84,11 +82,11 @@
 // Ratio of max volume and average volume
 #define RATIO_MAX_TO_AVG 1.5f
 // Average volume smoothness
-#define AVER_VOLUME_SMOOTH 0.95f
+#define AVER_VOLUME_SMOOTH 0.995f
 // Smoothness of volume bar
 #define SMOOTH_VU 0.8f
 // Power of signal
-#define EXP 1.1
+#define EXP 1
 // Maximum signal from analyzer
 #define ANALOG_VU_MAX 1000
 // Maxumum value of volume after being powered
