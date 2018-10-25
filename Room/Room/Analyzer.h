@@ -91,44 +91,14 @@ class Analyzer
         void analyzer ();
         
         // ----------SETTERS and GETTERS-----------
-        void calibrateLowPass ();
+        //void calibrateLowPass ();
 
         int getVUout ()
             {
             return VU_out;
             }
 
-        float* getFreqPeaksArray ();
-        float* getFreqArray ();
-
         // --------------COMMUNICATION-------------
     };
 
 #endif
-
-
-// freq
-/*
-// 3-5 режим - цветомузыка
-if (this_mode == 2 || this_mode == 3 || this_mode == 4 || this_mode == 7 || this_mode == 8) {
-
-}
-freq_max_f = freq_max * averK + freq_max_f * (1 - averK);
-for (byte i = 0; i < 3; i++) {
-colorMusic_aver[i] = colorMusic[i] * averK + colorMusic_aver[i] * (1 - averK);  // общая фильтрация
-colorMusic_f[i] = colorMusic[i] * SMOOTH_FREQ + colorMusic_f[i] * (1 - SMOOTH_FREQ);      // локальная
-if (colorMusic_f[i] > ((float)colorMusic_aver[i] * MAX_COEF_FREQ)) {
-thisBright[i] = 255;
-colorMusicFlash[i] = true;
-running_flag[i] = true;
-} else colorMusicFlash[i] = false;
-if (thisBright[i] >= 0) thisBright[i] -= SMOOTH_STEP;
-if (thisBright[i] < EMPTY_BRIGHT) {
-thisBright[i] = EMPTY_BRIGHT;
-running_flag[i] = false;
-}
-}
-animation();
-}
-
-*/

@@ -39,7 +39,7 @@ float Analyzer::measureVol ()
 int Analyzer::VUmeter ()
     {
     // Powering and mapping back the volume
-    float volume = map (measureVol (), low_pass_filter, 1023, 0, ANALOG_VU_MAX);
+    float volume = map (measureVol (), low_pass_filter_VU, 1023, 0, ANALOG_VU_MAX);
     volume = pow (volume, EXP);
     volume = map (volume, 0, VU_OUT_MAX, 0, ANALOG_VU_MAX);
     volume = constrain (volume, 0, ANALOG_VU_MAX);
