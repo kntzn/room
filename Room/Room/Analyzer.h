@@ -69,70 +69,16 @@ class Analyzer
         float measureVol ();
         int VUmeter ();
 
+        void analyzer ();
+        void analyzeAudio ();
+
         // ----------SETTERS and GETTERS-----------
 
         // --------------COMMUNICATION-------------
     };
 
+#endif
 
-// VU
-/*
-if (this_mode == 0 || this_mode == 1) 
-{
-for (byte i = 0; i < 100; i ++)
-{
-RcurrentLevel = analogRead(SOUND_R);
-if (RsoundLevel < RcurrentLevel) RsoundLevel = RcurrentLevel;
-
-}
-
-// фильтруем по нижнему порогу шумов
-RsoundLevel = map(RsoundLevel, LOW_PASS, 1023, 0, 500);
-if (!MONO)LsoundLevel = map(LsoundLevel, LOW_PASS, 1023, 0, 500);
-
-// ограничиваем диапазон
-RsoundLevel = constrain(RsoundLevel, 0, 500);
-if (!MONO)LsoundLevel = constrain(LsoundLevel, 0, 500);
-
-// возводим в степень (дл€ большей чЄткости работы)
-RsoundLevel = pow(RsoundLevel, EXP);
-if (!MONO)LsoundLevel = pow(LsoundLevel, EXP);
-
-// фильтр
-RsoundLevel_f = RsoundLevel * SMOOTH + RsoundLevel_f * (1 - SMOOTH);
-if (!MONO)LsoundLevel_f = LsoundLevel * SMOOTH + LsoundLevel_f * (1 - SMOOTH);
-
-if (MONO) LsoundLevel_f = RsoundLevel_f;  // если моно, то левый = правому
-
-// заливаем "подложку", если €ркость достаточна€
-if (EMPTY_BRIGHT > 5) {
-for (int i = 0; i < NUM_LEDS; i++)
-leds[i] = CHSV(EMPTY_COLOR, 255, EMPTY_BRIGHT);
-}
-
-// если значение выше порога - начинаем самое интересное
-if (RsoundLevel_f > 15 && LsoundLevel_f > 15) {
-
-// расчЄт общей средней громкости с обоих каналов, фильтраци€.
-// ‘ильтр очень медленный, сделано специально дл€ автогромкости
-averageLevel = (float)(RsoundLevel_f + LsoundLevel_f) / 2 * averK + averageLevel * (1 - averK);
-
-// принимаем максимальную громкость шкалы как среднюю, умноженную на некоторый коэффициент MAX_COEF
-maxLevel = (float)averageLevel * MAX_COEF;
-
-// преобразуем сигнал в длину ленты (где MAX_CH это половина количества светодиодов)
-Rlenght = map(RsoundLevel_f, 0, maxLevel, 0, MAX_CH);
-Llenght = map(LsoundLevel_f, 0, maxLevel, 0, MAX_CH);
-
-// ограничиваем до макс. числа светодиодов
-Rlenght = constrain(Rlenght, 0, MAX_CH);
-Llenght = constrain(Llenght, 0, MAX_CH);
-
-animation();       // отрисовать
-}
-}
-
-*/
 
 // freq
 /*
@@ -185,5 +131,3 @@ animation();
 }
 
 */
-
-#endif

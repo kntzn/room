@@ -17,6 +17,9 @@ void Analyzer::update ()
     {
     // Measuring the volume
     VU_out = VUmeter ();
+
+    // Dividing sound into freqencies
+
     }
 
 float Analyzer::measureVol ()
@@ -53,4 +56,30 @@ int Analyzer::VUmeter ()
     // Generating output of VU meter
     int output = map (volume_filt, 0, RATIO_MAX_TO_AVG*averVolume, 0, ANALOG_VU_MAX);
     return constrain (output, 0, ANALOG_VU_MAX);
+    }
+
+void Analyzer::analyzer ()
+    {
+    analyzeAudio ();
+    }
+
+void Analyzer::analyzeAudio () 
+    {
+    byte source_pin = JACK_INPUT_FREQ;
+    if (source == soundSource::microphone)
+        source_pin = MIC_INPUT_FREQ;
+
+    for (int i = 0; i < FHT_N; i++) 
+        {
+        int sample = analogRead (source_pin);
+        fht_input [i] = sample;
+        }
+    // Windowing the data for better frequency response
+    fht_window ();
+    // Reordering the data before doing the FHT
+    fht_reorder (); 
+    // Starting the FHT
+    fht_run ();     
+    // Getting the output of the FHT
+    fht_mag_log (); 
     }
