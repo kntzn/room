@@ -13,20 +13,18 @@
 
 class Analyzer
     {
+    private:
+        void measureVol ();
+
+        float volume_filt = 0;
+        float freq_max_filt = 0;
+        float freq_filt [SPECTRUM_SIZE];
+        float freq_peaks_filt [3];
+
     public:
         Analyzer ();
         
         void update ();
-
-    private:
-
-
-        void measureVol ();
-        
-        float volume_filt = 0;
-        float freq_max_filt = 0;
-        float freq_filt [32];
-        float freq_peaks_filt [3];
 
     };
 

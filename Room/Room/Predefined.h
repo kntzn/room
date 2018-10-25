@@ -1,5 +1,6 @@
 #pragma once
 
+// ----------------------------------------
 // LED strip controller defines
 
 // FastLED lib defines
@@ -31,7 +32,6 @@
 
 // Maximum brightness of leds in Freq mode
 #define FREQ_BRIGHTNESS_MAX 255
-
 // Minimum brightness of leds in Freq mode
 #define FREQ_BRIGHTNESS_MIN 50
 
@@ -49,19 +49,15 @@
 // Max brightness of night mode strip
 #define NIGHT_BRIGHTNESS_MAX 100
 
+
 // !LED strip controller defines
+// ----------------------------------------
 
 
 
-
-
-
-
-
-
-
-
+// ----------------------------------------
 // Analyzer defines
+
 
 // Defines for increasement of analog measurements frequency up to 38kHz
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
@@ -85,7 +81,12 @@
 #define FREQ_MAX 1024
 
 // !Analyzer predefined parameters
+// ----------------------------------------
 
+
+
+// ----------------------------------------
 // Other
 #define BAUD_RATE_SERIAL 9600
 // !Other
+// ----------------------------------------
