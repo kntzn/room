@@ -11,20 +11,34 @@
 
 #include "Predefined.h"
 
+#include <FHT.h>
+
 class Analyzer
     {
+    public:
+        enum soundSource
+            {
+            microphone,
+            headphones
+            };
     private:
-        void measureVol ();
-
+        // Communication
         float volume_filt = 0;
         float freq_max_filt = 0;
         float freq_filt [SPECTRUM_SIZE];
         float freq_peaks_filt [3];
 
+        // Internal values
+        float volume = 0.f;
+
+        // parameters
+        byte source = microphone;
+
     public:
         Analyzer ();
         
         void update ();
+        void measureVol ();
 
     };
 

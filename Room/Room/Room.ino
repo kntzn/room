@@ -3,6 +3,8 @@
  Created:	10/19/2018 8:10:31 AM
  Author:	CODEBOOK
 */
+#include "Predefined.h"
+
 
 #include "StripController.h"
 

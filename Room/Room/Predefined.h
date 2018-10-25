@@ -58,10 +58,16 @@
 // ----------------------------------------
 // Analyzer defines
 
-
-// Defines for increasement of analog measurements frequency up to 38kHz
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |=  _BV(bit))
+
+#define LOG_OUT 1
+
+// Pinout
+#define MIC_INPUT A0
+#define MIC_INPUT_FREQ A1
+#define JACK_INPUT A2
+#define JACK_INPUT_FREQ A3
 
 // VU meter parameters
 

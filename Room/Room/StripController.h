@@ -11,8 +11,6 @@
 
 #include "Predefined.h"
 
-#include <FastLED.h>
-
 class StripController
     {
     public:
