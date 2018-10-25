@@ -15,12 +15,13 @@ Analyzer::Analyzer ()
 
 void Analyzer::update ()
     {
-    
+    // Measuring the volume
+    VU_out = VUmeter ();
     }
 
-void Analyzer::measureVol ()
+float Analyzer::measureVol ()
     {
-    volume = 0.f;
+    float volume = 0.f;
 
     byte source_pin = JACK_INPUT;
     if (source == soundSource::microphone)
@@ -31,4 +32,25 @@ void Analyzer::measureVol ()
         int measured = analogRead (MIC_INPUT);
         if (volume < measured) volume = measured;
         }
+
+    return volume;
+    }
+
+int Analyzer::VUmeter ()
+    {
+    // Powering and mapping back the volume
+    float volume = map (measureVol (), low_pass_filter, 1023, 0, ANALOG_VU_MAX);
+    volume = pow (volume, EXP);
+    volume = map (volume, 0, VU_OUT_MAX, 0, ANALOG_VU_MAX);
+    volume = constrain (volume, 0, ANALOG_VU_MAX);
+
+    // Smoothing filter of volume
+    volume_filt = volume*(1 - SMOOTH_VU) + volume_filt * SMOOTH_VU;
+
+    // Average volume smoothing filter
+    averVolume = volume_filt * (1 - AVER_VOLUME_SMOOTH) + averVolume * AVER_VOLUME_SMOOTH;
+
+    // Generating output of VU meter
+    int output = map (volume_filt, 0, RATIO_MAX_TO_AVG*averVolume, 0, ANALOG_VU_MAX);
+    return constrain (output, 0, ANALOG_VU_MAX);
     }

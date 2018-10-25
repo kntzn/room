@@ -16,30 +16,62 @@
 class Analyzer
     {
     public:
+        // ----------------------------------------
+        // Enums
         enum soundSource
             {
             microphone,
             headphones
             };
     private:
-        // Communication
-        float volume_filt = 0;
-        float freq_max_filt = 0;
-        float freq_filt [SPECTRUM_SIZE];
-        float freq_peaks_filt [3];
+        // ----------------------------------------
+        // Parameters
 
-        // Internal values
-        float volume = 0.f;
-
-        // parameters
+        // Source of signal
         byte source = microphone;
+        int low_pass_filter = 0;
+
+        // ----------------------------------------
+        // Internal values
+        
+        // Last recorded amplitude 
+        float volume = 0.f;
+        // Filtered volume
+        float volume_filt = 0.f;
+        // Average volume
+        float averVolume = 0.f;
+        
+        // ----------------------------------------
+        // Communication
+        // VU meter output
+        float VU_out = 0.f;
+
+
+        // normalized freqencies volume in range [0; 1]
+        float freq_filt [SPECTRUM_SIZE] = {};
+        // normalized types of freqencies volume in range [0; 1]
+        float freq_peaks_filt [3] = {};
 
     public:
+        // ----------------------------------------
+        // Constructor
+        // Initializes led strips
         Analyzer ();
         
+        // ----------------------------------------
+        // Update function
+        // Listens and filter music's volume
         void update ();
-        void measureVol ();
 
+        // -----------------UTIL-------------------
+        // ----------------------------------------
+        // Measures volume
+        float measureVol ();
+        int VUmeter ();
+
+        // ----------SETTERS and GETTERS-----------
+
+        // --------------COMMUNICATION-------------
     };
 
 

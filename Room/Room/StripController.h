@@ -11,6 +11,8 @@
 
 #include "Predefined.h"
 
+#include <FastLED.h>
+
 class StripController
     {
     public:
@@ -47,6 +49,9 @@ class StripController
             };
 
     private:
+        // ----------------------------------------
+        // Parameters
+
         // Speed of rainbow palette (palette_offset)
         float palette_speed = 0.1f;
         // Speed of rainbow (rainbow_offset)
@@ -73,8 +78,6 @@ class StripController
         // Night mode activation time
         unsigned long int night_activation_time = 0;
         
-
-
         // Current color for fade_switch mode
         CRGB fadeSwitchColor = CRGB::Black;
         bool switchedColorFlag = false;
@@ -94,7 +97,7 @@ class StripController
         // ----------------------------------------
         // Communication
 
-        // Volume fou VU and VU_rain
+        // Volume fou VU, VU_bright and VU_rain
         int VU_val = 0;
 
         // Freqences arrays
