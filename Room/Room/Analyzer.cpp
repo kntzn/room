@@ -61,6 +61,20 @@ void Analyzer::analyzer ()
     analyzeAudio ();
     }
 
+void Analyzer::calibrateLowPass ()
+    {
+    analyzeAudio ();
+
+    uint8_t max = 0;
+    for (int i = 3; i < SPECTRUM_SIZE; i++)
+        if (fht_log_out [i] > max)
+            max = fht_log_out [i];
+
+    low_pass_filter_FREQ = max;
+
+    //Serial.println (low_pass_filter_FREQ);
+    }
+
 uint8_t * Analyzer::getFreqValues ()
     {
     return fht_log_out;
@@ -87,6 +101,6 @@ void Analyzer::analyzeAudio ()
     fht_mag_log (); 
 
     for (int i = 0; i < SPECTRUM_SIZE; i++)
-        if (fht_log_out [i] < 40)
+        if (fht_log_out [i] < 24)
             fht_log_out [i] = 0;
     }

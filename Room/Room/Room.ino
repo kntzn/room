@@ -53,6 +53,8 @@ int main ()
         for (int i = 2; i < SPECTRUM_SIZE; i++)
             output [i] = float (FREQ_MAX)*float (analyzer.getFreqValues () [i]) / float (max);
 
+        Serial.println (max);
+
         analyzer.update ();
         controller.setFreqValues (output);
 

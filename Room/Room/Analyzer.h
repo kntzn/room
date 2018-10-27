@@ -91,7 +91,7 @@ class Analyzer
         void analyzer ();
         
         // ----------SETTERS and GETTERS-----------
-        //void calibrateLowPass ();
+        void calibrateLowPass ();
 
         int getVUout ()
             {
