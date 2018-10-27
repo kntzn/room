@@ -1,4 +1,5 @@
 #include "Analyzer.h"
+#include <FHT.h>
 
 Analyzer::Analyzer ()
     {
@@ -16,7 +17,7 @@ void Analyzer::update ()
     VU_out = VUmeter ();
 
     // Dividing the sound into freqencies
-    //analyzer ();
+    analyzer ();
     }
 
 float Analyzer::measureVol ()
@@ -60,16 +61,20 @@ void Analyzer::analyzer ()
     analyzeAudio ();
     }
 
+uint8_t * Analyzer::getFreqValues ()
+    {
+    return fht_log_out;
+    }
+
 void Analyzer::analyzeAudio () 
     {
-    /*
     byte source_pin = JACK_INPUT_FREQ;
-    if (source == soundSource::microphone)
-        source_pin = MIC_INPUT_FREQ;
+    //if (source == soundSource::microphone)
+      //  source_pin = MIC_INPUT_FREQ;
 
     for (int i = 0; i < FHT_N; i++) 
         {
-        int sample = analogRead (source_pin);
+        int sample = analogRead (A2);
         fht_input [i] = sample;
         }
     // Windowing the data for better frequency response
@@ -80,5 +85,8 @@ void Analyzer::analyzeAudio ()
     fht_run ();     
     // Getting the output of the FHT
     fht_mag_log (); 
-    */
+
+    for (int i = 0; i < SPECTRUM_SIZE; i++)
+        if (fht_log_out [i] < 40)
+            fht_log_out [i] = 0;
     }

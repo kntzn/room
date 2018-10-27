@@ -39,7 +39,7 @@
 // ----------------------------------------
 
 // VU mode parameters
-#define VU_BRIGHTNESS_MIN 200
+#define VU_BRIGHTNESS_MIN 64
 #define VU_BRIGHTNESS_MAX 255
 #define HSV_VU_START HUE_RED
 #define HSV_VU_END HUE_GREEN
@@ -96,7 +96,7 @@
 // Average volume smoothness
 #define AVER_VOLUME_SMOOTH 0.995f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.95f
+#define SMOOTH_VU 0.8f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer

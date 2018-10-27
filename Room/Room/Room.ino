@@ -22,11 +22,13 @@ int main ()
 
     // Initialization of strip controller
     StripController controller;
-    controller.setMode (StripController::fade_switch_random);
-    controller.setTableMode (StripController::sync);
+    controller.setMode (StripController::rainbow_HSV);
+    controller.setTableMode (StripController::FREQ_FULL);
     controller.setPaletteSpeed (20.f);
     controller.setRainbowSpeed (0.1f);
     controller.setRainbowFrequency (0.5f);
+    controller.setFreqModeRainFreq (10.f);
+    controller.setFreqModeRainOffset (HUE_GREEN);
     controller.setColor (CRGB::DeepPink);
 
     Analyzer analyzer;
@@ -41,9 +43,18 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
 
+        float output [SPECTRUM_SIZE] = {};
+
+        uint8_t max = 0;
+        for (int i = 2; i < SPECTRUM_SIZE; i++)
+            if (analyzer.getFreqValues() [i] > max)
+                max = analyzer.getFreqValues () [i];
+
+        for (int i = 2; i < SPECTRUM_SIZE; i++)
+            output [i] = float (FREQ_MAX)*float (analyzer.getFreqValues () [i]) / float (max);
 
         analyzer.update ();
-        controller.setVU_val (analyzer.getVUout ());
+        controller.setFreqValues (output);
 
         // Strip controller
         if (!digitalRead (29))

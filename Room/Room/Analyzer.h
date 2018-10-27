@@ -97,6 +97,7 @@ class Analyzer
             {
             return VU_out;
             }
+        uint8_t* getFreqValues ();
 
         // --------------COMMUNICATION-------------
     };
