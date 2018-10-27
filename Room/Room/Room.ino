@@ -3,6 +3,7 @@
  Created:	10/19/2018 8:10:31 AM
  Author:	CODEBOOK
 */
+
 #include "Predefined.h"
 
 #include "StripController.h"
@@ -17,11 +18,12 @@ int main ()
     Serial.begin (BAUD_RATE_SERIAL);
 
     pinMode (29, INPUT_PULLUP);
+    pinMode (27, INPUT_PULLUP);
 
     // Initialization of strip controller
     StripController controller;
-    controller.setMode (StripController::mono);
-    controller.setTableMode (StripController::VU_rain);
+    controller.setMode (StripController::fade_switch_random);
+    controller.setTableMode (StripController::sync);
     controller.setPaletteSpeed (20.f);
     controller.setRainbowSpeed (0.1f);
     controller.setRainbowFrequency (0.5f);
@@ -45,7 +47,15 @@ int main ()
 
         // Strip controller
         if (!digitalRead (29))
+            {
             controller.setMode (StripController::night);
+            controller.setTableMode (StripController::sync);
+            }
+        if (!digitalRead (27))
+            {
+            controller.setMode (StripController::RVD);
+            controller.setTableMode (StripController::sync);
+            }
         
         controller.update (dt);
         controller.display ();

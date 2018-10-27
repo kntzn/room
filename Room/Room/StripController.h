@@ -27,7 +27,8 @@ class StripController
             fade_switch_random,
             rainbow_Sine,
             rainbow_HSV,
-            night
+            night,
+            RVD
             //matrix,
             
             };
@@ -75,7 +76,7 @@ class StripController
         // Internal Variables
 
         // Night mode activation time
-        unsigned long int night_activation_time = 0;
+        unsigned long int mode_activation_time = 0;
         
         // Current color for fade_switch mode
         CRGB fadeSwitchColor = CRGB::Black;

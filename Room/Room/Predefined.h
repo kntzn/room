@@ -13,6 +13,12 @@
 // Number of leds
 #define N_LEDS_MAIN 164
 #define N_LEDS_TABLE 42
+
+#define N_LEDS_SEC_0 53
+#define N_LEDS_SEC_1 39
+#define N_LEDS_SEC_2 72
+
+#define N_LEDS_SUBSEC 9
 // ----------------------------------------
 
 // Pinout
@@ -61,6 +67,11 @@
 #define NIGHT_FADE_TIME 10
 // Max brightness of night mode strip
 #define NIGHT_BRIGHTNESS_MAX 100
+
+// RVD full rise time (min)
+#define RVD_RISE_TIME 0.3
+// Rand amplitude value (does not change anything)
+#define RND_AMPL 50
 
 
 // !LED strip controller defines

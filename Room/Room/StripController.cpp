@@ -132,7 +132,7 @@ void StripController::update (float dt)
             }
         case night:
             {
-            float dt = float (millis () - night_activation_time);
+            float dt = float (millis () - mode_activation_time);
             float full_time = float (NIGHT_FADE_TIME) * 60.f * 1000.f;
             float brightness = float (NIGHT_BRIGHTNESS_MAX)*
                                float (1.f -  (dt/full_time));
@@ -143,7 +143,82 @@ void StripController::update (float dt)
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, int (brightness));
 
+            break;
             }
+        case RVD:
+            {
+            float dt = float (millis () - mode_activation_time);
+            float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
+            float brightness = float (MAX_BRIGHTNESS)*
+                               float ((dt / full_time));
+            
+            if (brightness > 255)
+                {
+                brightness = 255;
+
+                // Just for stabillity
+                for (int i = 0; i < N_LEDS_SEC_0; i++)
+                    leds_main [i] = CRGB::Blue;
+                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
+                    leds_main [i] = CRGB::Red;
+                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
+                    leds_main [i] = CRGB (40, 0, 255);
+                }
+            else
+                {
+                // Section 0
+                for (int i = 0; i < N_LEDS_SEC_0; i += N_LEDS_SUBSEC)
+                    {
+                    CRGB subsec_color = CRGB (0, 0, brightness);
+
+                    int rnd_val = rand () % RND_AMPL;
+                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                        subsec_color = CRGB (0, 0, 0);
+
+                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                        {
+                        if (i + j >= N_LEDS_MAIN)
+                            break;
+                        leds_main [i + j] = subsec_color;
+                        }
+                    }
+                // Section 1
+                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i += N_LEDS_SUBSEC)
+                    {
+                    CRGB subsec_color = CRGB (brightness, 0, 0);
+
+                    int rnd_val = rand () % RND_AMPL;
+                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                        subsec_color = CRGB (0, 0, 0);
+
+                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                        {
+                        if (i + j >= N_LEDS_SEC_0 + N_LEDS_SEC_1)
+                            break;
+                        leds_main [i + j] = subsec_color;
+                        }
+                    }
+                // Section 2
+                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i += N_LEDS_SUBSEC)
+                    {
+                    CRGB subsec_color = CRGB (brightness / 10, 0, brightness);
+
+                    int rnd_val = rand () % RND_AMPL;
+                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                        subsec_color = CRGB (0, 0, 0);
+
+                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                        {
+                        if (i + j >= N_LEDS_MAIN)
+                            break;
+                        leds_main [i + j] = subsec_color;
+                        }
+                    }
+                }
+            
+            break;
+            }
+
         default:
             break;
         }
@@ -280,9 +355,7 @@ void StripController::setMode (byte newMode)
     switchedColorFlag = false;
     mode = newMode;
 
-    if (mode == mainStripMode::night)
-        night_activation_time = millis ();
-
+    mode_activation_time = millis ();
     }
 void StripController::setTableMode (byte newMode)
     {
