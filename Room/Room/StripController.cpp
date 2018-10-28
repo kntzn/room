@@ -322,8 +322,17 @@ void StripController::update (float dt)
             {
             for (int i = 0; i < N_LEDS_TABLE / 2; i++)
                 {
-                float brightness = frequency_full [int (i * SPECTRUM_SIZE / (N_LEDS_TABLE/2))];
-                leds_table [N_LEDS_TABLE / 2 - i - 1] = CHSV (freq_full_rainbow_offset + freq_full_rainbow_freq * i / (N_LEDS_TABLE / 2), 255, brightness);
+                int curr_pos_freq_array = int (i * SPECTRUM_SIZE / (N_LEDS_TABLE / 2));
+
+                float brightness = frequency_full [curr_pos_freq_array];
+
+                if (curr_pos_freq_array != 0 && curr_pos_freq_array != SPECTRUM_SIZE - 1)
+                    {
+                    }
+                
+                int HUE = freq_full_rainbow_offset + freq_full_rainbow_freq * i / (N_LEDS_TABLE / 2);
+
+                leds_table [N_LEDS_TABLE / 2 - i - 1] = CHSV (HUE, 255, brightness);
                 
                 leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
                 }

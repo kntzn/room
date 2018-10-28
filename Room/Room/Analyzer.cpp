@@ -68,15 +68,15 @@ void Analyzer::analyzer ()
     // Makes the output smoother
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         {
-        freq [i] = fht_log_out [i];
-        
+        //freq [i] = fht_log_out [i];
+        freq [i] = SMOOTH_FREQ*freq [i] + (1.f - SMOOTH_FREQ)*(fht_log_out [i]);
         }
-        //freq [i] = SMOOTH_FREQ*freq [i] + (1.f - SMOOTH_FREQ)*(fht_log_out [i]);
+        
 
     
     }
 
-uint8_t * Analyzer::getFreqValues ()
+float * Analyzer::getFreqValues ()
     {
     return freq;
     }

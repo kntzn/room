@@ -47,7 +47,7 @@ class Analyzer
         float averVolume = 0.f;
 
         // Raw frequencies array
-        uint8_t freq [SPECTRUM_SIZE] = {};
+        float freq [SPECTRUM_SIZE] = {};
         // Raw frequencies types array
         float freq_peaks [SPECTRUM_SIZE] = {};
 
@@ -93,7 +93,7 @@ class Analyzer
             {
             return VU_out;
             }
-        uint8_t* getFreqValues ();
+        float* getFreqValues ();
 
         // --------------COMMUNICATION-------------
     };

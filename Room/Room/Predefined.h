@@ -109,7 +109,7 @@
 // Minimum loudness of frequency
 #define LOW_PASS_FREQ 28
 // Smoothness of the output
-#define SMOOTH_FREQ 0.7f
+#define SMOOTH_FREQ 0.5f
 
 // Spectrum size
 #define SPECTRUM_SIZE 32

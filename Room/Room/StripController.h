@@ -102,7 +102,7 @@ class StripController
 
         // frequences arrays
         float frequency_3 [3] = {};
-        float frequency_full [3] = {};
+        float frequency_full [SPECTRUM_SIZE] = {};
 
     public:
         // ----------------------------------------

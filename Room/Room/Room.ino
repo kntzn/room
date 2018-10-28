@@ -27,8 +27,8 @@ int main ()
     controller.setPaletteSpeed (20.f);
     controller.setRainbowSpeed (0.1f);
     controller.setRainbowFrequency (0.5f);
-    controller.setFreqModeRainFreq (10.f);
-    controller.setFreqModeRainOffset (HUE_GREEN);
+    controller.setFreqModeRainFreq (20.f);
+    controller.setFreqModeRainOffset (HUE_AQUA);
     controller.setColor (CRGB::DeepPink);
 
     Analyzer analyzer;
