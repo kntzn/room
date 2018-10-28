@@ -27,7 +27,6 @@
 // ----------------------------------------
 
 
-
 // HSV parameters
 #define MAX_BRIGHTNESS 255
 #define MAX_SATURATION 255
@@ -88,7 +87,6 @@
 #define JACK_INPUT A3
 #define JACK_INPUT_FREQ A2
 // ----------------------------------------
-
 // VU meter parameters
 
 // Ratio of max volume and average volume
@@ -104,8 +102,14 @@
 // Maxumum value of volume after being powered
 #define VU_OUT_MAX pow (ANALOG_VU_MAX, EXP)
 // ----------------------------------------
-
 // frequences analyzer's parameters
+
+// Filter's parameters
+
+// Minimum loudness of frequency
+#define LOW_PASS_FREQ 28
+// Smoothness of the output
+#define SMOOTH_FREQ 0.7f
 
 // Spectrum size
 #define SPECTRUM_SIZE 32

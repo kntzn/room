@@ -32,8 +32,7 @@ int main ()
     controller.setColor (CRGB::DeepPink);
 
     Analyzer analyzer;
-    //analyzer.calibrateLowPass ();
-
+    
     float prev_t = float (millis ());
 
     while (true)
@@ -43,7 +42,10 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
 
+
+        analyzer.update ();
         float output [SPECTRUM_SIZE] = {};
+
 
         uint8_t max = 0;
         for (int i = 2; i < SPECTRUM_SIZE; i++)
@@ -53,9 +55,7 @@ int main ()
         for (int i = 2; i < SPECTRUM_SIZE; i++)
             output [i] = float (FREQ_MAX)*float (analyzer.getFreqValues () [i]) / float (max);
 
-        Serial.println (max);
-
-        analyzer.update ();
+        
         controller.setFreqValues (output);
 
         // Strip controller

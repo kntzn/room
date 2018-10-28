@@ -59,25 +59,26 @@ int Analyzer::VUmeter ()
 void Analyzer::analyzer ()
     {
     analyzeAudio ();
-    }
+    
+    // Filters the output of FHT
+    for (int i = 0; i < SPECTRUM_SIZE; i++)
+        if (fht_log_out [i] < LOW_PASS_FREQ)
+            fht_log_out [i] = 0;
+    
+    // Makes the output smoother
+    for (int i = 0; i < SPECTRUM_SIZE; i++)
+        {
+        freq [i] = fht_log_out [i];
+        
+        }
+        //freq [i] = SMOOTH_FREQ*freq [i] + (1.f - SMOOTH_FREQ)*(fht_log_out [i]);
 
-void Analyzer::calibrateLowPass ()
-    {
-    analyzeAudio ();
-
-    uint8_t max = 0;
-    for (int i = 3; i < SPECTRUM_SIZE; i++)
-        if (fht_log_out [i] > max)
-            max = fht_log_out [i];
-
-    low_pass_filter_FREQ = max;
-
-    //Serial.println (low_pass_filter_FREQ);
+    
     }
 
 uint8_t * Analyzer::getFreqValues ()
     {
-    return fht_log_out;
+    return freq;
     }
 
 void Analyzer::analyzeAudio () 
@@ -100,7 +101,4 @@ void Analyzer::analyzeAudio ()
     // Getting the output of the FHT
     fht_mag_log (); 
 
-    for (int i = 0; i < SPECTRUM_SIZE; i++)
-        if (fht_log_out [i] < 24)
-            fht_log_out [i] = 0;
     }

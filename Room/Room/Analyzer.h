@@ -35,9 +35,7 @@ class Analyzer
         byte source = headphones;
         // level of noise if VU mode
         int low_pass_filter_VU = 0;
-        // level of noise in freq mode
-        int low_pass_filter_FREQ = 0;
-
+        
         // ----------------------------------------
         // Internal values
         
@@ -49,7 +47,7 @@ class Analyzer
         float averVolume = 0.f;
 
         // Raw frequencies array
-        float freq [SPECTRUM_SIZE] = {};
+        uint8_t freq [SPECTRUM_SIZE] = {};
         // Raw frequencies types array
         float freq_peaks [SPECTRUM_SIZE] = {};
 
@@ -91,8 +89,6 @@ class Analyzer
         void analyzer ();
         
         // ----------SETTERS and GETTERS-----------
-        void calibrateLowPass ();
-
         int getVUout ()
             {
             return VU_out;
