@@ -218,7 +218,21 @@ void StripController::update (float dt)
             
             break;
             }
+        case rise:
+            {
+            float dt = float (millis () - mode_activation_time);
+            float full_time = float (RISE_MODE_RISE_TIME) * 60.f * 1000.f;
+            float brightness = float (RISE_BRIGHTNESS_MAX)*
+                float (dt / full_time);
 
+            if (brightness < 0)
+                brightness = 0;
+
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                leds_main [i] = CHSV (RISE_COLOR, MAX_SATURATION, int (brightness));
+
+            break;
+            }
         default:
             break;
         }

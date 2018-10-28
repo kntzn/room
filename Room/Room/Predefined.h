@@ -72,6 +72,13 @@
 // Rand amplitude value (does not change anything)
 #define RND_AMPL 50
 
+// Rise mode color
+#define RISE_COLOR HUE_ORANGE
+// Rise mode rise time (min)
+#define RISE_MODE_RISE_TIME 2
+// Max brightness of night mode strip
+#define RISE_BRIGHTNESS_MAX 255
+
 
 // !LED strip controller defines
 // ----------------------------------------

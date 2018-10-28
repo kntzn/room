@@ -28,7 +28,8 @@ class StripController
             rainbow_Sine,
             rainbow_HSV,
             night,
-            RVD
+            RVD,
+            rise
             //matrix,
             
             };

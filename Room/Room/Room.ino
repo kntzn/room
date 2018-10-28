@@ -19,6 +19,7 @@ int main ()
 
     pinMode (29, INPUT_PULLUP);
     pinMode (27, INPUT_PULLUP);
+    pinMode (25, INPUT_PULLUP);
 
     // Initialization of strip controller
     StripController controller;
@@ -67,6 +68,11 @@ int main ()
         if (!digitalRead (27))
             {
             controller.setMode (StripController::RVD);
+            controller.setTableMode (StripController::sync);
+            }
+        if (!digitalRead (25))
+            {
+            controller.setMode (StripController::rise);
             controller.setTableMode (StripController::sync);
             }
         
