@@ -225,8 +225,8 @@ void StripController::update (float dt)
             float brightness = float (RISE_BRIGHTNESS_MAX)*
                 float (dt / full_time);
 
-            if (brightness < 0)
-                brightness = 0;
+            if (brightness > MAX_BRIGHTNESS)
+                brightness = MAX_BRIGHTNESS;
 
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 leds_main [i] = CHSV (RISE_COLOR, MAX_SATURATION, int (brightness));
