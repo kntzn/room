@@ -5,10 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Room", "Room\Room.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fht_codec", "..\..\..\..\Documents\Arduino\My Examples\131851451120411005\fht_codec\fht_codec.vcxproj", "{11FFAEB6-4362-4CEF-B620-49761D9BB114}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fht_adc_serial", "..\..\..\..\Documents\Arduino\My Examples\131851451339595733\fht_adc_serial\fht_adc_serial.vcxproj", "{9F15A0AE-C55A-4CC3-A733-854F8D3EF31D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,14 +15,6 @@ Global
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
-		{11FFAEB6-4362-4CEF-B620-49761D9BB114}.Debug|x86.ActiveCfg = Debug|Win32
-		{11FFAEB6-4362-4CEF-B620-49761D9BB114}.Debug|x86.Build.0 = Debug|Win32
-		{11FFAEB6-4362-4CEF-B620-49761D9BB114}.Release|x86.ActiveCfg = Release|Win32
-		{11FFAEB6-4362-4CEF-B620-49761D9BB114}.Release|x86.Build.0 = Release|Win32
-		{9F15A0AE-C55A-4CC3-A733-854F8D3EF31D}.Debug|x86.ActiveCfg = Debug|Win32
-		{9F15A0AE-C55A-4CC3-A733-854F8D3EF31D}.Debug|x86.Build.0 = Debug|Win32
-		{9F15A0AE-C55A-4CC3-A733-854F8D3EF31D}.Release|x86.ActiveCfg = Release|Win32
-		{9F15A0AE-C55A-4CC3-A733-854F8D3EF31D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -87,12 +87,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Analyzer.h" />
+    <ClInclude Include="LightBulbController.h" />
     <ClInclude Include="Predefined.h" />
     <ClInclude Include="StripController.h" />
     <ClInclude Include="__vm\.Room.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="LightBulbController.cpp" />
     <ClCompile Include="StripController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

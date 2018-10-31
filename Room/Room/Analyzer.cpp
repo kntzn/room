@@ -31,7 +31,8 @@ float Analyzer::measureVol ()
     for (byte i = 0; i < 100; i++)
         {
         int measured = analogRead (source_pin);
-        if (volume < measured) volume = measured;
+        if (volume < measured) 
+            volume = measured;
         }
 
     return volume;
@@ -46,7 +47,7 @@ int Analyzer::VUmeter ()
     volume = constrain (volume, 0, ANALOG_VU_MAX);
 
     // Smoothing filter of volume
-    volume_filt = volume*(1 - SMOOTH_VU) + volume_filt * SMOOTH_VU;
+    volume_filt = volume * (1 - SMOOTH_VU) + volume_filt * SMOOTH_VU;
 
     // Average volume smoothing filter
     averVolume = volume_filt * (1 - AVER_VOLUME_SMOOTH) + averVolume * AVER_VOLUME_SMOOTH;

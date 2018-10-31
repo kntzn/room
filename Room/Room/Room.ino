@@ -4,6 +4,7 @@
  Author:	CODEBOOK
 */
 
+#include "LightBulbController.h"
 #include "Predefined.h"
 
 #include "StripController.h"
