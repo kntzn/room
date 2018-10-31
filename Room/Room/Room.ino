@@ -10,10 +10,14 @@
 #include "StripController.h"
 #include "Analyzer.h"
 
+void initPins ();
+
 int main ()
     {
-    // Microcontroller initiaalization
+    // Microcontroller initialization
     init ();
+    // Pins initialization
+    initPins ();
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
@@ -84,4 +88,19 @@ int main ()
         }
 
     return 0;
+    }
+
+void initPins ()
+    {
+    // Strip controller
+    pinMode (STRIP_DATA_MAIN, OUTPUT);
+    pinMode (STRIP_DATA_TABLE, OUTPUT);
+    // !Strip controller
+
+    // Analyzer
+    pinMode (MIC_INPUT, INPUT);
+    pinMode (MIC_INPUT_FREQ, INPUT);
+    pinMode (JACK_INPUT, INPUT);
+    pinMode (JACK_INPUT_FREQ, INPUT);
+    // !Analyzer
     }

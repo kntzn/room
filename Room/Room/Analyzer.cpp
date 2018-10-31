@@ -4,11 +4,9 @@
 Analyzer::Analyzer ()
     {
     // Increasing measurements frequency
-    
-    pinMode (MIC_INPUT, INPUT);
-    pinMode (MIC_INPUT_FREQ, INPUT);
-    pinMode (JACK_INPUT, INPUT);
-    pinMode (JACK_INPUT_FREQ, INPUT);
+    sbi (ADCSRA, ADPS2);
+    cbi (ADCSRA, ADPS1);
+    sbi (ADCSRA, ADPS0);
     }
 
 void Analyzer::update ()
@@ -77,7 +75,7 @@ void Analyzer::analyzer ()
     
     }
 
-float * Analyzer::getFreqValues ()
+float* Analyzer::getFreqValues ()
     {
     return freq;
     }
