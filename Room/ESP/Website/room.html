@@ -1,105 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        
+	<title>Remote</title>
 
-        <style>
-
-        html 
-            { 
-            font-family: Helvetica;
-            display: inline-block;
-            margin: 0px auto;
-            text-align: center;
-            background-color: #151515;
-            color: white; 
-            }
-
-       .sidenav 
-            {
-            /* 100% Full-height */
-            height: 100%; 
-            
-            /* 0 width - change this with JavaScript */
-            width: 0; 
-
-            /* Stay in place */
-            position: fixed; 
-
-            /* Stay on top */
-            z-index: 1; 
-
-            /* Stay at the top */
-            top: 0; 
-            left: 0;
-
-             /* Black*/
-            background-color: #111;
-
-            /* Disable horizontal scroll */
-            overflow-x: hidden;
-
-            /* Place content 60px from the top */ 
-            padding-top: 60px;
-
-            /* 0.5 second transition effect to slide in the sidenav */ 
-            transition: 0.5s; 
-            }
-
-        .button 
-            {
-            background-color: #195B6A; 
-            border: none; 
-            padding: 16px 40px; 
-            text-decoration: none;
-            font-size: 30px;
-            margin: 2px; 
-            cursor: pointer;
-            color: white; 
-            }
-
-        .button2 
-            {
-            background-color: #77878A;
-            }
-
-            /* The navigation menu links */
-        .sidenav a 
-            {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-            }
-
-        /* When you mouse over the navigation links, change their color */
-        .sidenav a:hover 
-            {
-            color: #f1f1f1;
-            }
-
-        /* Position and style the close button (top right corner) */
-        .sidenav .closebtn 
-            {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-            }
-
-
-        </style>
-
-    </head>
-
+    <link rel="stylesheet"
+        type="text/css"
+        href="stylesheet.css" />
+</head>
 
     <body>
-        <!-- Sidenav setup -->
+        <!--Sidenav setup-->
         <div id ="sideNav" class="sidenav":>
             <a href ="javascript:void(0)"
                 class="closebtn"
@@ -107,35 +19,41 @@
                 &times
             </a>
 
-            <a href ="light.html">Light</a>
-            <a href ="light.html">Light</a>
-            <a href ="light.html">Light</a>
-            <a href ="light.html">Light</a>
+			<a href="room.html" class="selectedButton">&#8962 Home</a>
+			<a href="light.html">Light</a>
+			<a href="light.html">Audio</a>
+			<a href="light.html">Window</a>
+			<a href="light.html">Alarm</a>
 
         </div>
 
         <div id ="main">
-            <h1>ESP8266 Web Server</h1>
+            
+			<!--Button-->
+			<span class="menuBtn" onclick="openNav()">
+				&#9776; Menu
+			</span>
 
-            <p> GPIO 5 - State </p>
 
-            <p>
-	        
-		        <button class ="button" onclick ="openNav()"> 
-                    Menu
-		        </button>
-	        
-            </p>
+			<!--Main title-->
+			<h1>Room remote</h1>
+
+			<hr />
+
+			<p>ESP8266 controlled web remote for smart room</p>
+
         </div>
 
+        <!--Open the sidenav-->
         <script>
-            /* Open the sidenav */
             function openNav() 
                 {
-                document.getElementById("sideNav").style.width = "400px";
+                document.getElementById("sideNav").style.width = "500px";
                 }
-                
-            /* Close/hide the sidenav */
+        </script>
+
+        <!--Hide the sidenav-->
+        <script>
             function closeNav() 
                 {
                 document.getElementById("sideNav").style.width = "0";

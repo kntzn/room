@@ -1,13 +1,87 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        
-    </head>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Light</title>
+
+	<link rel="stylesheet"
+		  type="text/css"
+		  href="stylesheet.css" />
+</head>
+
+<body>
+	<!--Sidenav setup-->
+	<div id="sideNav" class="sidenav"
+		 >
+		<a href="javascript:void(0)"
+		   class="closebtn"
+		   onClick="closeNav ()">
+			&times
+		</a>
+
+		<a href="room.html">&#8962 Home</a>
+		<a href="light.html" class="selectedButton">Light</a>
+		<a href="light.html">Audio</a>
+		<a href="light.html">Window</a>
+		<a href="light.html">Alarm</a>
+
+	</div>
+
+	<div id="main">
 
 
+		<!--Button-->
+		<span class="menuBtn" onclick="openNav()">
+			&#9776; Menu
+		</span>
 
-    <body>
+		<!--Main title-->
+		<h1>Light menu</h1>
 
-    </body>
+		<hr />
+
+		<!--Main title-->
+		<p>
+			<a href="light.html">
+				<button class="defaultButton">
+					LED
+				</button>
+			</a>
+		</p>
+
+		<p>
+			<a href="light.html">
+				<button class="defaultButton">
+					Torchere
+				</button>
+			</a>
+		</p>
+
+		<p>
+			<a href="light.html">
+				<button class="defaultButton">
+					Lamp
+				</button>
+			</a>
+		</p>
+	</div>
+
+
+	<!--Open the sidenav-->
+	<script>
+        function openNav()
+            {
+            document.getElementById("sideNav").style.width = "500px";
+            }
+	
+	    function closeNav()
+            {
+            document.getElementById("sideNav").style.width = "0";
+            }
+	</script>
+
+
+</body>
 
 </html>
