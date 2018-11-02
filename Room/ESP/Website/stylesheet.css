@@ -59,7 +59,7 @@ html
 
 .sidenav a:hover 
     {
-    color:aquamarine;
+    color:#61E1B6;
     }
 
 /* Position and style the close button (top right corner) */
@@ -85,7 +85,7 @@ html
 
 .defaultButton:hover
     {
-    color:aquamarine;
+    color: #61E1B6;
     }
 
 .menuBtn 

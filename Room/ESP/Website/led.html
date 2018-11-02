@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Light</title>
+
+	<link rel="stylesheet"
+		  type="text/css"
+		  href="stylesheet.css" />
+</head>
+
+<body>
+	<!--Sidenav setup-->
+	<div id="sideNav" class="sidenav"
+		 >
+		<a href="javascript:void(0)"
+		   class="closebtn"
+		   onClick="closeNav ()">
+			&times
+		</a>
+
+		<a href="room.html">&#8962 Home</a>
+		<a href="light.html" class="selectedButton">Light</a>
+		<a href="light.html">Audio</a>
+		<a href="light.html">Window</a>
+		<a href="light.html">Alarm</a>
+
+	</div>
+
+	<div id="main">
+
+
+		<!--Button-->
+		<span class="menuBtn" onclick="openNav()">
+			&#9776; Menu
+		</span>
+
+		<!--Main title-->
+		<h1>Light menu</h1>
+
+		<hr />
+
+		<!--Main title-->
+		<p>
+			<a href="led.html">
+				<button class="defaultButton">
+					Color
+				</button>
+			</a>
+		</p>
+
+        <p>
+            <label for="red" style="color:red"> Red</label>
+            <input type="range" id="range_red" name="Red" min="0" max="255" step="1" onchange="sendColor()"/>
+        
+            <label for="green" style="color:green"> Green</label>
+            <input type="range" id="range_green" name="Green" min="0" max="255" step="1" onchange="sendColor()"/>
+        
+            <label for="blue" style="color:blue"> Blue</label>
+            <input type="range" id="range_blue" name="Blue" min="0" max="255" step="1" onchange="sendColor()"/>
+        </p>
+
+        <button class="defaultButton" onclick="sendColor()" id="send">
+            Update
+        </button>
+      
+
+	</div>
+
+
+	<!--Open the sidenav-->
+	<script>
+        function openNav()
+            {
+            document.getElementById("sideNav").style.width = "500px";
+            }
+	
+	    function closeNav()
+            {
+            document.getElementById("sideNav").style.width = "0";
+            }
+	</script>
+
+    
+    <script>
+        var rgbToHex = function (rgb) { 
+            var hex = Number(rgb).toString(16);
+            if (hex.length < 2) {
+                hex = "0" + hex;
+            }
+            return hex;
+        };
+
+        function sendColor()
+            {
+            var r = document.getElementById("range_red");
+            var g = document.getElementById("range_green");
+            var b = document.getElementById("range_blue");
+
+            var currentVal = "/color/" + r.value + "_" + g.value + "_" + b.value;
+
+            document.getElementById("send").style.color = "#"+rgbToHex(r.value)+rgbToHex(g.value)+rgbToHex(b.value);
+
+            //window.location.replace(currentVal);
+            }
+    </script>
+
+
+</body>
+
+</html>
