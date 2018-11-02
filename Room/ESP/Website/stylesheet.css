@@ -1,0 +1,86 @@
+﻿
+        html 
+            { 
+            font-family: Helvetica;
+            display: inline-block;
+            margin: 0px auto;
+            text-align: center;
+            background-color: #151515;
+            color: white; 
+            }
+
+       .sidenav 
+            {
+            /* 100% Full-height */
+            height: 100%; 
+            
+            /* 0 width - change this with JavaScript */
+            width: 0; 
+
+            /* Stay in place */
+            position: fixed; 
+
+            /* Stay on top */
+            z-index: 1; 
+
+            /* Stay at the top */
+            top: 0; 
+            left: 0;
+
+             /* Black*/
+            background-color: #111;
+
+            /* Disable horizontal scroll */
+            overflow-x: hidden;
+
+            /* Place content 60px from the top */ 
+            padding-top: 60px;
+
+            /* 0.5 second transition effect to slide in the sidenav */ 
+            transition: 0.5s; 
+            }
+
+        .button 
+            {
+            background-color: #195B6A; 
+            border: none; 
+            padding: 16px 40px; 
+            text-decoration: none;
+            font-size: 30px;
+            margin: 2px; 
+            cursor: pointer;
+            color: white; 
+            }
+
+        .button2 
+            {
+            background-color: #77878A;
+            }
+
+            /* The navigation menu links */
+        .sidenav a 
+            {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover 
+            {
+            color: #f1f1f1;
+            }
+
+        /* Position and style the close button (top right corner) */
+        .sidenav .closebtn 
+            {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            }
+
