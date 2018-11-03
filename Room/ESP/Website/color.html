@@ -37,33 +37,32 @@
 		</span>
 
 		<!--Main title-->
-		<h1>Led strip menu</h1>
+		<h1>Light menu</h1>
 
 		<hr />
 
-		<!--Buttons-->
-		<p>
-			<a href="color.html">
-				<button class="defaultButton">
-					Color
-				</button>
-			</a>
-		</p>
+        <!--Color sliders-->
+        <h3 id="red_val" style='color:palevioletred'>Red: 127</h3>
+        <input type="range" id="red_sld" style='background-color:palevioletred' min="0" max="255" step="1" onchange="updateTextValue('red_val', 'Red: ' + String(this.value));">
 
+        <h3 id="grn_val" style='color:aquamarine'>Green: 127</h3>
+        <input type="range" id="grn_sld" style='color:palevioletred' min="0" max="255" step="1"  onchange="updateTextValue('grn_val', 'Green: ' + String(this.value));">
+        
+        <h3 id="blu_val" style='color:dodgerblue'>Blue: 127</h3>
+        <input type="range" id="blu_sld" style='color:palevioletred' min="0" max="255" step="1" onchange="updateTextValue('blu_val', 'Blue: ' + String (this.value) );">
+        
+        <!--Update button-->
         <p>
-            <a href="color.html">
-                <button class="defaultButton">
-                    Mode
-                </button>
-            </a>
+            <button class="defaultButton" onclick="sendColor();" id="send">
+                Update
+            </button>
         </p>
-
       
 
 	</div>
 
 
-	<!--Open the sidenav-->
+	<!--Sidenav script-->
 	<script>
         function openNav()
             {
@@ -78,25 +77,15 @@
 
     
     <script>
-        var rgbToHex = function (rgb) { 
-            var hex = Number(rgb).toString(16);
-            if (hex.length < 2) {
-                hex = "0" + hex;
-            }
-            return hex;
-        };
-
         function sendColor()
             {
-            var r = document.getElementById("range_red");
-            var g = document.getElementById("range_green");
-            var b = document.getElementById("range_blue");
+            var r = document.getElementById("red_sld");
+            var g = document.getElementById("grn_sld");
+            var b = document.getElementById("blu_sld");
 
             var currentVal = "/color/" + r.value + "_" + g.value + "_" + b.value;
 
-            // document.getElementById("send").style.color = "#"+rgbToHex(r.value)+rgbToHex(g.value)+rgbToHex(b.value);
-
-            // window.location.replace(currentVal);
+            window.location.replace(currentVal);
         }
 
         function updateTextValue(name, val) {
