@@ -7,6 +7,7 @@ html
     background-color: #151515;
     color: white; 
 	text-align:center;
+    text-decoration: none;
     }
 
 .sidenav 
@@ -82,11 +83,28 @@ html
 	cursor:pointer;
 	margin: 20px;
 	}
-
 .defaultButton:hover
     {
     color: #61E1B6;
     }
+
+
+.powerOffButton 
+	{
+	text-align:center;
+	background-color:transparent;
+	border-color:transparent;
+	color: #ffdddd;
+	font-size:60px; 
+	cursor:pointer;
+    text-decoration: none;
+	}
+.powerOffButton:hover
+	{
+	color: indianred;
+	}
+
+
 
 .menuBtn 
 	{
