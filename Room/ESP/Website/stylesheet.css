@@ -81,7 +81,9 @@ html
 	color: white;
 	font-size:30px; 
 	cursor:pointer;
-	margin: 20px;
+	
+    text-decoration:none;
+    margin: 60px;
 	}
 .defaultButton:hover
     {
@@ -104,17 +106,6 @@ html
 	color: indianred;
 	}
 
-
-
-.menuBtn 
-	{
-	position:absolute;
-	top: 20px;
-	left: 20px;
-	text-align:left; 
-	font-size:30px; 
-	cursor:pointer;
-	}
 
 /* Styles of sliders */
 input[type=range] {

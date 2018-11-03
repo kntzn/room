@@ -28,51 +28,43 @@
 
 	</div>
 
-	<div id="main">
+    <div id="main">
+        <!--Main title-->
+        <h1>Light menu</h1>
 
+        <!--Menu Button-->
+        <span class="defaultButton" onclick="openNav()">
+            &#9776; Menu
+        </span>
 
-		<!--Button-->
-		<span class="menuBtn" onclick="openNav()">
-			&#9776; Menu
-		</span>
+        <hr />
 
-		<!--Main title-->
-		<h1>Light menu</h1>
+        <!--Main title-->
+        <p class="defaultButton">
+            <a href="led.html" class="defaultButton">
+                LED
+            </a>
+        </p>
 
-		<hr />
+        <p class="defaultButton">
+            <a href="led.html" class="defaultButton">
+                Torchere
+            </a>
+        </p>
 
-		<!--Main title-->
-		<p>
-			<a href="led.html">
-				<button class="defaultButton">
-					LED
-				</button>
-			</a>
-		</p>
-
-		<p>
-			<a href="light.html">
-				<button class="defaultButton">
-					Torchere
-				</button>
-			</a>
-		</p>
-
-		<p>
-			<a href="light.html">
-				<button class="defaultButton">
-					Lamp
-				</button>
-			</a>
-		</p>
-	</div>
+        <p class="defaultButton">
+            <a href="led.html" class="defaultButton">
+                Lamp
+            </a>
+        </p>
+    </div>
 
 
 	<!--Open the sidenav-->
 	<script>
         function openNav()
             {
-            document.getElementById("sideNav").style.width = "500px";
+            document.getElementById("sideNav").style.width = "100%";
             }
 	
 	    function closeNav()

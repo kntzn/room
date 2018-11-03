@@ -29,32 +29,26 @@
 	</div>
 
 	<div id="main">
-
-
-		<!--Button-->
-		<span class="menuBtn" onclick="openNav()">
-			&#9776; Menu
-		</span>
-
-		<!--Main title-->
+    	<!--Main title-->
 		<h1>Led strip menu</h1>
+
+        <!--Menu Button-->
+        <span class="defaultButton" onclick="openNav()">
+            &#9776; Menu
+        </span>
 
 		<hr />
 
 		<!--Buttons-->
-		<p>
-			<a href="color.html">
-				<button class="defaultButton">
-					Color
-				</button>
+		<p class="defaultButton">
+			<a href="color.html" class="defaultButton">
+				Color
 			</a>
 		</p>
 
-        <p>
-            <a href="color.html">
-                <button class="defaultButton">
-                    Mode
-                </button>
+        <p class="defaultButton">
+            <a href="color.html" class="defaultButton">
+                Mode
             </a>
         </p>
 
@@ -63,22 +57,24 @@
 	</div>
 
 
-	<!--Open the sidenav-->
-	<script>
-        function openNav()
-            {
-            document.getElementById("sideNav").style.width = "500px";
-            }
-	
-	    function closeNav()
+    <!--Open the sidenav-->
+    <script>
+            function openNav()
+                {
+                document.getElementById("sideNav").style.width = "100%";
+                }
+    </script>
+
+    <!--Hide the sidenav-->
+    <script>
+        function closeNav()
             {
             document.getElementById("sideNav").style.width = "0";
-            }
-	</script>
-
+        }
+    </script>
     
     <script>
-        var rgbToHex = function (rgb) { 
+        var rgbToHex = function (rgb) {
             var hex = Number(rgb).toString(16);
             if (hex.length < 2) {
                 hex = "0" + hex;

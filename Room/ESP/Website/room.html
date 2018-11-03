@@ -9,26 +9,9 @@
         type="text/css"
         href="stylesheet.css" />
 
-    <script>
-        function startTime() {
-            var today = new Date();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            m = checkTime(m);
-            s = checkTime(s);
-            document.getElementById('txt').innerHTML =
-            h + ":" + m;
-            var t = setTimeout(startTime, 500);
-        }
-        function checkTime(i) {
-            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-            return i;
-        }
-    </script>
 </head>
 
-    <body onload="startTime()">
+    <body>
 
         <!--Sidenav setup-->
         <div id ="sideNav" class="sidenav":>
@@ -46,18 +29,17 @@
 
         </div>
 
-        <div id="txt" class="defaultButton" style="position:absolute; right: 0px; top: 0px"></div>
-
-
         <div id ="main">
-			<!--Button-->
-			<span class="menuBtn" onclick="openNav()">
-				&#9776; Menu
-			</span>
-
+			
 			<!--Main title-->
 			<h1>Room remote</h1>
-			<hr />
+
+            <!--Menu Button-->
+            <span class="defaultButton" onclick="openNav()">
+                &#9776; Menu
+            </span>
+            
+            <hr style="margin:20px"/>
 			<h2 style="margin: 40px">
                 Web remote for smart room
             </h2>
@@ -76,7 +58,7 @@
         <script>
             function openNav() 
                 {
-                document.getElementById("sideNav").style.width = "500px";
+                document.getElementById("sideNav").style.width = "100%";
                 }
         </script>
 

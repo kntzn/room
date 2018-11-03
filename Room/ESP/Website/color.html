@@ -29,15 +29,13 @@
 	</div>
 
 	<div id="main">
-
-
-		<!--Button-->
-		<span class="menuBtn" onclick="openNav()">
-			&#9776; Menu
-		</span>
-
 		<!--Main title-->
 		<h1>Light menu</h1>
+
+        <!--Menu Button-->
+        <span class="defaultButton" onclick="openNav()">
+            &#9776; Menu
+        </span>
 
 		<hr />
 
@@ -62,18 +60,21 @@
 	</div>
 
 
-	<!--Sidenav script-->
-	<script>
-        function openNav()
-            {
-            document.getElementById("sideNav").style.width = "500px";
-            }
-	
-	    function closeNav()
-            {
-            document.getElementById("sideNav").style.width = "0";
-            }
-	</script>
+    <!--Open the sidenav-->
+    <script>
+            function openNav()
+                {
+                document.getElementById("sideNav").style.width = "100%";
+                }
+    </script>
+
+    <!--Hide the sidenav-->
+    <script>
+            function closeNav()
+                {
+                document.getElementById("sideNav").style.width = "0";
+                }
+    </script>
 
     
     <script>
