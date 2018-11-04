@@ -47,13 +47,13 @@
         </p>
 
         <p class="defaultButton">
-            <a href="light_led.html" class="defaultButton">
+            <a href="light_led.html" class="defaultButton" onclick="sendTorchere()">
                 Torchere
             </a>
         </p>
 
         <p class="defaultButton">
-            <a href="light_led.html" class="defaultButton">
+            <a href="light_led.html" class="defaultButton" onclick="sendLamp()">
                 Lamp
             </a>
         </p>
@@ -70,7 +70,16 @@
 	    function closeNav()
             {
             document.getElementById("sideNav").style.width = "0";
-            }
+	        }
+
+	    function sendLamp()
+	        {
+	        window.location.replace("/lamp");
+	        }
+	    function sendTorchere()
+	        {
+	        window.location.replace("/torchere");
+	        }
 	</script>
 
 

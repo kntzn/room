@@ -40,35 +40,28 @@
 		<hr />
 
         <!--Color sliders-->
-        <select class="defaultDrop" id="modeDrop">
-            <option value="0">Off</option>
-            <option value="1">Sync</option>
-            <option value="2">VU</option>
-            <option value="3">VU rainbow</option>
-            <option value="4">Analyzer/3</option>
-            <option value="4">Analyzer/5</option>
-            <option value="4">Analyzer/32</option>
-        </select>
-        
+        <h3 id="spd_val">Speed: 0.1 r/s</h3>
+        <input type="range" id="spd_sld" min="-0.25" max="0.25" step="0.01" value="0.1" onchange="updateTextValue('spd_val', 'Speed: ' + String(this.value) + ' r/s');">
+
         <!--Update button-->
         <br />
-        <button class="defaultButton" onclick="sendMode();" id="send">
+        <button class="defaultButton" onclick="sendValue();" id="send">
             &#x2713 Update
         </button>
-        
+      
+
 	</div>
 
 
-    <!--Open the sidenav-->
+    <!--Handles the sidenav-->
     <script>
+            // Open the sidenav
             function openNav()
                 {
                 document.getElementById("sideNav").style.width = "100%";
                 }
-    </script>
-
-    <!--Hide the sidenav-->
-    <script>
+    
+            // Hide the sidenav
             function closeNav()
                 {
                 document.getElementById("sideNav").style.width = "0";
@@ -77,11 +70,11 @@
 
     
     <script>
-        function sendMode()
+        function sendValue()
             {
-            var drop = document.getElementById("modeDrop");
-            
-            var currentVal = "/table_led_mode/" + drop.value;
+            var spd = document.getElementById("spd_sld");
+
+            var currentVal = "/speed/" + spd.value * 100;
 
             window.location.replace(currentVal);
             }

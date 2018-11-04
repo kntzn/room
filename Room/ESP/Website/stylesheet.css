@@ -33,6 +33,7 @@ html
 
         /* Black*/
     background-color: #111111;
+    background-image: linear-gradient(#111111, #000000);
 
     /* Disable horizontal scroll */
     overflow-x: hidden;
@@ -40,8 +41,8 @@ html
     /* Place content 60px from the top */ 
     padding-top: 60px;
 
-    /* 0.5 second transition effect to slide in the sidenav */ 
-    transition: 0.5s; 
+    /* 0.6 second transition effect to slide in the sidenav */ 
+    transition: 0.6s; 
     }
 
 /* The navigation menu links */
@@ -131,7 +132,7 @@ html
 /* Styles of cross-platform sliders */
 input[type=range] {
   -webkit-appearance: none;
-  width: 200px;
+  width: 400px;
   margin: 0.8px 0;
 }
 input[type=range]:focus {
@@ -161,7 +162,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   background: #8d8d8d;
 }
 input[type=range]::-ms-track {
-  width: 100%;
+  width: 400px;
   height: 8.4px;
   cursor: pointer;
   background: transparent;
