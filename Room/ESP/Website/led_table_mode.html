@@ -42,9 +42,12 @@
         <!--Color sliders-->
         <select class="defaultDrop" id="modeDrop">
             <option value="0">Off</option>
-            <option value="1">Mono</option>
-            <option value="2">Fade</option>
-            <option value="3">Fade and switch</option>
+            <option value="1">Sync</option>
+            <option value="2">VU</option>
+            <option value="3">VU rainbow</option>
+            <option value="4">Analyzer/3</option>
+            <option value="4">Analyzer/5</option>
+            <option value="4">Analyzer/32</option>
         </select>
         
         <!--Update button-->
@@ -52,8 +55,7 @@
         <button class="defaultButton" onclick="sendMode();" id="send">
             &#x2713 Update
         </button>
-      
-
+        
 	</div>
 
 
@@ -79,7 +81,7 @@
             {
             var drop = document.getElementById("modeDrop");
             
-            var currentVal = "/led_mode/" + drop.value;
+            var currentVal = "/table_led_mode/" + drop.value;
 
             window.location.replace(currentVal);
         }
