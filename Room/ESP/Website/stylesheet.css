@@ -1,4 +1,4 @@
-﻿
+﻿/* Common */
 html 
     { 
     font-family: Helvetica;
@@ -10,6 +10,7 @@ html
     text-decoration: none;
     }
 
+/* The navigation menu */
 .sidenav 
     {
     /* 100% Full-height */
@@ -41,13 +42,7 @@ html
     transition: 0.5s; 
     }
 
-.selectedButton
-	{
-	background-color: #080808;
-	color: #dddddd;
-	}
-
-    /* The navigation menu links */
+/* The navigation menu links */
 .sidenav a 
     {
     padding: 8px 8px 8px 32px;
@@ -57,11 +52,16 @@ html
     display: block;
     transition: 0.3s;
     }
-
 .sidenav a:hover 
     {
     color:#61E1B6;
     }
+.selectedButton
+	{
+	background-color: #080808;
+	color: #dddddd;
+	}
+
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn 
@@ -73,6 +73,7 @@ html
     margin-left: 50px;
     }
 
+/* Style of default button (link) */
 .defaultButton 
 	{
 	text-align:center;
@@ -83,14 +84,33 @@ html
 	cursor:pointer;
 	
     text-decoration:none;
-    margin: 60px;
+    margin: 10px;
 	}
 .defaultButton:hover
     {
     color: #61E1B6;
     }
 
+/* Style of drop down items */
+.defaultDrop 
+	{
+	text-align:center;
+	background-color: #151515;
+	border-color:transparent;
+	color: white;
+	font-size:30px; 
+	cursor:pointer;
+	
+    text-decoration:none;
+    margin: 10px;
+	}
+.defaultDrop:hover 
+    {
+    
+    color:aquamarine;
+    }
 
+/* Style of reset/power off button */
 .powerOffButton 
 	{
 	text-align:center;
@@ -107,7 +127,7 @@ html
 	}
 
 
-/* Styles of sliders */
+/* Styles of cross-platform sliders */
 input[type=range] {
   -webkit-appearance: none;
   width: 200px;

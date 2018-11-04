@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Light</title>
+
+	<link rel="stylesheet"
+		  type="text/css"
+		  href="stylesheet.css" />
+</head>
+
+<body>
+	<!--Sidenav setup-->
+	<div id="sideNav" class="sidenav"
+		 >
+		<a href="javascript:void(0)"
+		   class="closebtn"
+		   onClick="closeNav ()">
+			&times
+		</a>
+
+		<a href="room.html">&#8962 Home</a>
+		<a href="light.html" class="selectedButton">Light</a>
+		<a href="light.html">Audio</a>
+		<a href="light.html">Window</a>
+		<a href="light.html">Alarm</a>
+
+	</div>
+
+	<div id="main">
+		<!--Main title-->
+		<h1>Light menu</h1>
+
+        <!--Menu Button-->
+        <span class="defaultButton" onclick="openNav()">
+            &#9776; Menu
+        </span>
+
+		<hr />
+
+        <!--Color sliders-->
+        <select class="defaultDrop" id="modeDrop">
+            <option value="0">Off</option>
+            <option value="1">Mono</option>
+            <option value="2">Fade</option>
+            <option value="3">Fade and switch</option>
+        </select>
+        
+        <!--Update button-->
+        <p>
+            <button class="defaultButton" onclick="sendMode();" id="send">
+                Update
+            </button>
+        </p>
+      
+
+	</div>
+
+
+    <!--Open the sidenav-->
+    <script>
+            function openNav()
+                {
+                document.getElementById("sideNav").style.width = "100%";
+                }
+    </script>
+
+    <!--Hide the sidenav-->
+    <script>
+            function closeNav()
+                {
+                document.getElementById("sideNav").style.width = "0";
+                }
+    </script>
+
+    
+    <script>
+        function sendMode()
+            {
+            var drop = document.getElementById("modeDrop");
+            
+            var currentVal = "/led_mode/" + drop.value;
+
+            window.location.replace(currentVal);
+        }
+
+        function updateTextValue(name, val) {
+            document.getElementById(name).innerHTML = val;
+        }
+    </script>
+
+
+</body>
+
+</html>
