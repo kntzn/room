@@ -3,8 +3,10 @@ html
     { 
     font-family: Helvetica;
     display: inline-block;
-    margin: 0px auto;
+    margin: 0px;
     background-color: #151515;
+    height: 100%;
+    background-image: linear-gradient(#151515, #000000);
     color: white; 
 	text-align:center;
     text-decoration: none;
@@ -125,7 +127,6 @@ html
 	{
 	color: indianred;
 	}
-
 
 /* Styles of cross-platform sliders */
 input[type=range] {
