@@ -77,10 +77,6 @@ void Analyzer::analyzer (float dt)
         else
             freq [i] = 0;
         }
-        
-
-
-    
     }
 
 float* Analyzer::getFreqValues ()

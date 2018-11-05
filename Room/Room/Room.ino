@@ -4,10 +4,9 @@
  Author:	CODEBOOK
 */
 
-#include "LightBulbController.h"
+#include "LightController.h"
 #include "Predefined.h"
 
-#include "StripController.h"
 #include "Analyzer.h"
 
 void initPins ();
@@ -29,7 +28,7 @@ int main ()
     // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_HSV);
-    controller.setTableMode (StripController::FREQ_FULL);
+    controller.setTableMode (StripController::sync);
     controller.setPaletteSpeed (20.f);
     controller.setRainbowSpeed (-0.05f);
     controller.setRainbowFrequency (1.f);

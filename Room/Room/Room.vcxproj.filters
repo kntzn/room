@@ -33,6 +33,9 @@
     <ClInclude Include="LightBulbController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LightController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StripController.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LightBulbController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

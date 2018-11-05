@@ -148,6 +148,18 @@
 // ----------------------------------------
 
 // ----------------------------------------
+// Light controller defines
+
+// Pinout
+#define RELAY_LAMP 31
+#define RELAY_TORCHERE 33
+
+// !Light controller defines
+// ----------------------------------------
+
+
+
+// ----------------------------------------
 // Other
 #define BAUD_RATE_SERIAL 9600
 // !Other
