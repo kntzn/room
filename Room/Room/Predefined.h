@@ -124,6 +124,9 @@
 // Max output of frequences analyzer
 #define FREQ_MAX 1000
 
+
+// Lowest frequency
+#define LOWEST 2
 // Number of low freqs
 #define N_LOW 6
 // Number of mid freqs

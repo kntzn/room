@@ -74,6 +74,22 @@ void Analyzer::analyzer (float dt)
         else
             freq [i] = 0;
         }
+
+    // Maps the frequencies loudness to FREQ_MAX level
+    float max = getMaxFreq ();
+    if (max)
+        for (int i = 0; i < SPECTRUM_SIZE; i++)
+            freq [i] *= float (FREQ_MAX) / max;
+    }
+
+float Analyzer::getMaxFreq ()
+    {
+    float max = 0;
+    for (int i = LOWEST; i < SPECTRUM_SIZE; i++)
+        if (fht_log_out [i] > uint8_t (max))
+            max = float (fht_log_out [i]);
+        
+    return max;
     }
 
 float* Analyzer::getFreqValues ()

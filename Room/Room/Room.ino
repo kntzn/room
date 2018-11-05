@@ -46,23 +46,10 @@ int main ()
         float dt = (float (millis ()) - prev_t)/1000.f;
         prev_t += dt*1000.f;
         // !Clock
-        Serial.println (dt);
-
+        
         // Analyzer
         analyzer.update (dt);
-        float output [SPECTRUM_SIZE] = {};
-
-
-        uint8_t max = 0;
-        for (int i = 2; i < SPECTRUM_SIZE; i++)
-            if (analyzer.getFreqValues() [i] > max)
-                max = analyzer.getFreqValues () [i];
-
-        for (int i = 2; i < SPECTRUM_SIZE; i++)
-            output [i] = float (FREQ_MAX)*float (analyzer.getFreqValues () [i]) / float (max);
-
-        
-        controller.setFreqValues (output);
+        controller.setFreqValues (analyzer.getFreqValues ());
         // !Analyzer
 
         // Strip controller

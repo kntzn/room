@@ -76,6 +76,8 @@ class Analyzer
         // Divides array into 3 types of frequencies and filters it
         void analyzer (float dt);
 
+        float getMaxFreq ();
+
     public:
         // ----------------------------------------
         // Constructor
