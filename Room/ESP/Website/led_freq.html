@@ -30,7 +30,7 @@
 
 	<div id="main">
 		<!--Main title-->
-		<h1>Table mode</h1>
+		<h1>Animation frequency</h1>
 
         <!--Menu Button-->
         <span class="defaultButton" onclick="openNav()">
@@ -40,45 +40,41 @@
 		<hr />
 
         <!--Color sliders-->
-        <select class="defaultDrop" id="modeDrop">
-            <option value="0">Off</option>
-            <option value="1">Sync</option>
-            <option value="2">VU</option>
-            <option value="3">VU rainbow</option>
-            <option value="4">Analyzer/3</option>
-            <option value="4">Analyzer/5</option>
-            <option value="4">Analyzer/32</option>
-        </select>
-        
+        <h3 id="frq_val">Frequency: 1 r/room</h3>
+        <input type="range" id="frq_sld" min="0" max="3" step="0.1" value="1" onchange="updateTextValue('frq_val', 'Frequency: ' + String(this.value) + ' r/room');">
+
         <!--Update button-->
         <br />
-        <button class="defaultButton" onclick="sendMode();" id="send">
+        <button class="defaultButton" onclick="sendValue();" id="send">
             &#x2713 Update
         </button>
-        
+      
+
 	</div>
 
 
-    <!--Open the sidenav-->
+    <!--Handles the sidenav-->
     <script>
+            // Open the sidenav
             function openNav()
                 {
                 document.getElementById("sideNav").style.width = "100%";
                 }
+    
+            // Hide the sidenav
+            function closeNav()
+                {
+                document.getElementById("sideNav").style.width = "0";
+                }
     </script>
 
-    <!--Hide the sidenav-->
+    
     <script>
-        function closeNav()
+        function sendValue()
             {
-            document.getElementById("sideNav").style.width = "0";
-            }
+            var frq = document.getElementById('frq_sld');
 
-        function sendMode()
-            {
-            var drop = document.getElementById("modeDrop");
-            
-            var currentVal = "/table_led_mode/" + drop.value;
+            var currentVal = "/frequency/" + frq.value * 100;
 
             window.location.replace(currentVal);
             }
