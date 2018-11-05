@@ -59,22 +59,10 @@ class Analyzer
         // VU meter output
         int VU_out = 0;
 
-
         // normalized frequencies volume in range [0; 1]
         float freq_filt [SPECTRUM_SIZE] = {};
         // normalized types of frequencies volume in range [0; 1]
         float freq_peaks_filt [3] = {};
-
-    public:
-        // ----------------------------------------
-        // Constructor
-        // Initializes led strips
-        Analyzer ();
-        
-        // ----------------------------------------
-        // Update function
-        // Listens and filter music's volume
-        void update (float dt);
 
         // -----------------UTIL-------------------
         // ----------------------------------------
@@ -87,7 +75,18 @@ class Analyzer
         void analyzeAudio ();
         // Divides array into 3 types of frequencies and filters it
         void analyzer (float dt);
+
+    public:
+        // ----------------------------------------
+        // Constructor
+        // Initializes led strips
+        Analyzer ();
         
+        // ----------------------------------------
+        // Update function
+        // Listens and filter music's volume
+        void update (float dt);
+
         // ----------SETTERS and GETTERS-----------
         int getVUout ()
             {

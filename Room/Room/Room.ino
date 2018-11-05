@@ -48,6 +48,7 @@ int main ()
         // !Clock
         Serial.println (dt);
 
+        // Analyzer
         analyzer.update (dt);
         float output [SPECTRUM_SIZE] = {};
 
@@ -62,6 +63,7 @@ int main ()
 
         
         controller.setFreqValues (output);
+        // !Analyzer
 
         // Strip controller
         if (!digitalRead (29))
@@ -81,7 +83,6 @@ int main ()
             }
         
         controller.update (dt);
-        controller.display ();
         // !Strip coontroller
 
         }

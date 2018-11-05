@@ -105,6 +105,16 @@ class StripController
         float frequency_3 [3] = {};
         float frequency_full [SPECTRUM_SIZE] = {};
 
+        // -----------------UTIL-------------------
+        // ----------------------------------------
+        // Sync function
+        void sync_strips ();
+
+        // ----------------------------------------
+        // Display function
+        // Shows the array
+        void display ();
+
     public:
         // ----------------------------------------
         // Constructor
@@ -115,16 +125,6 @@ class StripController
         // Update function
         // Fills and updates the arrays
         void update (float dt);
-        
-        // ----------------------------------------
-        // Display function
-        // Shows the array
-        void display ();
-
-        // -----------------UTIL-------------------
-        // ----------------------------------------
-        // Sync function
-        void sync_strips ();
 
         // ----------SETTERS and GETTERS-----------
         void setMode (byte newMode);

@@ -365,6 +365,8 @@ void StripController::update (float dt)
         default:
             break;
         }
+
+    display ();
     }
 void StripController::display () 
     { 
