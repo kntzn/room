@@ -29,7 +29,7 @@ int main ()
     // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_Sine);
-    controller.setTableMode (StripController::sync);
+    controller.setTableMode (StripController::FREQ_FULL);
     controller.setPaletteSpeed (20.f);
     controller.setRainbowSpeed (-0.05f);
     controller.setRainbowFrequency (1.f);
@@ -47,7 +47,7 @@ int main ()
         float dt = (float (millis ()) - prev_t)/1000.f;
         prev_t += dt*1000.f;
         // !Clock
-
+        Serial.println (dt);
 
         analyzer.update ();
         float output [SPECTRUM_SIZE] = {};
