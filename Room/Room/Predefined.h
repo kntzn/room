@@ -139,7 +139,7 @@
 // Average frequency volume smoothness
 #define AVER_FREQ_VOLUME_SMOOTH 0.8f
 
-#define FREQ_MODE_FADE_C 5.f
+#define FREQ_MODE_FADE_C 50.f
 
 
 // ----------------------------------------

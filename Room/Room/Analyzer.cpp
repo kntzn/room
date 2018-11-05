@@ -9,13 +9,13 @@ Analyzer::Analyzer ()
     sbi (ADCSRA, ADPS0);
     }
 
-void Analyzer::update ()
+void Analyzer::update (float dt)
     {
     // Measuring the volume
     VU_out = VUmeter ();
 
     // Dividing the sound into freqencies
-    analyzer ();
+    analyzer (dt);
     }
 
 float Analyzer::measureVol ()
@@ -55,7 +55,7 @@ int Analyzer::VUmeter ()
     return constrain (output, 0, ANALOG_VU_MAX);
     }
 
-void Analyzer::analyzer ()
+void Analyzer::analyzer (float dt)
     {
     analyzeAudio ();
     
@@ -72,8 +72,8 @@ void Analyzer::analyzer ()
         
         if (freq [i] < fht_log_out [i])
             freq [i] = fht_log_out [i];
-        else if (freq [i] > FREQ_MODE_FADE_C)
-            freq [i] -= FREQ_MODE_FADE_C;
+        else if (freq [i] > FREQ_MODE_FADE_C*dt)
+            freq [i] -= FREQ_MODE_FADE_C*dt;
         else
             freq [i] = 0;
         }

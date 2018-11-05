@@ -74,7 +74,7 @@ class Analyzer
         // ----------------------------------------
         // Update function
         // Listens and filter music's volume
-        void update ();
+        void update (float dt);
 
         // -----------------UTIL-------------------
         // ----------------------------------------
@@ -85,8 +85,8 @@ class Analyzer
 
         // Divides signal into array of frequencies
         void analyzeAudio ();
-        // Divides array into 3 types of frequencies
-        void analyzer ();
+        // Divides array into 3 types of frequencies and filters it
+        void analyzer (float dt);
         
         // ----------SETTERS and GETTERS-----------
         int getVUout ()
