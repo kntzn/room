@@ -17,6 +17,16 @@
 
 class LightController
     {
+    public:
+        enum modes
+            {
+            off,
+            full,
+            noLed,
+            film,
+            night
+            };
+
     private:
         // Contents
         StripController LED;
@@ -30,6 +40,8 @@ class LightController
         void update (float dt);
 
         void syncWithAnalyzer (Analyzer &analyzer, float dt);
+
+        void setProfile (byte mode);
     };
 
 
