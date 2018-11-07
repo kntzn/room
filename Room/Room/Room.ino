@@ -25,6 +25,7 @@ int main ()
     pinMode (27, INPUT_PULLUP);
     pinMode (25, INPUT_PULLUP);
 
+    /*
     // Initialization of strip controller
     StripController controller;
     controller.setMode (StripController::rainbow_HSV);
@@ -35,7 +36,9 @@ int main ()
     controller.setFreqModeRainFreq (20.f);
     controller.setFreqModeRainOffset (HUE_AQUA);
     controller.setColor (CRGB::DeepPink);
+    */
 
+    LightController controller;
     Analyzer analyzer;
     
     float prev_t = float (millis ());
@@ -49,7 +52,7 @@ int main ()
         
         // Analyzer
         analyzer.update (dt);
-        controller.setFreqValues (analyzer.getFreqValues ());
+        controller.syncWithAnalyzer (analyzer, dt);
         // !Analyzer
 
         // Strip controller

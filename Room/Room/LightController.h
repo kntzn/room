@@ -13,8 +13,9 @@
 #include "StripController.h"
 
 #include "Predefined.h"
+#include "Analyzer.h"
 
-class LedController
+class LightController
     {
     private:
         // Contents
@@ -23,11 +24,12 @@ class LedController
         BulbController Torchere = BulbController (RELAY_TORCHERE);
 
     public:
-        LedController ();
+        LightController ();
 
 
         void update (float dt);
 
+        void syncWithAnalyzer (Analyzer &analyzer, float dt);
     };
 
 

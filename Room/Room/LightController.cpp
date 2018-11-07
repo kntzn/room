@@ -4,13 +4,19 @@
 
 #include "LightController.h"
 
-LedController::LedController ()
+LightController::LightController ()
     {
     }
 
-void LedController::update (float dt)
+void LightController::update (float dt)
     {
     LED.update (dt);
     Lamp.update ();
     Torchere.update ();
+    }
+
+void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)
+    {
+    LED.setFreqValues (analyzer.getFreqValues ());
+    //LED.setFreq3values (analyzer.getFreq3Values ());
     }
