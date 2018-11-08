@@ -71,3 +71,45 @@ void LightController::setProfile (byte mode)
             break;
         }
     }
+
+void LightController::setLedMode (byte newMode)
+    {
+    LED.setMode (newMode);
+    }
+void LightController::setLedTableMode (byte newMode)
+    {
+    LED.setTableMode (newMode);
+    }
+void LightController::setLedColor (CRGB newColor)
+    {
+    LED.setColor (newColor);
+    }
+void LightController::setLedAnimationFrequency (float newFreq)
+    {
+    LED.setRainbowFrequency (newFreq);
+    }
+void LightController::setLedAnimationSpeed (float newSpeed)
+    {
+    LED.setRainbowSpeed (newSpeed);
+    }
+void LightController::setLedAnimationSpeedVU (float newSpeed)
+    {
+    LED.setPaletteSpeed (newSpeed);
+    }
+void LightController::setLedAnalyzerAnimationFrequency (float newFreq)
+    {
+    LED.setFreqModeRainFreq (newFreq);
+    }
+void LightController::setLedAnalyzerAnimationOffset (float newOffset)
+    {
+    LED.setFreqModeRainOffset (newOffset);
+    }
+
+void LightController::setTorchereState (byte newState)
+    {
+    Torchere.setState (newState);
+    }
+void LightController::setLampState (byte newState)
+    {
+    Lamp.setState (newState);
+    }
