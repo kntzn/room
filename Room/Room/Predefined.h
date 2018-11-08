@@ -80,10 +80,10 @@
 #define RISE_BRIGHTNESS_MAX 255
 
 // Time between color switches (min)
-#define OLDSCHOOL_SWITCH_TIME 5.f
+#define OLDSCHOOL_SWITCH_TIME 1.f
 
 // Time of fade and rise while switch (secs)
-#define FADE_SWITCH_TIME 10.f
+#define FADE_SWITCH_TIME 3.f
 
 // Not connected pin used to generate random seed
 #define NC A8

@@ -31,6 +31,7 @@ class StripController
             RVD,
             rise,
             oldschool6,
+            oldschoolRND
             //matrix,
             
             };

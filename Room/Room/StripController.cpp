@@ -233,11 +233,12 @@ void StripController::update (float dt)
 
             break;
             }
+        case oldschoolRND:
         case oldschool6:
             {
             // Fills new color
             if (millis () - mode_activation_time >= OLDSCHOOL_SWITCH_TIME * 60 * 1000)
-                setMode (oldschool6);
+                setMode (mode);
             // Fades new color from black
             else if (millis () - mode_activation_time < FADE_SWITCH_TIME * 1000)
                 {
@@ -273,7 +274,6 @@ void StripController::update (float dt)
 
                 fillSections (sections);
                 }
-
 
             break;
             }
@@ -435,6 +435,11 @@ void StripController::setMode (byte newMode)
         {
         for (int i = 0; i < 3; i++)
             currColor3sections [i] = Wheel ((255 / 6) * (rand () % 6));
+        }
+    else if (newMode == oldschoolRND)
+        {
+        for (int i = 0; i < 3; i++)
+            currColor3sections [i] = Wheel (rand () % 256);
         }
 
     mode_activation_time = millis ();
