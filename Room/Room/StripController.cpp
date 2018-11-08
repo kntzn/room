@@ -237,7 +237,7 @@ void StripController::update (float dt)
         case oldschool6:
             {
             // Fills new color
-            if (millis () - mode_activation_time >= OLDSCHOOL_SWITCH_TIME * 60 * 1000)
+            if (millis () - mode_activation_time >= (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
                 setMode (mode);
             // Fades new color from black
             else if (millis () - mode_activation_time < FADE_SWITCH_TIME * 1000)
@@ -254,12 +254,13 @@ void StripController::update (float dt)
                 fillSections (sections);
                 }
             // Fills current colors
-            else if (millis () - mode_activation_time < float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000))
+            else if (millis () - mode_activation_time < 
+                     float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed)))
                 {
                 fillSections (currColor3sections);
                 
                 }
-            else if (millis () - mode_activation_time < OLDSCHOOL_SWITCH_TIME * 60 * 1000)
+            else if (millis () - mode_activation_time < (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
                 {
                 float percent = 1.f - float (millis () - mode_activation_time - 
                                           (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - 

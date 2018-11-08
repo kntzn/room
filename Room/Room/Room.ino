@@ -34,7 +34,7 @@ int main ()
     controller.setLedMode (StripController::oldschoolRND);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
-    controller.setLedAnimationSpeed (-0.05f);
+    controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (1.f);
     controller.setLedAnalyzerAnimationFrequency (20.f);
     controller.setLedAnalyzerAnimationOffset (HUE_AQUA);
