@@ -233,6 +233,47 @@ void StripController::update (float dt)
 
             break;
             }
+        case oldschool6:
+            {
+            // Fills new color
+            if (millis () - mode_activation_time >= OLDSCHOOL_SWITCH_TIME * 60 * 1000)
+                setMode (oldschool6);
+            // Fades new color from black
+            else if (millis () - mode_activation_time < FADE_SWITCH_TIME * 1000)
+                {
+                float percent = float (millis () - mode_activation_time) / 
+                                float (FADE_SWITCH_TIME * 1000);
+
+                CHSV sections [3] = {};
+                for (int i = 0; i < 3; i++)
+                    sections [i] = CHSV (currColor3sections [i].hue, 
+                                         MAX_SATURATION,
+                                         float (MAX_BRIGHTNESS)*percent);
+                
+                fillSections (sections);
+                }
+            // Fills current colors
+            else if (millis () - mode_activation_time < OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000)
+                fillSections (currColor3sections);
+            else if (millis () - mode_activation_time < OLDSCHOOL_SWITCH_TIME * 60 * 1000)
+                {
+                float percent = 1.f - float (millis () - mode_activation_time - 
+                                          (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - 
+                                          FADE_SWITCH_TIME * 1000)) /
+                                          float (FADE_SWITCH_TIME * 1000);
+
+                CHSV sections [3] = {};
+                for (int i = 0; i < 3; i++)
+                    sections [i] = CHSV (currColor3sections [i].hue,
+                                         MAX_SATURATION,
+                                         float (MAX_BRIGHTNESS)*percent);
+
+                fillSections (sections);
+                }
+
+
+            break;
+            }
         default:
             break;
         }
@@ -386,6 +427,14 @@ void StripController::setMode (byte newMode)
     fadeSwitchColor = CRGB::Red;
     switchedColorFlag = false;
     mode = newMode;
+
+    if (newMode == oldschool6)
+        {
+        for (int i = 0; i < 3; i++)
+            currColor3sections [i] = CHSV (60 * (rand () % 6), 
+                                           MAX_SATURATION,
+                                           MAX_BRIGHTNESS);
+        }
 
     mode_activation_time = millis ();
     }

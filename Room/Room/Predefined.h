@@ -79,6 +79,12 @@
 // Max brightness of night mode strip
 #define RISE_BRIGHTNESS_MAX 255
 
+// Time between color switches (min)
+#define OLDSCHOOL_SWITCH_TIME 0.2f
+
+// Time of fade and rise while switch (secs)
+#define FADE_SWITCH_TIME 3.f
+
 
 // !LED strip controller defines
 // ----------------------------------------

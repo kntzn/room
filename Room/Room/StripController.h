@@ -29,7 +29,8 @@ class StripController
             rainbow_HSV,
             night,
             RVD,
-            rise
+            rise,
+            oldschool6,
             //matrix,
             
             };
@@ -73,6 +74,14 @@ class StripController
         // Color of fade and mono modes
         CRGB currColor = CRGB::Black;
 
+        // Color of sections
+        CHSV currColor3sections [3] = 
+            { 
+            CHSV (0, MAX_SATURATION, 0),
+            CHSV (0, MAX_SATURATION, 0),
+            CHSV (0, MAX_SATURATION, 0)
+            };
+
         // ----------------------------------------
         // Internal Variables
 
@@ -109,6 +118,18 @@ class StripController
         // ----------------------------------------
         // Sync function
         void sync_strips ();
+
+        // Fills sections with their colors
+        void fillSections (CHSV sections [3])
+            {
+            // Paints the sections
+            for (int i = 0; i < N_LEDS_SEC_0; i++)
+                leds_main [i] = sections [0];
+            for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
+                leds_main [i] = sections [1];
+            for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
+                leds_main [i] = sections [2];
+            }
 
         // ----------------------------------------
         // Display function
