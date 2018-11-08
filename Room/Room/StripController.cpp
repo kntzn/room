@@ -244,17 +244,20 @@ void StripController::update (float dt)
                 float percent = float (millis () - mode_activation_time) / 
                                 float (FADE_SWITCH_TIME * 1000);
 
-                CHSV sections [3] = {};
+                CRGB sections [3] = {};
                 for (int i = 0; i < 3; i++)
-                    sections [i] = CHSV (currColor3sections [i].hue, 
-                                         MAX_SATURATION,
-                                         float (MAX_BRIGHTNESS)*percent);
+                    sections [i] = CRGB (currColor3sections [i].r*percent,
+                                         currColor3sections [i].g*percent, 
+                                         currColor3sections [i].b*percent);
                 
                 fillSections (sections);
                 }
             // Fills current colors
             else if (millis () - mode_activation_time < OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000)
+                {
                 fillSections (currColor3sections);
+                
+                }
             else if (millis () - mode_activation_time < OLDSCHOOL_SWITCH_TIME * 60 * 1000)
                 {
                 float percent = 1.f - float (millis () - mode_activation_time - 
@@ -262,11 +265,11 @@ void StripController::update (float dt)
                                           FADE_SWITCH_TIME * 1000)) /
                                           float (FADE_SWITCH_TIME * 1000);
 
-                CHSV sections [3] = {};
+                CRGB sections [3] = {};
                 for (int i = 0; i < 3; i++)
-                    sections [i] = CHSV (currColor3sections [i].hue,
-                                         MAX_SATURATION,
-                                         float (MAX_BRIGHTNESS)*percent);
+                    sections [i] = CRGB (currColor3sections [i].r*percent,
+                                         currColor3sections [i].g*percent,
+                                         currColor3sections [i].b*percent);
 
                 fillSections (sections);
                 }
@@ -431,9 +434,7 @@ void StripController::setMode (byte newMode)
     if (newMode == oldschool6)
         {
         for (int i = 0; i < 3; i++)
-            currColor3sections [i] = CHSV ((255/6) * (rand () % 6), 
-                                           MAX_SATURATION,
-                                           MAX_BRIGHTNESS);
+            currColor3sections [i] = Wheel ((255 / 6) * (rand () % 6));
         }
 
     mode_activation_time = millis ();
