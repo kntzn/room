@@ -253,7 +253,7 @@ void StripController::update (float dt)
                 fillSections (sections);
                 }
             // Fills current colors
-            else if (millis () - mode_activation_time < OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000)
+            else if (millis () - mode_activation_time < float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000))
                 {
                 fillSections (currColor3sections);
                 
