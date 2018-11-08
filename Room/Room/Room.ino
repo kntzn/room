@@ -18,6 +18,9 @@ int main ()
     // Pins initialization
     initPins ();
 
+    // Random initialization
+    srand (analogRead (NC));
+
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
 

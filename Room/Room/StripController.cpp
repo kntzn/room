@@ -431,7 +431,7 @@ void StripController::setMode (byte newMode)
     if (newMode == oldschool6)
         {
         for (int i = 0; i < 3; i++)
-            currColor3sections [i] = CHSV (60 * (rand () % 6), 
+            currColor3sections [i] = CHSV ((255/6) * (rand () % 6), 
                                            MAX_SATURATION,
                                            MAX_BRIGHTNESS);
         }

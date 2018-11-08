@@ -85,6 +85,8 @@
 // Time of fade and rise while switch (secs)
 #define FADE_SWITCH_TIME 3.f
 
+// Not connected pin used to generate random seed
+#define NC A8
 
 // !LED strip controller defines
 // ----------------------------------------
