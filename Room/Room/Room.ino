@@ -4,6 +4,7 @@
  Author:	CODEBOOK
 */
 
+#include "Hbridge.h"
 #include "LightController.h"
 #include "Predefined.h"
 
