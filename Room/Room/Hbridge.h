@@ -12,8 +12,9 @@
 class Hbridge
     {
     private:
-        int speed = 0;
+        bool invert = false;
         byte out0 = 255, out1 = 255;
+        int speed = 0;
 
 
     public:
@@ -23,24 +24,10 @@ class Hbridge
         void setSpeed (int newSpeed);
 
         // Updates the bridge
-        void update ()
-            {
-            if (out0 == 255 || out1 == 255)
-                return;
+        void update ();
 
-            if (speed > 0)
-                {
-                analogWrite (out0, 0);
-                analogWrite (out1, speed);
-                }
-            else if (speed < 0)
-                {
-                analogWrite (out1, 0);
-                analogWrite (out0, -speed);
-                }
-            else
-                speed = 0;
-            }
+        // Reverses the current direction of the bridge
+        void reverse ();    
     };
 
 
