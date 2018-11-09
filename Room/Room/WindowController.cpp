@@ -76,3 +76,10 @@ void WindowController::update ()
     else
         prev_mode = mode;
     }
+
+void WindowController::listenBrightness ()
+    {
+    if (autoMode)
+        {
+        }
+    }

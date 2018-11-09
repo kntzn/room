@@ -177,6 +177,16 @@
 // Time, required to set window in closed position (in secs)
 #define INIT_TIME_TO_OPEN FULL_OPEN_TIME
 
+// Pinout
+#define BRIDGE_0 11
+#define BRIDGE_1 12
+#define LIGHT_SENSOR_OUTSIDE A4
+#define LIGHT_SENSOR_INSIDE A5
+
+// Brightness value update period (sec)
+#define BRIGHTNESS_UPDATE_PERIOD 30
+// Number of measurements
+#define N_MES 100
 
 // !Window
 // ----------------------------------------
