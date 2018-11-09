@@ -168,6 +168,14 @@
 // !Light controller defines
 // ----------------------------------------
 
+// ----------------------------------------
+// Window
+
+// Time, required to set window in closed position (in secs)
+#define INIT_TIME_TO_OPEN 5
+// !Window
+// ----------------------------------------
+
 
 
 // ----------------------------------------
