@@ -28,5 +28,51 @@ void WindowController::update ()
 
     bridge.update ();
     
-    
+    if (dt < FULL_OPEN_TIME)
+        {
+        if (prev_mode == opened)
+            {
+            if (mode == closed_in &&
+                dt < FULL_OPEN_TIME / 2)
+                {
+                bridge.setSpeed (255);
+                }
+            if (mode == closed_out &&
+                dt < FULL_OPEN_TIME / 2)
+                {
+                bridge.setSpeed (-255);
+                }
+            }
+        else if (prev_mode == closed_in &&
+                 dt < FULL_OPEN_TIME)
+            {
+            if (mode == opened &&
+                dt < FULL_OPEN_TIME / 2)
+                {
+                bridge.setSpeed (-255);
+                }
+            if (mode == closed_out &&
+                dt < FULL_OPEN_TIME)
+                {
+                bridge.setSpeed (-255);
+                }
+            }
+        else if (prev_mode == closed_out &&
+                 dt < FULL_OPEN_TIME)
+            {
+            if (mode == opened && dt < FULL_OPEN_TIME / 2)
+                {
+                bridge.setSpeed (255);
+                }
+            if (mode == closed_in && dt < FULL_OPEN_TIME)
+                {
+                bridge.setSpeed (255);
+                }
+            }
+        else
+            bridge.setSpeed (0);
+
+        }
+    else
+        prev_mode = mode;
     }
