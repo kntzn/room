@@ -18,16 +18,28 @@ WindowController::WindowController ()
 
 void WindowController::setMode (byte newMode)    
     {
-    mode_switch = millis ();
-    mode = newMode;
+    if (!autoMode)
+        {
+        mode_switch = millis ();
+        mode = newMode;
+        }
+    }
+
+void WindowController::setAutoMode (bool isAuto)
+    {
+    autoMode = isAuto;
     }
 
 void WindowController::update ()
     {
+    // Time scice mode switch
     unsigned long int dt = millis () - mode_switch;
 
-    bridge.update ();
-    
+    // Updates sensors
+    outside.update ();
+    inside.update ();
+
+    // Bridge logic
     if (dt < FULL_OPEN_TIME)
         {
         if (prev_mode == opened)
@@ -75,11 +87,18 @@ void WindowController::update ()
         }
     else
         prev_mode = mode;
+
+    // Updates the bridge
+    bridge.update ();
     }
 
 void WindowController::listenBrightness ()
     {
     if (autoMode)
         {
+        if (100 + outside.getBrightness () < inside.getBrightness ())
+            mode = closed_in;
+        else
+            mode = opened;
         }
     }

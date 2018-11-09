@@ -65,12 +65,13 @@ class WindowController
         unsigned long int mode_switch = 0;
         BrightnessListener outside = BrightnessListener (LIGHT_SENSOR_OUTSIDE);
         BrightnessListener inside = BrightnessListener (LIGHT_SENSOR_INSIDE);
-        Hbridge bridge = Hbridge (255, 255);
+        Hbridge bridge = Hbridge (BRIDGE_0, BRIDGE_1);
         
     public:
         WindowController ();
 
         void setMode (byte newMode);
+        void setAutoMode (bool isAuto);
 
         void update ();
 
