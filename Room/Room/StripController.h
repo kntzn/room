@@ -121,36 +121,10 @@ class StripController
         void sync_strips ();
 
         // Fills sections with their colors
-        void fillSections (CRGB sections [3])
-            {
-            // Paints the sections
-            for (int i = 0; i < N_LEDS_SEC_0; i++)
-                leds_main [i] = sections [0];
-            for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
-                leds_main [i] = sections [1];
-            for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
-                leds_main [i] = sections [2];
-            }
-
+        void fillSections (CRGB sections [3]);
         
-        CRGB Wheel (byte WheelPos)
-            {
-            WheelPos = 255 - WheelPos;
-            if (WheelPos < 85)
-                {
-                return CRGB (255 - WheelPos * 3, 0, WheelPos * 3);
-                }
-            else if (WheelPos < 170)
-                {
-                WheelPos -= 85;
-                return CRGB (0, WheelPos * 3, 255 - WheelPos * 3);
-                }
-            else
-                {
-                WheelPos -= 170;
-                return CRGB (WheelPos * 3, 255 - WheelPos * 3, 0);
-                }
-            }
+        // HSV HUE to rgb
+        CRGB Wheel (byte WheelPos);
 
         // ----------------------------------------
         // Display function

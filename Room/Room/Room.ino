@@ -38,9 +38,11 @@ int main ()
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (1.f);
-    controller.setLedAnalyzerAnimationFrequency (20.f);
-    controller.setLedAnalyzerAnimationOffset (HUE_AQUA);
+    controller.setLedAnalyzerAnimationFrequency (-50.f);
+    controller.setLedAnalyzerAnimationOffset (HUE_RED);
     controller.setLedColor (CRGB::White);
+    
+    
 
     Analyzer analyzer;
     
