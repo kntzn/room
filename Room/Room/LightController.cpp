@@ -18,6 +18,7 @@ void LightController::update (float dt)
 void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)
     {
     LED.setFreqValues (analyzer.getFreqValues ());
+    LED.setVU_val (analyzer.getVUout ());
     //LED.setFreq3values (analyzer.getFreq3Values ());
     }
 

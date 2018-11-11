@@ -33,14 +33,14 @@ int main ()
     // Initialization of strip
     
     LightController controller;
-    controller.setLedMode (StripController::oldschoolRND);
-    controller.setLedTableMode (StripController::sync);
+    controller.setLedMode (StripController::rainbow_HSV);
+    controller.setLedTableMode (StripController::FREQ_FULL);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (1.f);
     controller.setLedAnalyzerAnimationFrequency (20.f);
     controller.setLedAnalyzerAnimationOffset (HUE_AQUA);
-    controller.setLedColor (CRGB::DeepPink);
+    controller.setLedColor (CRGB::White);
 
     Analyzer analyzer;
     

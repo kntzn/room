@@ -379,6 +379,8 @@ void StripController::update (float dt)
             }
         case FREQ_FULL:
             {
+            Serial.println (frequency_full [6]);
+
             for (int i = 0; i < N_LEDS_TABLE / 2; i++)
                 {
                 int curr_pos_freq_array = int (i * SPECTRUM_SIZE / (N_LEDS_TABLE / 2));
@@ -387,11 +389,11 @@ void StripController::update (float dt)
 
                 if (1 < curr_pos_freq_array && curr_pos_freq_array < SPECTRUM_SIZE - 2 - 1)
                     {
-                    brightness += frequency_full [curr_pos_freq_array + 0] * 0.7;
-                    brightness += frequency_full [curr_pos_freq_array + 1] * 0.1;
-                    brightness += frequency_full [curr_pos_freq_array - 1] * 0.1;
-                    brightness += frequency_full [curr_pos_freq_array + 2] * 0.05;
-                    brightness += frequency_full [curr_pos_freq_array - 2] * 0.05;
+                    brightness += frequency_full [curr_pos_freq_array + 0] * 1.0;
+                    //brightness += frequency_full [curr_pos_freq_array + 1] * 0.1;
+                    //brightness += frequency_full [curr_pos_freq_array - 1] * 0.1;
+                    //brightness += frequency_full [curr_pos_freq_array + 2] * 0.05;
+                    //brightness += frequency_full [curr_pos_freq_array - 2] * 0.05;
                     }
                 else
                     brightness = frequency_full [curr_pos_freq_array];
@@ -402,7 +404,6 @@ void StripController::update (float dt)
                 
                 leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
                 }
-
 
             break;
             }

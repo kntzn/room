@@ -50,6 +50,9 @@ class Analyzer
         float freq [SPECTRUM_SIZE] = {};
         // Raw frequencies types array
         float freq_peaks [SPECTRUM_SIZE] = {};
+        // Mapped and filtered array of frequencies
+        float freq_map [SPECTRUM_SIZE] = {};
+
 
         // The loudest frequency
         float freq_max_filt = 0.f;

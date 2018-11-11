@@ -74,12 +74,6 @@ void Analyzer::analyzer (float dt)
         else
             freq [i] = 0;
         }
-
-    // Maps the frequencies loudness to FREQ_MAX level
-    float max = getMaxFreq ();
-    if (max)
-        for (int i = 0; i < SPECTRUM_SIZE; i++)
-            freq [i] *= float (FREQ_MAX) / max;
     }
 
 float Analyzer::getMaxFreq ()
@@ -94,14 +88,20 @@ float Analyzer::getMaxFreq ()
 
 float* Analyzer::getFreqValues ()
     {
-    return freq;
+    // Maps the frequencies loudness to FREQ_MAX level
+    float max = getMaxFreq ();
+    if (max > 0)
+        for (int i = 0; i < SPECTRUM_SIZE; i++)
+            freq_map [i] = freq [i] * float (FREQ_MAX) / max;
+
+    return freq_map;
     }
 
 void Analyzer::analyzeAudio () 
     {
     byte source_pin = JACK_INPUT_FREQ;
-    //if (source == soundSource::microphone)
-      //  source_pin = MIC_INPUT_FREQ;
+    if (source == soundSource::microphone)
+        source_pin = MIC_INPUT_FREQ;
 
     for (int i = 0; i < FHT_N; i++) 
         {
