@@ -5,6 +5,8 @@ StripController::StripController ()
     {
     LEDS.addLeds <WS2811, STRIP_DATA_MAIN, GRB> (leds_main, N_LEDS_MAIN);
     LEDS.addLeds <WS2811, STRIP_DATA_TABLE, GRB> (leds_table, N_LEDS_TABLE);
+
+    LEDS.setBrightness (50);
     }
 
 // Visuals
@@ -225,12 +227,22 @@ void StripController::update (float dt)
             float brightness = float (RISE_BRIGHTNESS_MAX)*
                 float (dt / full_time);
 
-            if (brightness > MAX_BRIGHTNESS)
-                brightness = MAX_BRIGHTNESS;
+            // RGB color
+            CRGB riseColor = CRGB (CHSV (RISE_COLOR, MAX_SATURATION, MAX_BRIGHTNESS));
+            if (brightness <= RISE_BRIGHTNESS_MAX)
+                riseColor *= (brightness / 255.f);
+            if (brightness <= 2 * RISE_BRIGHTNESS_MAX)
+                {
+                CRGB deltaColor = CRGB (CRGB::White) - riseColor;
+
+                deltaColor *= float (brightness - RISE_BRIGHTNESS_MAX) / 255.f;
+
+                riseColor += deltaColor;
+                }
 
             for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CHSV (RISE_COLOR, MAX_SATURATION, int (brightness));
-
+                leds_main [i] = riseColor;
+            
             break;
             }
         case oldschoolRND:

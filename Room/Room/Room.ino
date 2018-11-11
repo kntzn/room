@@ -34,7 +34,7 @@ int main ()
     
     LightController controller;
     controller.setLedMode (StripController::rainbow_HSV);
-    controller.setLedTableMode (StripController::FREQ_FULL);
+    controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (1.f);

@@ -74,8 +74,8 @@
 
 // Rise mode color
 #define RISE_COLOR HUE_ORANGE
-// Rise mode rise time (min)
-#define RISE_MODE_RISE_TIME 2
+// Rise mode stage rise time (min)
+#define RISE_MODE_RISE_TIME 0.25f
 // Max brightness of night mode strip
 #define RISE_BRIGHTNESS_MAX 255
 
