@@ -92,7 +92,11 @@ float* Analyzer::getFreqValues ()
     float max = getMaxFreq ();
     if (max > 0)
         for (int i = 0; i < SPECTRUM_SIZE; i++)
-            freq_map [i] = freq [i] * float (FREQ_MAX) / max;
+            freq_map [i] = freq [i] * float (FREQ_MAX) / max * 
+                           pow (float (i + 1) / float (SPECTRUM_SIZE), 1.01);
+    else if (max == 0)
+        for (int i = 0; i < SPECTRUM_SIZE; i++)
+            freq_map [i] *= 0.9;
 
     return freq_map;
     }

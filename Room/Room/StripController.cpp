@@ -387,16 +387,8 @@ void StripController::update (float dt)
 
                 float brightness = 0;
 
-                if (1 < curr_pos_freq_array && curr_pos_freq_array < SPECTRUM_SIZE - 2 - 1)
-                    {
-                    brightness += frequency_full [curr_pos_freq_array + 0] * 1.0;
-                    //brightness += frequency_full [curr_pos_freq_array + 1] * 0.1;
-                    //brightness += frequency_full [curr_pos_freq_array - 1] * 0.1;
-                    //brightness += frequency_full [curr_pos_freq_array + 2] * 0.05;
-                    //brightness += frequency_full [curr_pos_freq_array - 2] * 0.05;
-                    }
-                else
-                    brightness = frequency_full [curr_pos_freq_array];
+                
+                brightness = frequency_full [curr_pos_freq_array];
                 
                 int HUE = freq_full_rainbow_offset + freq_full_rainbow_freq * i / (N_LEDS_TABLE / 2);
 
