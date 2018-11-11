@@ -68,7 +68,7 @@ void Analyzer::analyzer (float dt)
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         {
         if (freq [i] < fht_log_out [i])
-            freq [i] = fht_log_out [i];
+            freq [i] += (fht_log_out [i] - freq [i])*0.7;
         else if (freq [i] > FREQ_MODE_FADE_C*dt)
             freq [i] -= FREQ_MODE_FADE_C*dt;
         else
