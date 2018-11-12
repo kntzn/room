@@ -224,18 +224,25 @@ void StripController::update (float dt)
             {
             float dt = float (millis () - mode_activation_time);
             float full_time = float (RISE_MODE_RISE_TIME) * 60.f * 1000.f;
-            float brightness = float (RISE_BRIGHTNESS_MAX)*
+            float brightness = float (RISE_BRIGHTNESS_MAX) *
                 float (dt / full_time);
 
             // RGB color
             CRGB riseColor = CRGB (CHSV (RISE_COLOR, MAX_SATURATION, MAX_BRIGHTNESS));
             if (brightness <= RISE_BRIGHTNESS_MAX)
-                riseColor *= (brightness / 255.f);
+                riseColor = CRGB (riseColor.r * brightness / float (RISE_BRIGHTNESS_MAX),
+                                  riseColor.g * brightness / float (RISE_BRIGHTNESS_MAX),
+                                  riseColor.b * brightness / float (RISE_BRIGHTNESS_MAX));
             if (brightness <= 2 * RISE_BRIGHTNESS_MAX)
                 {
                 CRGB deltaColor = CRGB (CRGB::White) - riseColor;
 
-                deltaColor *= float (brightness - RISE_BRIGHTNESS_MAX) / 255.f;
+                deltaColor = CRGB (deltaColor.r * float (brightness - RISE_BRIGHTNESS_MAX ) /
+                                                  float (RISE_BRIGHTNESS_MAX),
+                                   deltaColor.g * float (brightness - RISE_BRIGHTNESS_MAX) /
+                                                  float (RISE_BRIGHTNESS_MAX),
+                                   deltaColor.b * float (brightness - RISE_BRIGHTNESS_MAX) /
+                                                  float (RISE_BRIGHTNESS_MAX));
 
                 riseColor += deltaColor;
                 }
