@@ -48,12 +48,14 @@ class Analyzer
 
         // Raw frequencies array
         float freq [SPECTRUM_SIZE] = {};
-        // Raw frequencies types array
-        float freq_peaks [SPECTRUM_SIZE] = {};
         // Mapped and filtered array of frequencies
         float freq_map [SPECTRUM_SIZE] = {};
 
-
+        // Raw frequencies types array
+        float freq_peaks [SPECTRUM_SIZE] = {};
+        // Mapped and filtered array of frequencies types
+        float freq3_map [SPECTRUM_SIZE] = {};
+        
         // The loudest frequency
         float freq_max_filt = 0.f;
 
@@ -97,6 +99,7 @@ class Analyzer
             return VU_out;
             }
         float* getFreqValues ();
+        float* getFreq3Values ();
 
         // --------------COMMUNICATION-------------
     };

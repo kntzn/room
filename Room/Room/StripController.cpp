@@ -306,7 +306,7 @@ void StripController::update (float dt)
         default:
             break;
         }
-
+        
     // VU_bright mode sets it's own brightness
     // Otherwise, brightness is maximal
     if (mode != VU_bright)

@@ -125,6 +125,21 @@ float* Analyzer::getFreqValues ()
     return freq_map;
     }
 
+float * Analyzer::getFreq3Values ()
+    {
+    // Maps the frequencies loudness to FREQ_MAX level
+    float max = getMaxFreq ();
+    if (max > 0)
+        for (int i = 0; i < 3; i++)
+            freq3_map [i] = freq_peaks [i] * float (FREQ_MAX) / max *
+            pow (float (i + 1) / float (SPECTRUM_SIZE), 1.01);
+    else if (max == 0)
+        for (int i = 0; i < SPECTRUM_SIZE; i++)
+            freq3_map [i] *= 0.9;
+
+    return freq3_map;
+    }
+
 void Analyzer::analyzeAudio () 
     {
     byte source_pin = JACK_INPUT_FREQ;
