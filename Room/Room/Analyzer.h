@@ -71,12 +71,14 @@ class Analyzer
         // Powers and filters the volume
         int VUmeter ();
 
-        // Divides signal into array of frequencies
+        // Transforms the signal
         void analyzeAudio ();
-        // Divides array into 3 types of frequencies and filters it
+        // Filters transformed signal
         void analyzer (float dt);
-
+        // Gets the loudest frequency value
         float getMaxFreq ();
+        // Fills the array of frequency values
+        void getPeaks ();
 
     public:
         // ----------------------------------------
