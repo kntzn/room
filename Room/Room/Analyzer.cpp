@@ -63,7 +63,26 @@ void Analyzer::analyzer (float dt)
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         if (fht_log_out [i] < LOW_PASS_FREQ)
             fht_log_out [i] = 0;
-    
+
+
+    // Gets maximum of each frequency type
+    for (int i = 0; i < 3; i++)
+        freq_peaks [i] = 0;
+
+    // Lows
+    for (int i = LOWEST; i < LOWEST + N_LOW; i++)
+        if (freq_peaks [0] < fht_log_out [i])
+            freq_peaks [0] = fht_log_out [i];
+    // Mids
+    for (int i = LOWEST + N_LOW; i < LOWEST + N_LOW + N_MID; i++)
+        if (freq_peaks [1] < fht_log_out [i])
+            freq_peaks [1] = fht_log_out [i];
+    // Highs
+    for (int i = LOWEST + N_LOW + N_MID; i < SPECTRUM_SIZE; i++)
+        if (freq_peaks [2] < fht_log_out [i])
+            freq_peaks [2] = fht_log_out [i];
+
+
     // Makes the output smoother
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         {

@@ -62,10 +62,7 @@ class Analyzer
         // VU meter output
         int VU_out = 0;
 
-        // normalized frequencies volume in range [0; 1]
-        float freq_filt [SPECTRUM_SIZE] = {};
-        // normalized types of frequencies volume in range [0; 1]
-        float freq_peaks_filt [3] = {};
+        
 
         // -----------------UTIL-------------------
         // ----------------------------------------

@@ -75,7 +75,7 @@
 // Rise mode color
 #define RISE_COLOR CRGB (255, 170, 0)
 // Rise mode stage rise time (min)
-#define RISE_MODE_RISE_TIME 0.25f
+#define RISE_MODE_RISE_TIME 2.f
 // Max brightness of night mode strip
 #define RISE_BRIGHTNESS_MAX 255
 
@@ -136,14 +136,14 @@
 // Lowest frequency
 #define LOWEST 2
 // Number of low freqs
-#define N_LOW 6
+#define N_LOW 4
 // Number of mid freqs
 #define N_MID 5
 // Number of high freqs
 #define N_HIGH 21
 
 // Check for incorrect ranges
-#if N_LOW + N_MID + N_HIGH != SPECTRUM_SIZE
+#if N_LOW + N_MID + N_HIGH != SPECTRUM_SIZE - LOWEST
 #error Incorrect frequencies ranges
 #endif // N_LOW + N_MID + N_HIGH != SPECTRUM_SIZE
 
