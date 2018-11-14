@@ -73,7 +73,7 @@
 #define RND_AMPL 50
 
 // Rise mode color
-#define RISE_COLOR HUE_ORANGE
+#define RISE_COLOR CRGB (255, 170, 0)
 // Rise mode stage rise time (min)
 #define RISE_MODE_RISE_TIME 0.25f
 // Max brightness of night mode strip

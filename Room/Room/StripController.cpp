@@ -228,25 +228,31 @@ void StripController::update (float dt)
                 float (dt / full_time);
 
             // RGB color
-            CRGB riseColor = CRGB (CHSV (RISE_COLOR, MAX_SATURATION, MAX_BRIGHTNESS));
+            CRGB riseColor = RISE_COLOR;
+            // Black to RISE_COLOR stage
             if (brightness <= RISE_BRIGHTNESS_MAX)
-                riseColor = CRGB (riseColor.r * brightness / float (RISE_BRIGHTNESS_MAX),
-                                  riseColor.g * brightness / float (RISE_BRIGHTNESS_MAX),
-                                  riseColor.b * brightness / float (RISE_BRIGHTNESS_MAX));
-            if (brightness <= 2 * RISE_BRIGHTNESS_MAX)
+                {
+                riseColor = CRGB (riseColor.r * float (brightness / float (RISE_BRIGHTNESS_MAX)),
+                                  riseColor.g * float (brightness / float (RISE_BRIGHTNESS_MAX)),
+                                  riseColor.b * float (brightness / float (RISE_BRIGHTNESS_MAX)));
+                }
+            // RISE_COLOR to white stage
+            else if (brightness <= 2 * RISE_BRIGHTNESS_MAX)
                 {
                 CRGB deltaColor = CRGB (CRGB::White) - riseColor;
 
-                deltaColor = CRGB (deltaColor.r * float (brightness - RISE_BRIGHTNESS_MAX ) /
-                                                  float (RISE_BRIGHTNESS_MAX),
+                deltaColor = CRGB (deltaColor.r * float (brightness - RISE_BRIGHTNESS_MAX) /
+                                   float (RISE_BRIGHTNESS_MAX),
                                    deltaColor.g * float (brightness - RISE_BRIGHTNESS_MAX) /
-                                                  float (RISE_BRIGHTNESS_MAX),
+                                   float (RISE_BRIGHTNESS_MAX),
                                    deltaColor.b * float (brightness - RISE_BRIGHTNESS_MAX) /
-                                                  float (RISE_BRIGHTNESS_MAX));
-
+                                   float (RISE_BRIGHTNESS_MAX));
                 riseColor += deltaColor;
                 }
+            else
+                riseColor = CRGB::White;
 
+            // Fills leds' colors array
             for (int i = 0; i < N_LEDS_MAIN; i++)
                 leds_main [i] = riseColor;
             
@@ -436,7 +442,6 @@ void StripController::sync_strips ()
     for (int i = 0; i < N_LEDS_TABLE; i++)
         leds_table [N_LEDS_TABLE - 1 - i] = leds_main [i];
     }
-
 void StripController::fillSections (CRGB sections [3])
     {
     // Paints the sections
@@ -447,7 +452,6 @@ void StripController::fillSections (CRGB sections [3])
     for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
         leds_main [i] = sections [2];
     }
-
 CRGB StripController::Wheel (byte WheelPos)
     {
     WheelPos = 255 - WheelPos;

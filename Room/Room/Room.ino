@@ -42,8 +42,6 @@ int main ()
     controller.setLedAnalyzerAnimationOffset (HUE_RED);
     controller.setLedColor (CRGB::White);
     
-    
-
     Analyzer analyzer;
     
     float prev_t = float (millis ());
