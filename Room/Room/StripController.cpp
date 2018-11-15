@@ -25,6 +25,12 @@ void StripController::update (float dt)
                 leds_main [i] = CRGB::Black;
             break;
             }
+        case fullWhite:
+            {
+            for (int i = 0; i < N_LEDS_MAIN; i++)
+                leds_main [i] = CRGB::White;
+            break;
+            }
         case mono:
             {
             for (int i = 0; i < N_LEDS_MAIN; i++)

@@ -4,6 +4,11 @@
 
 #include "LightController.h"
 
+void LightController::restartAnimation ()
+    {
+    LED.setMode (lastAnimationMode);
+    }
+
 LightController::LightController ()
     {
     }
@@ -36,8 +41,7 @@ void LightController::setProfile (byte mode)
             }
         case full:
             {
-            LED.setColor (CRGB::White);
-            LED.setMode (StripController::mono);
+            LED.setMode (StripController::fullWhite);
             LED.setTableMode (StripController::sync);
             Torchere.setState (BulbController::on);
             Lamp.setState (BulbController::on);
@@ -67,7 +71,14 @@ void LightController::setProfile (byte mode)
             Lamp.setState (BulbController::off);
             break;
             }
-
+        case default:
+            {
+            restartAnimation ();
+            LED.setTableMode (StripController::sync);
+            Torchere.setState (BulbController::on);
+            Lamp.setState (BulbController::on);
+            break;
+            }
         default:
             break;
         }
@@ -75,6 +86,12 @@ void LightController::setProfile (byte mode)
 
 void LightController::setLedMode (byte newMode)
     {
+    if (newMode != StripController::mainStripMode::off &&
+        newMode != StripController::mainStripMode::fullWhite &&
+        newMode != StripController::mainStripMode::rise &&
+        newMode != StripController::mainStripMode::night)
+        lastAnimationMode = newMode;
+
     LED.setMode (newMode);
     }
 void LightController::setLedTableMode (byte newMode)

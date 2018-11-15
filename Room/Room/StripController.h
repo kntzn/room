@@ -21,6 +21,7 @@ class StripController
         enum mainStripMode
             {
             off,
+            fullWhite,
             mono,
             fade,
             fade_switch,

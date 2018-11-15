@@ -24,7 +24,8 @@ class LightController
             full,
             noLed,
             film,
-            night
+            night,
+            default
             };
 
     private:
@@ -32,6 +33,11 @@ class LightController
         StripController LED;
         BulbController Lamp = BulbController (RELAY_LAMP);
         BulbController Torchere = BulbController (RELAY_TORCHERE);
+
+        // ---------------------------
+        // Util 
+        byte lastAnimationMode = StripController::off;
+        void restartAnimation ();
 
     public:
         LightController ();
@@ -48,6 +54,7 @@ class LightController
         // Sets premade profile
         void setProfile (byte mode);
 
+        // ---------------------------
         // Led strip parameters setters
 
         // Sets the mode of main led strip
@@ -69,7 +76,7 @@ class LightController
         void setLedAnalyzerAnimationFrequency (float newFreq);
         // Sets beginning of the rainbow's color 
         // in Freq_full LED mode
-        // i.e. color at the center of LED
+        // i.e. color at the center of LED strip
         void setLedAnalyzerAnimationOffset (float newOffset);
         
         // Sets the mode of the torchere
