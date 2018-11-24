@@ -32,7 +32,8 @@ class StripController
             RVD,
             rise,
             oldschool6,
-            oldschoolRND
+            oldschoolRND,
+            RVD_RND
             //matrix,
             
             };
@@ -83,6 +84,24 @@ class StripController
             CRGB::Black,
             CRGB::Black
             };
+        CRGB currColor3sectionsRVD [3] =
+            {
+            CRGB::Black,
+            CRGB::Black,
+            CRGB::Black
+            };
+
+        const CRGB Color3sectionsRVD [N_COLORS_RVD] =
+            {
+            CRGB::Red,
+            CRGB::Blue,
+            CRGB (32, 0, 255),
+            CRGB::Yellow,
+            CRGB (241, 255, 211),
+            CRGB (191, 0, 255),
+            CRGB (0, 178, 255)
+            };
+
 
         // ----------------------------------------
         // Internal Variables

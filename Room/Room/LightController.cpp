@@ -71,7 +71,7 @@ void LightController::setProfile (byte mode)
             Lamp.setState (BulbController::off);
             break;
             }
-        case default:
+        case def:
             {
             restartAnimation ();
             LED.setTableMode (StripController::sync);

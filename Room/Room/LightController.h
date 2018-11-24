@@ -25,7 +25,7 @@ class LightController
             noLed,
             film,
             night,
-            default
+            def
             };
 
     private:

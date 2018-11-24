@@ -33,13 +33,13 @@ int main ()
     // Initialization of strip
     
     LightController controller;
-    controller.setLedMode (StripController::rainbow_HSV);
+    controller.setLedMode (StripController::oldschoolRND);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (1.f);
-    controller.setLedAnalyzerAnimationFrequency (-50.f);
-    controller.setLedAnalyzerAnimationOffset (HUE_RED);
+    controller.setLedAnalyzerAnimationFrequency (80);
+    controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
     controller.setLedColor (CRGB::White);
     
     Analyzer analyzer;
@@ -66,7 +66,7 @@ int main ()
             }
         if (!digitalRead (27))
             {
-            controller.setLedMode (StripController::RVD);
+            controller.setLedMode (StripController::RVD_RND);
             controller.setLedTableMode (StripController::sync);
             }
         if (!digitalRead (25))

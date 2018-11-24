@@ -85,6 +85,9 @@
 // Time of fade and rise while switch (secs)
 #define FADE_SWITCH_TIME 2.f
 
+// Number of RVD_RND colors
+#define N_COLORS_RVD 7
+
 // Not connected pin used to generate random seed
 #define NC A8
 

@@ -309,6 +309,90 @@ void StripController::update (float dt)
 
             break;
             }
+        case RVD_RND:
+            {
+            float dt = float (millis () - mode_activation_time);
+            float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
+            float brightness = float (MAX_BRIGHTNESS)*
+                float ((dt / full_time));
+
+
+
+            if (brightness > MAX_BRIGHTNESS)
+                {
+                brightness = MAX_BRIGHTNESS;
+
+                // Just for stabillity
+                for (int i = 0; i < N_LEDS_SEC_0; i++)
+                    leds_main [i] = currColor3sectionsRVD [0];
+                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
+                    leds_main [i] = currColor3sectionsRVD [1];
+                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
+                    leds_main [i] = currColor3sectionsRVD [2];
+                }
+            else
+                {
+                // Section 0
+                for (int i = 0; i < N_LEDS_SEC_0; i += N_LEDS_SUBSEC)
+                    {
+                    CRGB thisColor = currColor3sectionsRVD [0];
+                    CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
+                                              float (thisColor.g)*brightness / 255.f,
+                                              float (thisColor.b)*brightness / 255.f);
+
+                    int rnd_val = rand () % RND_AMPL;
+                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                        subsec_color = CRGB (0, 0, 0);
+
+                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                        {
+                        if (i + j >= N_LEDS_MAIN)
+                            break;
+                        leds_main [i + j] = subsec_color;
+                        }
+                    }
+                // Section 1
+                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i += N_LEDS_SUBSEC)
+                    {
+                    CRGB thisColor = currColor3sectionsRVD [1];
+                    CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
+                                              float (thisColor.g)*brightness / 255.f,
+                                              float (thisColor.b)*brightness / 255.f);
+
+                    int rnd_val = rand () % RND_AMPL;
+                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                        subsec_color = CRGB (0, 0, 0);
+
+                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                        {
+                        if (i + j >= N_LEDS_SEC_0 + N_LEDS_SEC_1)
+                            break;
+                        leds_main [i + j] = subsec_color;
+                        }
+                    }
+                // Section 2
+                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i += N_LEDS_SUBSEC)
+                    {
+                    CRGB thisColor = currColor3sectionsRVD [2];
+                    CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
+                                              float (thisColor.g)*brightness / 255.f,
+                                              float (thisColor.b)*brightness / 255.f);
+
+                    int rnd_val = rand () % RND_AMPL;
+                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                        subsec_color = CRGB (0, 0, 0);
+
+                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                        {
+                        if (i + j >= N_LEDS_MAIN)
+                            break;
+                        leds_main [i + j] = subsec_color;
+                        }
+                    }
+                }
+
+            break;
+            }
         default:
             break;
         }
@@ -489,11 +573,31 @@ void StripController::setMode (byte newMode)
         for (int i = 0; i < 3; i++)
             currColor3sections [i] = Wheel ((255 / 6) * (rand () % 6));
         }
-    else if (newMode == oldschoolRND)
+    if (newMode == oldschoolRND)
         {
         for (int i = 0; i < 3; i++)
             currColor3sections [i] = Wheel (rand () % 256);
         }
+    if (newMode == RVD_RND)
+        {
+        // Generates neon different colors
+        int id_rnd_rvd_color_0 = rand () % N_COLORS_RVD;
+        
+        int id_rnd_rvd_color_1 = rand () % N_COLORS_RVD;
+        while (id_rnd_rvd_color_1 == id_rnd_rvd_color_0)
+            id_rnd_rvd_color_1 = rand () % N_COLORS_RVD;
+
+        int id_rnd_rvd_color_2 = rand () % N_COLORS_RVD;
+        while (id_rnd_rvd_color_2 == id_rnd_rvd_color_0 ||
+               id_rnd_rvd_color_2 == id_rnd_rvd_color_1)
+            id_rnd_rvd_color_2 = rand () % N_COLORS_RVD;
+
+        // Sets color values
+        currColor3sectionsRVD [0] = Color3sectionsRVD [id_rnd_rvd_color_0];
+        currColor3sectionsRVD [1] = Color3sectionsRVD [id_rnd_rvd_color_1];
+        currColor3sectionsRVD [2] = Color3sectionsRVD [id_rnd_rvd_color_2];
+        }
+        
 
     mode_activation_time = millis ();
     }
