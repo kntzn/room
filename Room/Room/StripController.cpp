@@ -581,20 +581,19 @@ void StripController::setMode (byte newMode)
     if (newMode == RVD_RND)
         {
         // Generates neon different colors
-        int id_rnd_rvd_color_0 = rand () % N_COLORS_RVD;
-        
-        int id_rnd_rvd_color_1 = rand () % N_COLORS_RVD;
-        while (id_rnd_rvd_color_1 == id_rnd_rvd_color_0)
-            id_rnd_rvd_color_1 = rand () % N_COLORS_RVD;
 
-        int id_rnd_rvd_color_2 = rand () % N_COLORS_RVD;
-        while (id_rnd_rvd_color_2 == id_rnd_rvd_color_0 ||
-               id_rnd_rvd_color_2 == id_rnd_rvd_color_1)
-            id_rnd_rvd_color_2 = rand () % N_COLORS_RVD;
-
-        // Sets color values
+        // section 0
+        // RED / BLUE
+        bool id_rnd_rvd_color_0 = rand () % 2;
         currColor3sectionsRVD [0] = Color3sectionsRVD [id_rnd_rvd_color_0];
-        currColor3sectionsRVD [1] = Color3sectionsRVD [id_rnd_rvd_color_1];
+        
+        // section 1
+        // BLUE / RED
+        currColor3sectionsRVD [1] = Color3sectionsRVD [!id_rnd_rvd_color_0];
+        
+        // 3rd section
+        // ANOTHER_COLOR
+        int id_rnd_rvd_color_2 = 2 + rand () % (N_COLORS_RVD-2);
         currColor3sectionsRVD [2] = Color3sectionsRVD [id_rnd_rvd_color_2];
         }
         
