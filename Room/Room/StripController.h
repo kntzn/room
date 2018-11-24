@@ -97,7 +97,6 @@ class StripController
             CRGB::Blue,
             CRGB (32, 0, 255),
             CRGB::Yellow,
-            CRGB (241, 255, 211),
             CRGB (191, 0, 255),
             CRGB (0, 178, 255)
             };

@@ -86,7 +86,7 @@
 #define FADE_SWITCH_TIME 2.f
 
 // Number of RVD_RND colors
-#define N_COLORS_RVD 7
+#define N_COLORS_RVD 6
 
 // Not connected pin used to generate random seed
 #define NC A8
