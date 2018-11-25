@@ -128,11 +128,11 @@ float* Analyzer::getFreqValues ()
 float * Analyzer::getFreq3Values ()
     {
     // Maps the frequencies loudness to FREQ_MAX level
-    float max = getMaxFreq ();
+    float max = max (freq_peaks [0], max (freq_peaks [1], freq_peaks [2]));
+
     if (max > 0)
         for (int i = 0; i < 3; i++)
-            freq3_map [i] = freq_peaks [i] * float (FREQ_MAX) / max *
-            pow (float (i + 1) / float (SPECTRUM_SIZE), 1.01);
+            freq3_map [i] = freq_peaks [i] * float (FREQ_MAX) / max;
     else if (max == 0)
         for (int i = 0; i < SPECTRUM_SIZE; i++)
             freq3_map [i] *= 0.9;

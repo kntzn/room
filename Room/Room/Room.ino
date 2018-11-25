@@ -34,7 +34,7 @@ int main ()
     // Initialization of controller and strip
     LightController controller;
     controller.setLedMode (StripController::oldschoolRND);
-    controller.setLedTableMode (StripController::sync);
+    controller.setLedTableMode (StripController::FREQ_3);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (1.f);
