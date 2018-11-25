@@ -139,11 +139,11 @@
 // Lowest frequency
 #define LOWEST 2
 // Number of low freqs
-#define N_LOW 4
+#define N_LOW 1
 // Number of mid freqs
-#define N_MID 5
+#define N_MID 6
 // Number of high freqs
-#define N_HIGH 21
+#define N_HIGH 23
 
 // Check for incorrect ranges
 #if N_LOW + N_MID + N_HIGH != SPECTRUM_SIZE - LOWEST

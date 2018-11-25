@@ -134,7 +134,7 @@ float * Analyzer::getFreq3Values ()
         for (int i = 0; i < 3; i++)
             freq3_map [i] = freq_peaks [i] * float (FREQ_MAX) / max;
     else if (max == 0)
-        for (int i = 0; i < SPECTRUM_SIZE; i++)
+        for (int i = 0; i < 3; i++)
             freq3_map [i] *= 0.9;
 
     return freq3_map;
