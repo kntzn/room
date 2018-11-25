@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Analyzer.h" />
+    <ClInclude Include="DoorSensor.h" />
     <ClInclude Include="Hbridge.h" />
     <ClInclude Include="LightBulbController.h" />
     <ClInclude Include="LightController.h" />
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="DoorSensor.cpp" />
     <ClCompile Include="Hbridge.cpp" />
     <ClCompile Include="LightBulbController.cpp" />
     <ClCompile Include="LightController.cpp" />

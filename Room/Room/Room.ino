@@ -4,6 +4,7 @@
  Author:	CODEBOOK
 */
 
+#include "DoorSensor.h"
 #include "WindowController.h"
 #include "Hbridge.h"
 #include "LightController.h"
@@ -30,8 +31,7 @@ int main ()
     pinMode (27, INPUT_PULLUP);
     pinMode (25, INPUT_PULLUP);
 
-    // Initialization of strip
-    
+    // Initialization of controller and strip
     LightController controller;
     controller.setLedMode (StripController::oldschoolRND);
     controller.setLedTableMode (StripController::sync);
@@ -96,4 +96,8 @@ void initPins ()
     pinMode (JACK_INPUT, INPUT);
     pinMode (JACK_INPUT_FREQ, INPUT);
     // !Analyzer
+
+    // Door
+    pinMode (DOOR_SENSOR_PIN, INPUT_PULLUP);
+    // !Door
     }
