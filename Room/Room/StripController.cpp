@@ -519,6 +519,7 @@ void StripController::update (float dt)
             break;
         }
 
+
     // Creates fade effect when mode is switched
     if (millis () - mode_activation_time <= MODE_SWITCH_FADE_TIME * 1000 &&
         mode != oldschool6 && mode != oldschoolRND)
@@ -531,24 +532,26 @@ void StripController::update (float dt)
         // Generates average color
         for (int i = 0; i < N_LEDS_MAIN; i++)
             {
-            leds_main [i] = CRGB ((leds_main [i].r * (perc) + leds_main_copy [i].r * (1 - perc)) / 2,
-                                  (leds_main [i].g * (perc) + leds_main_copy [i].g * (1 - perc)) / 2,
-                                  (leds_main [i].b * (perc) + leds_main_copy [i].b * (1 - perc)) / 2);
+            leds_main [i] = CRGB ((leds_main [i].r * (perc) + leds_main_copy [i].r * (1 - perc)),
+                                  (leds_main [i].g * (perc) + leds_main_copy [i].g * (1 - perc)),
+                                  (leds_main [i].b * (perc) + leds_main_copy [i].b * (1 - perc)));
 
             }
         for (int i = 0; i < N_LEDS_TABLE; i++)
             {
-            leds_table [i] = CRGB ((leds_table [i].r * (perc) + leds_table_copy [i].r * (1 - perc)) / 2,
-                                   (leds_table [i].g * (perc) + leds_table_copy [i].g * (1 - perc)) / 2,
-                                   (leds_table [i].b * (perc) + leds_table_copy [i].b * (1 - perc)) / 2);
+            leds_table [i] = CRGB ((leds_table [i].r * (perc) + leds_table_copy [i].r * (1 - perc)),
+                                   (leds_table [i].g * (perc) + leds_table_copy [i].g * (1 - perc)),
+                                   (leds_table [i].b * (perc) + leds_table_copy [i].b * (1 - perc)));
             }
     
-
-        Serial.print (leds_main [0].r);
-        Serial.print (" ");
-        Serial.println (leds_main_copy [0].r);
-        
         }
+    
+
+
+    Serial.print (leds_main [0].r);
+    Serial.print (" ");
+    Serial.println (leds_main_copy [0].r);
+
 
 
     display ();
@@ -596,6 +599,11 @@ CRGB StripController::Wheel (byte WheelPos)
 // Setters
 void StripController::setMode (byte newMode)
     {
+    if (newMode == mode &&
+        newMode != oldschool6 && newMode != oldschoolRND &&
+        newMode != RVD_RND)
+        return;
+
     for (int i = 0; i < N_LEDS_MAIN; i++)
         leds_main_copy [i] = leds_main [i];
 
