@@ -102,6 +102,7 @@ class StripController
             };
 
 
+
         // ----------------------------------------
         // Internal Variables
 
@@ -123,6 +124,9 @@ class StripController
         // Leds Arrays
         CRGB leds_main [N_LEDS_MAIN] = {};
         CRGB leds_table [N_LEDS_TABLE] = {};
+
+        CRGB leds_main_copy [N_LEDS_MAIN] = {};
+        CRGB leds_table_copy [N_LEDS_TABLE] = {};
 
         // ----------------------------------------
         // Communication

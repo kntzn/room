@@ -34,7 +34,6 @@
 
 // Modes' defines
 #define SWITCH_BRIGHTNESS 2
-#define N_PREDEFINED_COLORS 147
 // ----------------------------------------
 
 // VU mode parameters
@@ -88,8 +87,8 @@
 // Number of RVD_RND colors
 #define N_COLORS_RVD 6
 
-// Not connected pin used to generate random seed
-#define NC A8
+// Switch fade time (sec)
+#define MODE_SWITCH_FADE_TIME 1
 
 // !LED strip controller defines
 // ----------------------------------------
@@ -112,7 +111,7 @@
 // Average volume smoothness
 #define AVER_VOLUME_SMOOTH 0.995f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.8f
+#define SMOOTH_VU 0.9f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer
@@ -201,6 +200,9 @@
 #define BAUD_RATE_SERIAL 9600
 
 #define DOOR_SENSOR_PIN 43
+
+// Not connected pin used to generate random seed
+#define NC A8
 // !Other
 // ----------------------------------------
 

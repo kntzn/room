@@ -519,6 +519,34 @@ void StripController::update (float dt)
             break;
         }
 
+    // Creates fade effect when mode is switched
+    if (millis () - mode_activation_time <= MODE_SWITCH_FADE_TIME * 1000)
+        {
+        float dt = float (millis ()) - float (mode_activation_time);
+        float perc = dt / float (MODE_SWITCH_FADE_TIME * 1000);
+        if (perc > 1)
+            perc = 1;
+
+        // Generates average color
+        for (int i = 0; i < N_LEDS_MAIN; i++)
+            {
+            leds_main [i] = CRGB ((leds_main [i].r * (perc) + leds_main_copy [i].r * (1 - perc)) / 2,
+                                  (leds_main [i].g * (perc) + leds_main_copy [i].g * (1 - perc)) / 2,
+                                  (leds_main [i].b * (perc) + leds_main_copy [i].b * (1 - perc)) / 2);
+
+            }
+        for (int i = 0; i < N_LEDS_TABLE; i++)
+            {
+            leds_table [i] = CRGB ((leds_table [i].r * (perc) + leds_table_copy [i].r * (1 - perc)) / 2,
+                                   (leds_table [i].g * (perc) + leds_table_copy [i].g * (1 - perc)) / 2,
+                                   (leds_table [i].b * (perc) + leds_table_copy [i].b * (1 - perc)) / 2);
+            }
+    
+
+        Serial.println (leds_main [0].r);
+        }
+
+
     display ();
     }
 void StripController::display () 
@@ -564,6 +592,9 @@ CRGB StripController::Wheel (byte WheelPos)
 // Setters
 void StripController::setMode (byte newMode)
     {
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main_copy [i] = leds_main [i];
+
     fadeSwitchColor = CRGB::Red;
     switchedColorFlag = false;
     mode = newMode;
@@ -602,6 +633,9 @@ void StripController::setMode (byte newMode)
     }
 void StripController::setTableMode (byte newMode)
     {
+    for (int i = 0; i < N_LEDS_TABLE; i++)
+        leds_table_copy [i] = leds_table [i];
+
     table_mode = newMode;
     }
 void StripController::setColor (CRGB newColor)
