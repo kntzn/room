@@ -520,7 +520,8 @@ void StripController::update (float dt)
         }
 
     // Creates fade effect when mode is switched
-    if (millis () - mode_activation_time <= MODE_SWITCH_FADE_TIME * 1000)
+    if (millis () - mode_activation_time <= MODE_SWITCH_FADE_TIME * 1000 &&
+        mode != oldschool6 && mode != oldschoolRND)
         {
         float dt = float (millis ()) - float (mode_activation_time);
         float perc = dt / float (MODE_SWITCH_FADE_TIME * 1000);
@@ -543,7 +544,10 @@ void StripController::update (float dt)
             }
     
 
-        Serial.println (leds_main [0].r);
+        Serial.print (leds_main [0].r);
+        Serial.print (" ");
+        Serial.println (leds_main_copy [0].r);
+        
         }
 
 

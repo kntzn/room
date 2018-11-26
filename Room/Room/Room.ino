@@ -33,7 +33,7 @@ int main ()
 
     // Initialization of controller and strip
     LightController controller;
-    controller.setLedMode (StripController::oldschoolRND);
+    controller.setLedMode (StripController::rainbow_HSV);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
@@ -61,7 +61,7 @@ int main ()
         // Strip controller
         if (!digitalRead (29))
             {
-            controller.setLedMode (StripController::night);
+            controller.setLedMode (StripController::mainStripMode::fullWhite);
             controller.setLedTableMode (StripController::sync);
             }
         if (!digitalRead (27))
@@ -71,7 +71,7 @@ int main ()
             }
         if (!digitalRead (25))
             {
-            controller.setLedMode (StripController::rise);
+            controller.setLedMode (StripController::night);
             controller.setLedTableMode (StripController::sync);
             }
         
