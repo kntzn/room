@@ -41,16 +41,6 @@ float PowerSupply::voltage_prec (byte pin)
     return readVcc ()*aver_analog (pin) / 1024 / 1000.0 + 0.05f;
     }
 
-void PowerSupply::update ()
-    {
-    float current_raw_input = 
-    current = U_TO_I_K * current_raw_input + U_TO_I_B;
-
-    voltage = voltage_prec (VOLTAGE_SENSOR_PIN);
-
-    power = current * voltage;
-    }
-
 PowerSupply::PowerSupply (byte pinI, byte pinV)
     {    
     pinCurrent = pinI;
@@ -59,3 +49,25 @@ PowerSupply::PowerSupply (byte pinI, byte pinV)
     voltage = current = power = 0.f;
     }
 
+void PowerSupply::update ()
+    {
+    float current_raw_input = voltage_prec (CURRENT_SENSOR_PIN);
+
+    voltage = voltage_prec (VOLTAGE_SENSOR_PIN);
+    current = U_TO_I_K * current_raw_input + U_TO_I_B;
+    power = current * voltage;
+    }
+
+
+float PowerSupply::getVoltage ()
+    {
+    return voltage;
+    }
+float PowerSupply::getCurrent ()
+    {
+    return current;
+    }
+float PowerSupply::getPower ()
+    {
+    return power;
+    }

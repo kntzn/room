@@ -27,12 +27,16 @@ class PowerSupply
     
         float voltage_prec (byte pin);
     
-        void update ();
-
-
+        
     public:
         PowerSupply (byte pinI, byte pinV);
     
+        void update ();
+
+
+        float getVoltage ();
+        float getCurrent ();
+        float getPower   ();
 
     };
 
