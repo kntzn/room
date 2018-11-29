@@ -112,10 +112,7 @@ void StripController::update (float dt)
             else if (switchedColorFlag)
                 switchedColorFlag = false;
 
-            
-
             break;
-
             }
         case rainbow_Sine:
             {
@@ -546,14 +543,6 @@ void StripController::update (float dt)
     
         }
     
-
-
-    Serial.print (leds_main [0].r);
-    Serial.print (" ");
-    Serial.println (leds_main_copy [0].r);
-
-
-
     display ();
     }
 void StripController::display () 

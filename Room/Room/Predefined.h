@@ -193,6 +193,23 @@
 // !Window
 // ----------------------------------------
 
+// ----------------------------------------
+// Wattmeter
+
+// Pinout
+#define CURRENT_SENSOR_PIN A6
+#define VOLTAGE_SENSOR_IN A7
+
+// Reference voltage
+#define VCC_REF 1.0
+
+// Coefficients
+#define U_TO_I_K 2.82702703
+#define U_TO_I_B 0.35
+
+
+// !Wattmeter
+// ----------------------------------------
 
 
 // ----------------------------------------

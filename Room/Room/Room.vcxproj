@@ -97,6 +97,7 @@
     <ClInclude Include="LightController.h" />
     <ClInclude Include="Predefined.h" />
     <ClInclude Include="StripController.h" />
+    <ClInclude Include="Wattmeter.h" />
     <ClInclude Include="WindowController.h" />
     <ClInclude Include="__vm\.Room.vsarduino.h" />
   </ItemGroup>
@@ -107,6 +108,7 @@
     <ClCompile Include="LightBulbController.cpp" />
     <ClCompile Include="LightController.cpp" />
     <ClCompile Include="StripController.cpp" />
+    <ClCompile Include="Wattmeter.cpp" />
     <ClCompile Include="WindowController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

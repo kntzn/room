@@ -45,6 +45,9 @@
     <ClInclude Include="DoorSensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Wattmeter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StripController.cpp">
@@ -66,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DoorSensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wattmeter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
