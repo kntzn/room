@@ -11,22 +11,28 @@
 
 #include "Predefined.h"
 
-class WattMeter
+class PowerSupply
     {
-    byte pinVoltage;
-    byte pinCurrent;
 
-
-    long aver_analog (uint8_t pin, size_t times = 10);
-        
-    long readVcc ();
-    
-    float voltage_prec (byte pin);
-    
-    public:
-        WattMeter (byte pinI, byte pinV);
-        
     private:
+
+        byte pinVoltage;
+        byte pinCurrent;
+
+        float voltage, current, power;
+
+        long aver_analog (uint8_t pin, size_t times = 10);
+        
+        long readVcc ();
+    
+        float voltage_prec (byte pin);
+    
+        void update ();
+
+
+    public:
+        PowerSupply (byte pinI, byte pinV);
+    
 
     };
 

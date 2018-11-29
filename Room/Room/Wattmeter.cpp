@@ -4,7 +4,7 @@
 
 #include "Wattmeter.h"
 
-long WattMeter::aver_analog (uint8_t pin, size_t times)
+long PowerSupply::aver_analog (uint8_t pin, size_t times)
     {
     long value = 0;
     for (int i = 0; i < times; i++)
@@ -13,7 +13,7 @@ long WattMeter::aver_analog (uint8_t pin, size_t times)
     return value;
     }
 
-long WattMeter::readVcc ()
+long PowerSupply::readVcc ()
     {
     #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
     ADMUX = _BV (REFS0) | _BV (MUX4) | _BV (MUX3) | _BV (MUX2) | _BV (MUX1);
@@ -35,14 +35,27 @@ long WattMeter::readVcc ()
     return result;
     }
 
-float WattMeter::voltage_prec (byte pin)
+float PowerSupply::voltage_prec (byte pin)
     {
     // Measuring battery voltage
     return readVcc ()*aver_analog (pin) / 1024 / 1000.0 + 0.05f;
     }
 
-WattMeter::WattMeter (byte pinI, byte pinV)
-    {    
+void PowerSupply::update ()
+    {
+    float current_raw_input = 
+    current = U_TO_I_K * current_raw_input + U_TO_I_B;
 
+    voltage = voltage_prec (VOLTAGE_SENSOR_PIN);
+
+    power = current * voltage;
+    }
+
+PowerSupply::PowerSupply (byte pinI, byte pinV)
+    {    
+    pinCurrent = pinI;
+    pinVoltage = pinV;
+
+    voltage = current = power = 0.f;
     }
 

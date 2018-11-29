@@ -198,7 +198,7 @@
 
 // Pinout
 #define CURRENT_SENSOR_PIN A6
-#define VOLTAGE_SENSOR_IN A7
+#define VOLTAGE_SENSOR_PIN A7
 
 // Reference voltage
 #define VCC_REF 1.0
