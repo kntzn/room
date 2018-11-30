@@ -16,378 +16,53 @@ void StripController::update (float dt)
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;
 
-
+    // Main strip modes switch
     switch (mode)
         {
         case off:
-            {
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CRGB::Black;
+            mainStrip_off_mode ();
             break;
-            }
         case fullWhite:
-            {
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CRGB::White;
+            mainStrip_fullWhite_mode ();
             break;
-            }
         case mono:
-            {
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = currColor;
+            mainStrip_mono_mode ();
             break;
-            }
         case fade:
-            {
-            float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
-
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                {
-                leds_main [i].r = currColor.r * brightness;
-                leds_main [i].g = currColor.g * brightness;
-                leds_main [i].b = currColor.b * brightness;
-                }
-
+            mainStrip_fade_mode ();
             break;
-            }
         case fade_switch:
-            {
-            float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
-
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                {
-                leds_main [i].r = fadeSwitchColor.r * brightness;
-                leds_main [i].g = fadeSwitchColor.g * brightness;
-                leds_main [i].b = fadeSwitchColor.b * brightness;
-                }
-
-            // Generates new color at low brightness
-            if (brightness < float (SWITCH_BRIGHTNESS) / float (MAX_BRIGHTNESS))
-                {
-                brightness = 0;
-                if (!switchedColorFlag)
-                    {
-                    switchedColorFlag = true;
-
-                    if (fadeSwitchColor == CRGB (CRGB::Red))
-                        fadeSwitchColor = CRGB::Yellow;
-                    else if (fadeSwitchColor == CRGB (CRGB::Yellow))
-                        fadeSwitchColor = CRGB::Green;
-                    else if (fadeSwitchColor == CRGB (CRGB::Green))
-                        fadeSwitchColor = CRGB::LightBlue;
-                    else if (fadeSwitchColor == CRGB (CRGB::LightBlue))
-                        fadeSwitchColor = CRGB::Blue;
-                    else if (fadeSwitchColor == CRGB (CRGB::Blue))
-                        fadeSwitchColor = CRGB::Violet;
-                    else
-                        fadeSwitchColor = CRGB::Red;
-                    }
-                }
-            else if (switchedColorFlag)
-                switchedColorFlag = false;
+            mainStrip_fade_switch_mode ();
             break;
-            }
         case fade_switch_random:
-            {
-            float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
-
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                {
-                leds_main [i].r = fadeSwitchColor.r * brightness;
-                leds_main [i].g = fadeSwitchColor.g * brightness;
-                leds_main [i].b = fadeSwitchColor.b * brightness;
-                }
-
-            // Generates new color at low brightness
-            if (brightness < float (SWITCH_BRIGHTNESS)/float (MAX_BRIGHTNESS))
-                {
-                brightness = 0;
-                if (!switchedColorFlag)
-                    {
-                    switchedColorFlag = true;
-
-                    fadeSwitchColor = CRGB (CHSV (rand ()%360, MAX_SATURATION, MAX_BRIGHTNESS));
-                    }
-                }
-            else if (switchedColorFlag)
-                switchedColorFlag = false;
-
+            mainStrip_fade_random_mode ();
             break;
-            }
         case rainbow_Sine:
-            {
-            CRGB color;
-            
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                {
-                color.r = 128 + 127 * sinf (double (rainbow_freq * i * (2*PI)/N_LEDS_MAIN + (2*PI)*rainbow_offset + 2*PI/3));
-                color.g = 128 + 127 * sinf (double (rainbow_freq * i * (2*PI)/N_LEDS_MAIN + (2*PI)*rainbow_offset + 4*PI/3));
-                color.b = 128 + 127 * sinf (double (rainbow_freq * i * (2*PI)/N_LEDS_MAIN + (2*PI)*rainbow_offset));
-                leds_main [i] = color;
-                }
-
+            mainStrip_rainbow_Sine_mode ();
             break;
-            }
         case rainbow_HSV:
-            {
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CHSV (i*(360/N_LEDS_MAIN)*rainbow_freq + rainbow_offset*360, MAX_SATURATION, MAX_BRIGHTNESS);
-                
+            mainStrip_rainbow_HSV_mode ();
             break;
-            }
         case night:
-            {
-            float dt = float (millis () - mode_activation_time);
-            float full_time = float (NIGHT_FADE_TIME) * 60.f * 1000.f;
-            float brightness = float (NIGHT_BRIGHTNESS_MAX)*
-                               float (1.f -  (dt/full_time));
-            
-            if (brightness < 0)
-                brightness = 0;
-
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, int (brightness));
-
+            mainStrip_night_mode ();
             break;
-            }
         case RVD:
-            {
-            float dt = float (millis () - mode_activation_time);
-            float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
-            float brightness = float (MAX_BRIGHTNESS)*
-                               float ((dt / full_time));
-            
-            if (brightness > 255)
-                {
-                brightness = 255;
-
-                // Just for stabillity
-                for (int i = 0; i < N_LEDS_SEC_0; i++)
-                    leds_main [i] = CRGB::Blue;
-                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
-                    leds_main [i] = CRGB::Red;
-                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
-                    leds_main [i] = CRGB (40, 0, 255);
-                }
-            else
-                {
-                // Section 0
-                for (int i = 0; i < N_LEDS_SEC_0; i += N_LEDS_SUBSEC)
-                    {
-                    CRGB subsec_color = CRGB (0, 0, brightness);
-
-                    int rnd_val = rand () % RND_AMPL;
-                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
-                        subsec_color = CRGB (0, 0, 0);
-
-                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
-                        {
-                        if (i + j >= N_LEDS_MAIN)
-                            break;
-                        leds_main [i + j] = subsec_color;
-                        }
-                    }
-                // Section 1
-                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i += N_LEDS_SUBSEC)
-                    {
-                    CRGB subsec_color = CRGB (brightness, 0, 0);
-
-                    int rnd_val = rand () % RND_AMPL;
-                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
-                        subsec_color = CRGB (0, 0, 0);
-
-                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
-                        {
-                        if (i + j >= N_LEDS_SEC_0 + N_LEDS_SEC_1)
-                            break;
-                        leds_main [i + j] = subsec_color;
-                        }
-                    }
-                // Section 2
-                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i += N_LEDS_SUBSEC)
-                    {
-                    CRGB subsec_color = CRGB (brightness / 10, 0, brightness);
-
-                    int rnd_val = rand () % RND_AMPL;
-                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
-                        subsec_color = CRGB (0, 0, 0);
-
-                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
-                        {
-                        if (i + j >= N_LEDS_MAIN)
-                            break;
-                        leds_main [i + j] = subsec_color;
-                        }
-                    }
-                }
-            
+            mainStrip_RVD_mode ();
             break;
-            }
         case rise:
             {
-            float dt = float (millis () - mode_activation_time);
-            float full_time = float (RISE_MODE_RISE_TIME) * 60.f * 1000.f;
-            float brightness = float (RISE_BRIGHTNESS_MAX) *
-                float (dt / full_time);
-
-            // RGB color
-            CRGB riseColor = RISE_COLOR;
-            // Black to RISE_COLOR stage
-            if (brightness <= RISE_BRIGHTNESS_MAX)
-                {
-                riseColor = CRGB (riseColor.r * float (brightness / float (RISE_BRIGHTNESS_MAX)),
-                                  riseColor.g * float (brightness / float (RISE_BRIGHTNESS_MAX)),
-                                  riseColor.b * float (brightness / float (RISE_BRIGHTNESS_MAX)));
-                }
-            // RISE_COLOR to white stage
-            else if (brightness <= 2 * RISE_BRIGHTNESS_MAX)
-                {
-                CRGB deltaColor = CRGB (CRGB::White) - riseColor;
-
-                deltaColor = CRGB (deltaColor.r * float (brightness - RISE_BRIGHTNESS_MAX) /
-                                   float (RISE_BRIGHTNESS_MAX),
-                                   deltaColor.g * float (brightness - RISE_BRIGHTNESS_MAX) /
-                                   float (RISE_BRIGHTNESS_MAX),
-                                   deltaColor.b * float (brightness - RISE_BRIGHTNESS_MAX) /
-                                   float (RISE_BRIGHTNESS_MAX));
-                riseColor += deltaColor;
-                }
-            else
-                riseColor = CRGB::White;
-
-            // Fills leds' colors array
-            for (int i = 0; i < N_LEDS_MAIN; i++)
-                leds_main [i] = riseColor;
-            
+            mainStrip_rise_mode ();
             break;
             }
         case oldschoolRND:
         case oldschool6:
             {
-            // Fills new color
-            if (millis () - mode_activation_time >= (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
-                setMode (mode);
-            // Fades new color from black
-            else if (millis () - mode_activation_time < FADE_SWITCH_TIME * 1000)
-                {
-                float percent = float (millis () - mode_activation_time) / 
-                                float (FADE_SWITCH_TIME * 1000);
-
-                CRGB sections [3] = {};
-                for (int i = 0; i < 3; i++)
-                    sections [i] = CRGB (currColor3sections [i].r*percent,
-                                         currColor3sections [i].g*percent, 
-                                         currColor3sections [i].b*percent);
-                
-                fillSections (sections);
-                }
-            // Fills current colors
-            else if (millis () - mode_activation_time < 
-                     float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed)))
-                {
-                fillSections (currColor3sections);
-                
-                }
-            else if (millis () - mode_activation_time < (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
-                {
-                float percent = 1.f - float (millis () - mode_activation_time - 
-                                          (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - 
-                                          FADE_SWITCH_TIME * 1000)) /
-                                          float (FADE_SWITCH_TIME * 1000);
-
-                CRGB sections [3] = {};
-                for (int i = 0; i < 3; i++)
-                    sections [i] = CRGB (currColor3sections [i].r*percent,
-                                         currColor3sections [i].g*percent,
-                                         currColor3sections [i].b*percent);
-
-                fillSections (sections);
-                }
-
+            mainStrip_oldschool_mode ();
             break;
             }
         case RVD_RND:
             {
-            float dt = float (millis () - mode_activation_time);
-            float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
-            float brightness = float (MAX_BRIGHTNESS)*
-                float ((dt / full_time));
-
-
-
-            if (brightness > MAX_BRIGHTNESS)
-                {
-                brightness = MAX_BRIGHTNESS;
-
-                // Just for stabillity
-                for (int i = 0; i < N_LEDS_SEC_0; i++)
-                    leds_main [i] = currColor3sectionsRVD [0];
-                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
-                    leds_main [i] = currColor3sectionsRVD [1];
-                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
-                    leds_main [i] = currColor3sectionsRVD [2];
-                }
-            else
-                {
-                // Section 0
-                for (int i = 0; i < N_LEDS_SEC_0; i += N_LEDS_SUBSEC)
-                    {
-                    CRGB thisColor = currColor3sectionsRVD [0];
-                    CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
-                                              float (thisColor.g)*brightness / 255.f,
-                                              float (thisColor.b)*brightness / 255.f);
-
-                    int rnd_val = rand () % RND_AMPL;
-                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
-                        subsec_color = CRGB (0, 0, 0);
-
-                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
-                        {
-                        if (i + j >= N_LEDS_MAIN)
-                            break;
-                        leds_main [i + j] = subsec_color;
-                        }
-                    }
-                // Section 1
-                for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i += N_LEDS_SUBSEC)
-                    {
-                    CRGB thisColor = currColor3sectionsRVD [1];
-                    CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
-                                              float (thisColor.g)*brightness / 255.f,
-                                              float (thisColor.b)*brightness / 255.f);
-
-                    int rnd_val = rand () % RND_AMPL;
-                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
-                        subsec_color = CRGB (0, 0, 0);
-
-                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
-                        {
-                        if (i + j >= N_LEDS_SEC_0 + N_LEDS_SEC_1)
-                            break;
-                        leds_main [i + j] = subsec_color;
-                        }
-                    }
-                // Section 2
-                for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i += N_LEDS_SUBSEC)
-                    {
-                    CRGB thisColor = currColor3sectionsRVD [2];
-                    CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
-                                              float (thisColor.g)*brightness / 255.f,
-                                              float (thisColor.b)*brightness / 255.f);
-
-                    int rnd_val = rand () % RND_AMPL;
-                    if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
-                        subsec_color = CRGB (0, 0, 0);
-
-                    for (int j = 0; j < N_LEDS_SUBSEC; j++)
-                        {
-                        if (i + j >= N_LEDS_MAIN)
-                            break;
-                        leds_main [i + j] = subsec_color;
-                        }
-                    }
-                }
-
+            mainStrip_RVD_RND_mode ();
             break;
             }
         default:
@@ -491,8 +166,6 @@ void StripController::update (float dt)
             }
         case FREQ_FULL:
             {
-            Serial.println (frequency_full [6]);
-
             for (int i = 0; i < N_LEDS_TABLE / 2; i++)
                 {
                 int curr_pos_freq_array = int (i * SPECTRUM_SIZE / (N_LEDS_TABLE / 2));
@@ -678,4 +351,356 @@ void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
     {
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         frequency_full [i] = newFreqVal [i];
+    }
+
+// Modes defenitions
+void StripController::mainStrip_off_mode ()
+    {
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main [i] = CRGB::Black;
+    }
+void StripController::mainStrip_fullWhite_mode ()
+    {
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main [i] = CRGB::White;
+    }
+void StripController::mainStrip_mono_mode ()
+    {
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main [i] = currColor;
+    }
+void StripController::mainStrip_fade_mode ()
+    {
+    float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        {
+        leds_main [i].r = currColor.r * brightness;
+        leds_main [i].g = currColor.g * brightness;
+        leds_main [i].b = currColor.b * brightness;
+        }
+    }
+void StripController::mainStrip_fade_switch_mode ()
+    {
+    float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        {
+        leds_main [i].r = fadeSwitchColor.r * brightness;
+        leds_main [i].g = fadeSwitchColor.g * brightness;
+        leds_main [i].b = fadeSwitchColor.b * brightness;
+        }
+
+    // Generates new color at low brightness
+    if (brightness < float (SWITCH_BRIGHTNESS) / float (MAX_BRIGHTNESS))
+        {
+        brightness = 0;
+        if (!switchedColorFlag)
+            {
+            switchedColorFlag = true;
+
+            if (fadeSwitchColor == CRGB (CRGB::Red))
+                fadeSwitchColor = CRGB::Yellow;
+            else if (fadeSwitchColor == CRGB (CRGB::Yellow))
+                fadeSwitchColor = CRGB::Green;
+            else if (fadeSwitchColor == CRGB (CRGB::Green))
+                fadeSwitchColor = CRGB::LightBlue;
+            else if (fadeSwitchColor == CRGB (CRGB::LightBlue))
+                fadeSwitchColor = CRGB::Blue;
+            else if (fadeSwitchColor == CRGB (CRGB::Blue))
+                fadeSwitchColor = CRGB::Violet;
+            else
+                fadeSwitchColor = CRGB::Red;
+            }
+        }
+    else if (switchedColorFlag)
+        switchedColorFlag = false;
+    }
+void StripController::mainStrip_fade_random_mode ()
+    {
+    float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        {
+        leds_main [i].r = fadeSwitchColor.r * brightness;
+        leds_main [i].g = fadeSwitchColor.g * brightness;
+        leds_main [i].b = fadeSwitchColor.b * brightness;
+        }
+
+    // Generates new color at low brightness
+    if (brightness < float (SWITCH_BRIGHTNESS) / float (MAX_BRIGHTNESS))
+        {
+        brightness = 0;
+        if (!switchedColorFlag)
+            {
+            switchedColorFlag = true;
+
+            fadeSwitchColor = CRGB (CHSV (rand () % 360, MAX_SATURATION, MAX_BRIGHTNESS));
+            }
+        }
+    else if (switchedColorFlag)
+        switchedColorFlag = false;
+    }
+void StripController::mainStrip_rainbow_Sine_mode ()
+    {
+    CRGB color;
+
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        {
+        color.r = 128 + 127 * sinf (double (rainbow_freq * i * (2 * PI) / N_LEDS_MAIN + (2 * PI)*rainbow_offset + 2 * PI / 3));
+        color.g = 128 + 127 * sinf (double (rainbow_freq * i * (2 * PI) / N_LEDS_MAIN + (2 * PI)*rainbow_offset + 4 * PI / 3));
+        color.b = 128 + 127 * sinf (double (rainbow_freq * i * (2 * PI) / N_LEDS_MAIN + (2 * PI)*rainbow_offset));
+        leds_main [i] = color;
+        }
+    }
+void StripController::mainStrip_rainbow_HSV_mode ()
+    {
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main [i] = CHSV (i*(360 / N_LEDS_MAIN)*rainbow_freq + rainbow_offset * 360,
+                              MAX_SATURATION,
+                              MAX_BRIGHTNESS);
+    }
+void StripController::mainStrip_night_mode ()
+    {
+    float dt = float (millis () - mode_activation_time);
+    float full_time = float (NIGHT_FADE_TIME) * 60.f * 1000.f;
+    float brightness = float (NIGHT_BRIGHTNESS_MAX)*
+        float (1.f - (dt / full_time));
+
+    if (brightness < 0)
+        brightness = 0;
+
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, int (brightness));
+    }
+void StripController::mainStrip_RVD_mode ()
+    {
+    float dt = float (millis () - mode_activation_time);
+    float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
+    float brightness = float (MAX_BRIGHTNESS)*
+        float ((dt / full_time));
+
+    if (brightness > 255)
+        {
+        brightness = 255;
+
+        // Just for stabillity
+        for (int i = 0; i < N_LEDS_SEC_0; i++)
+            leds_main [i] = CRGB::Blue;
+        for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
+            leds_main [i] = CRGB::Red;
+        for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
+            leds_main [i] = CRGB (40, 0, 255);
+        }
+    else
+        {
+        // Section 0
+        for (int i = 0; i < N_LEDS_SEC_0; i += N_LEDS_SUBSEC)
+            {
+            CRGB subsec_color = CRGB (0, 0, brightness);
+
+            int rnd_val = rand () % RND_AMPL;
+            if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                subsec_color = CRGB (0, 0, 0);
+
+            for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                {
+                if (i + j >= N_LEDS_MAIN)
+                    break;
+                leds_main [i + j] = subsec_color;
+                }
+            }
+        // Section 1
+        for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i += N_LEDS_SUBSEC)
+            {
+            CRGB subsec_color = CRGB (brightness, 0, 0);
+
+            int rnd_val = rand () % RND_AMPL;
+            if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                subsec_color = CRGB (0, 0, 0);
+
+            for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                {
+                if (i + j >= N_LEDS_SEC_0 + N_LEDS_SEC_1)
+                    break;
+                leds_main [i + j] = subsec_color;
+                }
+            }
+        // Section 2
+        for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i += N_LEDS_SUBSEC)
+            {
+            CRGB subsec_color = CRGB (brightness / 10, 0, brightness);
+
+            int rnd_val = rand () % RND_AMPL;
+            if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                subsec_color = CRGB (0, 0, 0);
+
+            for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                {
+                if (i + j >= N_LEDS_MAIN)
+                    break;
+                leds_main [i + j] = subsec_color;
+                }
+            }
+        }
+    }
+void StripController::mainStrip_rise_mode ()
+    {
+    float dt = float (millis () - mode_activation_time);
+    float full_time = float (RISE_MODE_RISE_TIME) * 60.f * 1000.f;
+    float brightness = float (RISE_BRIGHTNESS_MAX) *
+        float (dt / full_time);
+
+    // RGB color
+    CRGB riseColor = RISE_COLOR;
+    // Black to RISE_COLOR stage
+    if (brightness <= RISE_BRIGHTNESS_MAX)
+        {
+        riseColor = CRGB (riseColor.r * float (brightness / float (RISE_BRIGHTNESS_MAX)),
+                          riseColor.g * float (brightness / float (RISE_BRIGHTNESS_MAX)),
+                          riseColor.b * float (brightness / float (RISE_BRIGHTNESS_MAX)));
+        }
+    // RISE_COLOR to white stage
+    else if (brightness <= 2 * RISE_BRIGHTNESS_MAX)
+        {
+        CRGB deltaColor = CRGB (CRGB::White) - riseColor;
+
+        deltaColor = CRGB (deltaColor.r * float (brightness - RISE_BRIGHTNESS_MAX) /
+                           float (RISE_BRIGHTNESS_MAX),
+                           deltaColor.g * float (brightness - RISE_BRIGHTNESS_MAX) /
+                           float (RISE_BRIGHTNESS_MAX),
+                           deltaColor.b * float (brightness - RISE_BRIGHTNESS_MAX) /
+                           float (RISE_BRIGHTNESS_MAX));
+        riseColor += deltaColor;
+        }
+    else
+        riseColor = CRGB::White;
+
+    // Fills leds' colors array
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        leds_main [i] = riseColor;
+    }
+void StripController::mainStrip_oldschool_mode ()
+    {
+    // Fills new color
+    if (millis () - mode_activation_time >= (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
+        setMode (mode);
+    // Fades new color from black
+    else if (millis () - mode_activation_time < FADE_SWITCH_TIME * 1000)
+        {
+        float percent = float (millis () - mode_activation_time) /
+            float (FADE_SWITCH_TIME * 1000);
+
+        CRGB sections [3] = {};
+        for (int i = 0; i < 3; i++)
+            sections [i] = CRGB (currColor3sections [i].r*percent,
+                                 currColor3sections [i].g*percent,
+                                 currColor3sections [i].b*percent);
+
+        fillSections (sections);
+        }
+    // Fills current colors
+    else if (millis () - mode_activation_time <
+             float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed)))
+        {
+        fillSections (currColor3sections);
+
+        }
+    else if (millis () - mode_activation_time < (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
+        {
+        float percent = 1.f - float (millis () - mode_activation_time -
+            (OLDSCHOOL_SWITCH_TIME * 60 * 1000 -
+                                     FADE_SWITCH_TIME * 1000)) /
+            float (FADE_SWITCH_TIME * 1000);
+
+        CRGB sections [3] = {};
+        for (int i = 0; i < 3; i++)
+            sections [i] = CRGB (currColor3sections [i].r*percent,
+                                 currColor3sections [i].g*percent,
+                                 currColor3sections [i].b*percent);
+
+        fillSections (sections);
+        }
+    }
+void StripController::mainStrip_RVD_RND_mode ()
+    {
+    float dt = float (millis () - mode_activation_time);
+    float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
+    float brightness = float (MAX_BRIGHTNESS)*
+        float ((dt / full_time));
+
+
+
+    if (brightness > MAX_BRIGHTNESS)
+        {
+        brightness = MAX_BRIGHTNESS;
+
+        // Just for stabillity
+        for (int i = 0; i < N_LEDS_SEC_0; i++)
+            leds_main [i] = currColor3sectionsRVD [0];
+        for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i++)
+            leds_main [i] = currColor3sectionsRVD [1];
+        for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i++)
+            leds_main [i] = currColor3sectionsRVD [2];
+        }
+    else
+        {
+        // Section 0
+        for (int i = 0; i < N_LEDS_SEC_0; i += N_LEDS_SUBSEC)
+            {
+            CRGB thisColor = currColor3sectionsRVD [0];
+            CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
+                                      float (thisColor.g)*brightness / 255.f,
+                                      float (thisColor.b)*brightness / 255.f);
+
+            int rnd_val = rand () % RND_AMPL;
+            if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                subsec_color = CRGB (0, 0, 0);
+
+            for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                {
+                if (i + j >= N_LEDS_MAIN)
+                    break;
+                leds_main [i + j] = subsec_color;
+                }
+            }
+        // Section 1
+        for (int i = N_LEDS_SEC_0; i < N_LEDS_SEC_0 + N_LEDS_SEC_1; i += N_LEDS_SUBSEC)
+            {
+            CRGB thisColor = currColor3sectionsRVD [1];
+            CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
+                                      float (thisColor.g)*brightness / 255.f,
+                                      float (thisColor.b)*brightness / 255.f);
+
+            int rnd_val = rand () % RND_AMPL;
+            if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                subsec_color = CRGB (0, 0, 0);
+
+            for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                {
+                if (i + j >= N_LEDS_SEC_0 + N_LEDS_SEC_1)
+                    break;
+                leds_main [i + j] = subsec_color;
+                }
+            }
+        // Section 2
+        for (int i = N_LEDS_SEC_0 + N_LEDS_SEC_1; i < N_LEDS_MAIN; i += N_LEDS_SUBSEC)
+            {
+            CRGB thisColor = currColor3sectionsRVD [2];
+            CRGB subsec_color = CRGB (float (thisColor.r)*brightness / 255.f,
+                                      float (thisColor.g)*brightness / 255.f,
+                                      float (thisColor.b)*brightness / 255.f);
+
+            int rnd_val = rand () % RND_AMPL;
+            if (rnd_val >= RND_AMPL - RND_AMPL * pow (2, -brightness / 20))
+                subsec_color = CRGB (0, 0, 0);
+
+            for (int j = 0; j < N_LEDS_SUBSEC; j++)
+                {
+                if (i + j >= N_LEDS_MAIN)
+                    break;
+                leds_main [i + j] = subsec_color;
+                }
+            }
+        }
     }

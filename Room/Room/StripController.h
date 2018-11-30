@@ -47,6 +47,10 @@ class StripController
             FREQ_3,
             FREQ_FULL
             };
+
+    private:
+        // ----------------------------------------
+        // Enums
         enum frequences
             {
             lows,
@@ -54,7 +58,6 @@ class StripController
             highs
             };
 
-    private:
         // ----------------------------------------
         // Parameters
 
@@ -148,6 +151,37 @@ class StripController
         
         // HSV HUE to rgb
         CRGB Wheel (byte WheelPos);
+
+        /*
+        off,
+            fullWhite,
+            mono,
+            fade,
+            fade_switch,
+            fade_switch_random,
+            rainbow_Sine,
+            rainbow_HSV,
+            night,
+            RVD,
+            rise,
+            oldschool6,
+            oldschoolRND,
+            RVD_RND
+        */
+
+        void mainStrip_off_mode ();
+        void mainStrip_fullWhite_mode ();
+        void mainStrip_mono_mode ();
+        void mainStrip_fade_mode ();
+        void mainStrip_fade_switch_mode ();
+        void mainStrip_fade_random_mode ();
+        void mainStrip_rainbow_Sine_mode ();
+        void mainStrip_rainbow_HSV_mode ();
+        void mainStrip_night_mode ();
+        void mainStrip_RVD_mode ();
+        void mainStrip_rise_mode ();
+        void mainStrip_oldschool_mode ();
+        void mainStrip_RVD_RND_mode ();
 
         // ----------------------------------------
         // Display function
