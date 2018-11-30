@@ -46,7 +46,7 @@ PowerSupply::PowerSupply (byte pinI, byte pinV, byte pinT)
     pinCurrent = pinI;
     pinVoltage = pinV;
     
-    voltage = current = power = 0.f;
+    voltage = current = power = temperature = 0.f;
 
     // Temperature sensor init
     DS18B20 = DallasTemperature (&OneWire (pinT));
@@ -58,7 +58,7 @@ void PowerSupply::update ()
     float current_raw_input = voltage_prec (pinCurrent);
 
     // Wattage
-    voltage = voltage_prec (pinVoltage);
+    voltage = voltage_prec (pinVoltage) * VOLTAGE_AMPL_FACTOR;
     current = U_TO_I_K * current_raw_input + U_TO_I_B;
     power = current * voltage;
 
@@ -66,7 +66,6 @@ void PowerSupply::update ()
     DS18B20.requestTemperatures ();
     temperature = DS18B20.getTempCByIndex (0);
     }
-
 
 float PowerSupply::getVoltage ()
     {
@@ -80,7 +79,6 @@ float PowerSupply::getPower ()
     {
     return power;
     }
-
 float PowerSupply::getTemperature ()
     {
     return temperature;

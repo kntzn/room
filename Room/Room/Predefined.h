@@ -194,7 +194,7 @@
 // ----------------------------------------
 
 // ----------------------------------------
-// Wattmeter
+// Power Supply
 
 // Pinout
 #define CURRENT_SENSOR_PIN A6
@@ -208,8 +208,9 @@
 #define U_TO_I_K 2.82702703
 #define U_TO_I_B 0.35
 
+#define VOLTAGE_AMPL_FACTOR 1.5f
 
-// !Wattmeter
+// !Power Supply
 // ----------------------------------------
 
 

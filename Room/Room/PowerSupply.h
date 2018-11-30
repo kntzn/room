@@ -16,7 +16,6 @@
 class PowerSupply
     {
     private:
-        
         DallasTemperature DS18B20;
 
         byte pinVoltage;

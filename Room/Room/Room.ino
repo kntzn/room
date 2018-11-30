@@ -100,4 +100,9 @@ void initPins ()
     // Door
     pinMode (DOOR_SENSOR_PIN, INPUT_PULLUP);
     // !Door
+
+    // Power supply
+    pinMode (CURRENT_SENSOR_PIN, INPUT);
+    pinMode (VOLTAGE_SENSOR_PIN, INPUT);
+    // !Power supply
     }
