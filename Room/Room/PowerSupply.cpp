@@ -2,7 +2,7 @@
 // 
 // 
 
-#include "Wattmeter.h"
+#include "PowerSupply.h"
 
 long PowerSupply::aver_analog (uint8_t pin, size_t times)
     {
@@ -41,21 +41,30 @@ float PowerSupply::voltage_prec (byte pin)
     return readVcc ()*aver_analog (pin) / 1024 / 1000.0 + 0.05f;
     }
 
-PowerSupply::PowerSupply (byte pinI, byte pinV)
+PowerSupply::PowerSupply (byte pinI, byte pinV, byte pinT)
     {    
     pinCurrent = pinI;
     pinVoltage = pinV;
-
+    
     voltage = current = power = 0.f;
+
+    // Temperature sensor init
+    DS18B20 = DallasTemperature (&OneWire (pinT));
+    DS18B20.begin ();
     }
 
 void PowerSupply::update ()
     {
-    float current_raw_input = voltage_prec (CURRENT_SENSOR_PIN);
+    float current_raw_input = voltage_prec (pinCurrent);
 
-    voltage = voltage_prec (VOLTAGE_SENSOR_PIN);
+    // Wattage
+    voltage = voltage_prec (pinVoltage);
     current = U_TO_I_K * current_raw_input + U_TO_I_B;
     power = current * voltage;
+
+    // Temperature
+    DS18B20.requestTemperatures ();
+    temperature = DS18B20.getTempCByIndex (0);
     }
 
 
@@ -70,4 +79,9 @@ float PowerSupply::getCurrent ()
 float PowerSupply::getPower ()
     {
     return power;
+    }
+
+float PowerSupply::getTemperature ()
+    {
+    return temperature;
     }
