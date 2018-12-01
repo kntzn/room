@@ -15,15 +15,20 @@
 class HardwareMonitor
     {
     private:
+        bool updAvail = 0;
         char lastChar = 0;
         String input;
 
         LiquidCrystal_I2C lcd;
+        int hardwareState [N_HW_PARAMS] = {};
 
     public:
         HardwareMonitor ();
 
         void listenSerial ();
+        void log ();
+        void print ();
+
     };
 
 #endif

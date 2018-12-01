@@ -217,6 +217,7 @@
 // ----------------------------------------
 // Hardware Monitor
 #define SERIAL_HW_MONITOR Serial1
+#define N_HW_PARAMS 8
 
 // !Hardware Monitor
 // ----------------------------------------
