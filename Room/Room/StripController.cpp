@@ -229,7 +229,7 @@ void StripController::sync_strips ()
     for (int i = 0; i < N_LEDS_TABLE; i++)
         leds_table [N_LEDS_TABLE - 1 - i] = leds_main [i];
     }
-void StripController::fillSections (CRGB sections [3])
+void StripController::fillSections (CRGB sections [N_SEC])
     {
     // Paints the sections
     for (int i = 0; i < N_LEDS_SEC_0; i++)
@@ -275,12 +275,12 @@ void StripController::setMode (byte newMode)
 
     if (newMode == oldschool6)
         {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < N_SEC; i++)
             currColor3sections [i] = Wheel ((255 / 6) * (rand () % 6));
         }
     if (newMode == oldschoolRND)
         {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < N_SEC; i++)
             currColor3sections [i] = Wheel (rand () % 256);
         }
     if (newMode == RVD_RND)
@@ -315,6 +315,11 @@ void StripController::setTableMode (byte newMode)
 void StripController::setColor (CRGB newColor)
     {
     currColor = newColor;
+    }
+void StripController::setSectionColor (CRGB newColor, byte sec_id)
+    {
+    if (sec_id < 3)
+        currColor3sections [sec_id] = newColor;
     }
 void StripController::setRainbowFrequency (float newFreq)
     {
@@ -593,8 +598,8 @@ void StripController::mainStrip_oldschool_mode ()
         float percent = float (millis () - mode_activation_time) /
             float (FADE_SWITCH_TIME * 1000);
 
-        CRGB sections [3] = {};
-        for (int i = 0; i < 3; i++)
+        CRGB sections [N_SEC] = {};
+        for (int i = 0; i < N_SEC; i++)
             sections [i] = CRGB (currColor3sections [i].r*percent,
                                  currColor3sections [i].g*percent,
                                  currColor3sections [i].b*percent);
@@ -619,8 +624,8 @@ void StripController::mainStrip_oldschool_mode ()
                                      FADE_SWITCH_TIME * 1000)) /
             float (FADE_SWITCH_TIME * 1000);
 
-        CRGB sections [3] = {};
-        for (int i = 0; i < 3; i++)
+        CRGB sections [N_SEC] = {};
+        for (int i = 0; i < N_SEC; i++)
             sections [i] = CRGB (currColor3sections [i].r*percent,
                                  currColor3sections [i].g*percent,
                                  currColor3sections [i].b*percent);
@@ -634,8 +639,6 @@ void StripController::mainStrip_RVD_RND_mode ()
     float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
     float brightness = float (MAX_BRIGHTNESS)*
         float ((dt / full_time));
-
-
 
     if (brightness > MAX_BRIGHTNESS)
         {

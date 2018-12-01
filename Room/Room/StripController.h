@@ -81,13 +81,13 @@ class StripController
         CRGB currColor = CRGB::Black;
 
         // Color of sections
-        CRGB currColor3sections [3] = 
+        CRGB currColor3sections [N_SEC] =
             { 
             CRGB::Black,
             CRGB::Black,
             CRGB::Black
             };
-        CRGB currColor3sectionsRVD [3] =
+        CRGB currColor3sectionsRVD [N_SEC] =
             {
             CRGB::Black,
             CRGB::Black,
@@ -146,7 +146,7 @@ class StripController
         void sync_strips ();
 
         // Fills sections with their colors
-        void fillSections (CRGB sections [3]);
+        void fillSections (CRGB sections [N_SEC]);
         
         // HSV HUE to rgb
         CRGB Wheel (byte WheelPos);
@@ -203,6 +203,7 @@ class StripController
         void setTableMode (byte newMode); 
         
         void setColor (CRGB newColor);
+        void setSectionColor (CRGB newColor, byte sec_id);
 
         void setRainbowFrequency (float newFreq);
         void setRainbowSpeed (float newSpeed);

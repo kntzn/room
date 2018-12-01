@@ -14,6 +14,7 @@
 #define N_LEDS_MAIN 164
 #define N_LEDS_TABLE 42
 
+#define N_SEC 3
 #define N_LEDS_SEC_0 53
 #define N_LEDS_SEC_1 39
 #define N_LEDS_SEC_2 72
