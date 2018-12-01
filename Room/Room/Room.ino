@@ -4,12 +4,14 @@
  Author:	CODEBOOK
 */
 
+
 #include "DoorSensor.h"
 #include "WindowController.h"
 #include "Hbridge.h"
 #include "LightController.h"
 #include "Predefined.h"
 
+#include "HardwareMonitor.h"
 #include "Analyzer.h"
 
 void initPins ();
@@ -44,6 +46,8 @@ int main ()
     
     Analyzer analyzer;
     
+    HardwareMonitor hw_monitor;
+
     float prev_t = float (millis ());
 
     while (true)
@@ -78,6 +82,7 @@ int main ()
         controller.update (dt);
         // !Strip coontroller
 
+        hw_monitor.listenSerial ();
         }
 
     return 0;
