@@ -93,7 +93,6 @@ class StripController
             CRGB::Black,
             CRGB::Black
             };
-
         const CRGB Color3sectionsRVD [N_COLORS_RVD] =
             {
             CRGB::Red,
@@ -104,7 +103,7 @@ class StripController
             CRGB (0, 178, 255)
             };
 
-
+        
 
         // ----------------------------------------
         // Internal Variables
