@@ -83,7 +83,6 @@ int main ()
         // !Strip coontroller
 
         hw_monitor.listenSerial ();
-        hw_monitor.log ();
         hw_monitor.print ();
         }
 

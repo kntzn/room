@@ -26,6 +26,9 @@ class HardwareMonitor
         HardwareMonitor ();
 
         void listenSerial ();
+        
+        void removeNoise ();
+
         void log ();
         void print ();
 

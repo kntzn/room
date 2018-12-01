@@ -11,39 +11,12 @@ HardwareMonitor::HardwareMonitor ():
     SERIAL_HW_MONITOR.begin (BAUD_RATE_SERIAL);
 
     lcd.init ();
-    
+    lcd.backlight ();
     }
 
 void HardwareMonitor::listenSerial ()
     {
     int parameter_ID = 0;
-    /*
-    // Parses full string
-    while (SERIAL_HW_MONITOR.available ())
-        {
-        lastChar = SERIAL_HW_MONITOR.read ();
-        if (lastChar == ';' || lastChar == 'E')
-            {
-            if (parameter_ID < N_HW_PARAMS)
-                hardwareState [parameter_ID] = input.toInt ();
-
-            parameter_ID++;
-
-            if (lastChar == 'E')
-                {
-                lastChar = 0;
-                updAvail = true;
-
-                }
-            input = "";
-            }
-        else
-            input += lastChar;
-        }
-
-
-        */
-
     
     while (SERIAL_HW_MONITOR.available ())
         {
@@ -62,12 +35,25 @@ void HardwareMonitor::listenSerial ()
             while ((str = strtok_r (p, ";", &p)) != NULL) 
                 {
                 String string_convert = str;
-                hardwareState [index] = string_convert.toInt ();
+                if (index < N_HW_PARAMS)
+                    hardwareState [index] = string_convert.toInt ();
                 index++;
                 }
             input = "";
             }
             
+        }
+    }
+
+void HardwareMonitor::removeNoise ()
+    {
+    for (int i = 0; i < N_HW_PARAMS; i++)
+        {
+        // if data > 100 % or > 100%
+        if (hardwareState [i] > 100)
+            {
+            hardwareState [i] /= 10;
+            }
         }
     }
 
@@ -99,12 +85,22 @@ void HardwareMonitor::log ()
 
 void HardwareMonitor::print ()
     {
-    lcd.clear ();
-    lcd.home ();
-    lcd.print ("CPU TEMP: ");
-    lcd.print (hardwareState [0]);
-    lcd.setCursor (0, 1);
-    lcd.print ("CPU LOAD: ");
-    lcd.print (hardwareState [4]);
+    if (updAvail)
+        {
+        lcd.clear ();
+
+        lcd.setCursor (0, 0);
+        lcd.print ("CPU T: ");
+        lcd.print (hardwareState [0]);
+        lcd.print ("C; CPU L: ");
+        lcd.print (hardwareState [4]);
+        lcd.print ("%");
+        
+        lcd.setCursor (0, 1);
+        
+        
+        
+        updAvail = false;
+        }
     }
 
