@@ -218,6 +218,7 @@
 // Hardware Monitor
 #define SERIAL_HW_MONITOR Serial1
 #define N_HW_PARAMS 8
+#define N_TICKS_SMOOTH 2
 
 // !Hardware Monitor
 // ----------------------------------------

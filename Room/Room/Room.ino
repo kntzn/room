@@ -35,7 +35,7 @@ int main ()
 
     // Initialization of controller and strip
     LightController controller;
-    controller.setLedMode (StripController::rainbow_HSV);
+    controller.setLedMode (StripController::fade_switch_random);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (0.2f);

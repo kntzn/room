@@ -20,7 +20,9 @@ class HardwareMonitor
         String input;
 
         LiquidCrystal_I2C lcd;
-        int hardwareState [N_HW_PARAMS] = {};
+        int hardwareState [N_HW_PARAMS][N_TICKS_SMOOTH] = {};
+
+        float hardwareStateFiltered [N_HW_PARAMS] = {};
 
     public:
         HardwareMonitor ();

@@ -36,7 +36,18 @@ void HardwareMonitor::listenSerial ()
                 {
                 String string_convert = str;
                 if (index < N_HW_PARAMS)
-                    hardwareState [index] = string_convert.toInt ();
+                    {
+                    // ROL:
+
+                    for (int i = 0; i < N_TICKS_SMOOTH - 1; i++)
+                        hardwareState [index] [i] = hardwareState [index] [i + 1];
+
+
+                    // Value conversion
+                    hardwareState [index] [N_TICKS_SMOOTH - 1] = string_convert.toInt ();
+                    
+                    
+                    }
                 index++;
                 }
             input = "";
@@ -47,39 +58,24 @@ void HardwareMonitor::listenSerial ()
 
 void HardwareMonitor::removeNoise ()
     {
+    // Filters last values
     for (int i = 0; i < N_HW_PARAMS; i++)
         {
         // if data > 100 % or > 100%
-        if (hardwareState [i] > 1000)
-            hardwareState [i] /= 100;
-        else if (hardwareState [i] > 100)
-            hardwareState [i] /= 10;
+        if (hardwareState [i] [N_TICKS_SMOOTH - 1] > 1000)
+            hardwareState [i] [N_TICKS_SMOOTH - 1] /= 100;
+        else if (hardwareState [i] [N_TICKS_SMOOTH - 1] > 100)
+            hardwareState [i] [N_TICKS_SMOOTH - 1] /= 10;
         }
-    }
 
-void HardwareMonitor::log ()
-    {
-    if (updAvail)
+    // Creates average values of last N_TICKS_SMOOTH updates
+    for (int i = 0; i < N_HW_PARAMS; i++)
         {
-        Serial.println ("HW MON LOG:");
-        Serial.println ("-----------------");
-        Serial.print ("CPU TEMP: ");
-        Serial.print (hardwareState [0]);
-        Serial.print ("degC;\nCPU LOAD: ");
-        Serial.print (hardwareState [4]);
-        Serial.print ("%;\nGPU TEMP: ");
-        Serial.print (hardwareState [1]);
-        Serial.print ("degC;\nGPU LOAD: ");
-        Serial.print (hardwareState [5]);
-        Serial.print ("%;\nGPU MEM LOAD: ");
-        Serial.print (hardwareState [7]);
-        Serial.print ("%;\nHDD TEMP: ");
-        Serial.print (hardwareState [3]);
-        Serial.print ("degC;\nRAM LOAD: ");
-        Serial.print (hardwareState [6]);
-        Serial.print ("%;\n");
+        float summ = 0;
+        for (int j = 0; j < N_TICKS_SMOOTH; j++)
+            summ += (float) hardwareState [i] [j];
         
-        updAvail = false;
+        hardwareStateFiltered [i] = summ / float (N_TICKS_SMOOTH);
         }
     }
 
@@ -91,16 +87,16 @@ void HardwareMonitor::print ()
 
         lcd.setCursor (0, 0);
         lcd.print ("CPU: ");
-        lcd.print (hardwareState [0]);
+        lcd.print (hardwareStateFiltered [0], 1);
         lcd.print ("C; ");
-        lcd.print (hardwareState [4]);
+        lcd.print (hardwareStateFiltered [4], 0);
         lcd.print ("%");
         
         lcd.setCursor (0, 1);
         lcd.print ("GPU L:");
-        lcd.print (hardwareState [5]);
+        lcd.print (hardwareStateFiltered [5], 0);
         lcd.print ("% M:");
-        lcd.print (hardwareState [7]);
+        lcd.print (hardwareStateFiltered [7], 0);
         lcd.print ("%");
 
         
