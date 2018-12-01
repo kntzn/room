@@ -50,10 +50,10 @@ void HardwareMonitor::removeNoise ()
     for (int i = 0; i < N_HW_PARAMS; i++)
         {
         // if data > 100 % or > 100%
-        if (hardwareState [i] > 100)
-            {
+        if (hardwareState [i] > 1000)
+            hardwareState [i] /= 100;
+        else if (hardwareState [i] > 100)
             hardwareState [i] /= 10;
-            }
         }
     }
 
@@ -90,15 +90,19 @@ void HardwareMonitor::print ()
         lcd.clear ();
 
         lcd.setCursor (0, 0);
-        lcd.print ("CPU T: ");
+        lcd.print ("CPU: ");
         lcd.print (hardwareState [0]);
-        lcd.print ("C; CPU L: ");
+        lcd.print ("C; ");
         lcd.print (hardwareState [4]);
         lcd.print ("%");
         
         lcd.setCursor (0, 1);
-        
-        
+        lcd.print ("GPU L:");
+        lcd.print (hardwareState [5]);
+        lcd.print ("% M:");
+        lcd.print (hardwareState [7]);
+        lcd.print ("%");
+
         
         updAvail = false;
         }
