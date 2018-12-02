@@ -61,7 +61,7 @@
 
 
 // Night mode color
-#define NIGHT_COLOR HUE_PURPLE
+#define NIGHT_COLOR CRGB (45, 10, 34)
 // Night fade time (min)
 #define NIGHT_FADE_TIME 10
 // Max brightness of night mode strip

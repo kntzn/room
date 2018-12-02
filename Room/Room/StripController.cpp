@@ -12,11 +12,6 @@ StripController::StripController ()
 // Visuals
 void StripController::update (float dt)
     {
-    // Trigger for animation start
-    
-    if (!triggered)
-        mode_activation_time = millis ();
-        
     // updating offsets
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;
@@ -479,17 +474,22 @@ void StripController::mainStrip_night_mode ()
     {
     float dt = float (millis () - mode_activation_time);
     float full_time = float (NIGHT_FADE_TIME) * 60.f * 1000.f;
-    float brightness = float (NIGHT_BRIGHTNESS_MAX)*
-        float (1.f - (dt / full_time));
+    float brightness = float (1.f - (dt / full_time));
 
-    if (brightness < 0)
+    if (brightness < 0 || !triggered)
         brightness = 0;
 
     for (int i = 0; i < N_LEDS_MAIN; i++)
-        leds_main [i] = CHSV (NIGHT_COLOR, MAX_SATURATION, int (brightness));
+        leds_main [i] = CRGB (NIGHT_COLOR.r*brightness, 
+                              NIGHT_COLOR.g*brightness,
+                              NIGHT_COLOR.b*brightness);
     }
 void StripController::mainStrip_RVD_mode ()
     {
+    // Trigger for animation start
+    if (!triggered)
+        mode_activation_time = millis ();
+
     float dt = float (millis () - mode_activation_time);
     float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
     float brightness = float (MAX_BRIGHTNESS)*
@@ -645,6 +645,10 @@ void StripController::mainStrip_oldschool_mode ()
     }
 void StripController::mainStrip_RVD_RND_mode ()
     {
+    // Trigger for animation start
+    if (!triggered)
+        mode_activation_time = millis ();
+
     float dt = float (millis () - mode_activation_time);
     float full_time = float (RVD_RISE_TIME) * 60.f * 1000.f;
     float brightness = float (MAX_BRIGHTNESS)*

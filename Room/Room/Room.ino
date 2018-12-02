@@ -61,7 +61,7 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
     
-        Serial.println (doorSens.isTriggered ());
+        //Serial.println (doorSens.isTriggered ());
 
 
         // Analyzer
@@ -73,7 +73,14 @@ int main ()
         if (!digitalRead (27))
             {
             controller.setProfile (LightController::film, &doorSens);
-            Serial.println ("sht");
+            }
+        if (!digitalRead (29))
+            {
+            controller.setProfile (LightController::night, &doorSens);
+            }
+        if (!digitalRead (31))
+            {
+            controller.setProfile (LightController::def, &doorSens);
             }
         
         controller.update (dt, &doorSens);
@@ -82,9 +89,6 @@ int main ()
 
         doorSens.update ();
 
-        //hw_monitor.listenSerial ();
-        //hw_monitor.removeNoise ();
-        //hw_monitor.print ();
         }
 
     return 0;

@@ -82,6 +82,9 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             }
         case night:
             {
+            if (sens != nullptr)
+                sens->setTriggerType (DoorSensor::ifClosed);
+
             LED.setMode (StripController::night);
             LED.setTableMode (StripController::sync);
             Torchere.setState (BulbController::off);
@@ -90,6 +93,7 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             }
         case def:
             {
+            LED.setTrigger (true);
             restartAnimation ();
             LED.setTableMode (StripController::sync);
             Torchere.setState (BulbController::on);
