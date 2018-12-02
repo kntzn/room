@@ -13,9 +13,10 @@ StripController::StripController ()
 void StripController::update (float dt)
     {
     // Trigger for animation start
+    
     if (!triggered)
         mode_activation_time = millis ();
-
+        
     // updating offsets
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;

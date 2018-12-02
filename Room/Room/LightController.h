@@ -11,6 +11,7 @@
 
 #include "LightBulbController.h"
 #include "StripController.h"
+#include "DoorSensor.h"
 
 #include "Predefined.h"
 #include "Analyzer.h"
@@ -46,13 +47,13 @@ class LightController
         // Main functions
 
         // Upates all light sources
-        void update (float dt);
+        void update (float dt, DoorSensor* sens);
 
         // Gets information from analyzer and sets parameters to led strips
         void syncWithAnalyzer (Analyzer &analyzer, float dt);
         
         // Sets premade profile
-        void setProfile (byte mode);
+        void setProfile (byte mode, DoorSensor* sens);
 
         // ---------------------------
         // Led strip parameters setters

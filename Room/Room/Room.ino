@@ -27,7 +27,7 @@ int main ()
     srand (analogRead (NC));
 
     // Serial1 initialization
-    Serial1.begin (BAUD_RATE_SERIAL);
+    Serial.begin (BAUD_RATE_SERIAL);
 
     pinMode (29, INPUT_PULLUP);
     pinMode (27, INPUT_PULLUP);
@@ -46,8 +46,12 @@ int main ()
     
     Analyzer analyzer;
     
-    HardwareMonitor hw_monitor;
+    //HardwareMonitor hw_monitor;
 
+    DoorSensor doorSens (DOOR_SENSOR_PIN);
+    doorSens.setTriggerType (DoorSensor::ifOpen);
+
+    
     float prev_t = float (millis ());
 
     while (true)
@@ -56,33 +60,30 @@ int main ()
         float dt = (float (millis ()) - prev_t)/1000.f;
         prev_t += dt*1000.f;
         // !Clock
-        
+    
+        Serial.println (doorSens.isTriggered ());
+
+
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
         // !Analyzer
 
         // Strip controller
-        if (!digitalRead (29))
-            {
-            controller.setProfile (LightController::night);
-            }
         if (!digitalRead (27))
             {
-            controller.setProfile (LightController::film);
-            }
-        if (!digitalRead (25))
-            {
-            controller.setLedMode (StripController::rise);
-            controller.setLedTableMode (StripController::sync);
+            controller.setProfile (LightController::film, &doorSens);
+            Serial.println ("sht");
             }
         
-        controller.update (dt);
+        controller.update (dt, &doorSens);
         // !Strip coontroller
 
-        hw_monitor.listenSerial ();
-        hw_monitor.removeNoise ();
-        hw_monitor.print ();
+        doorSens.update ();
+
+        //hw_monitor.listenSerial ();
+        //hw_monitor.removeNoise ();
+        //hw_monitor.print ();
         }
 
     return 0;

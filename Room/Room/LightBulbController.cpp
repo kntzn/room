@@ -7,10 +7,18 @@ BulbController::BulbController (byte pin)
 
 void BulbController::update ()
     {
-    digitalWrite (output_pin, state);        
+    if (inverted)
+        digitalWrite (output_pin, !state);
+    else
+        digitalWrite (output_pin, state);
     }
 
 void BulbController::setState (bool newState)
     {
     state = newState;
+    }
+
+void BulbController::setLogicLevel (bool lvl)
+    {
+    inverted = lvl;
     }

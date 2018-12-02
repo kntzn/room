@@ -22,6 +22,7 @@ class BulbController
         // ----------------------------------------
         // Internal variables
         bool state = off;
+        bool inverted = false;
         byte output_pin = 0;
 
     public:
@@ -38,6 +39,7 @@ class BulbController
         // Setstate function
         // Sets the state of the relay pin
         void setState (bool newState);      
+        void setLogicLevel (bool lvl);
     };
 
 #endif

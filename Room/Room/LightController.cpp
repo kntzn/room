@@ -13,9 +13,13 @@ LightController::LightController ()
     {
     }
 
-void LightController::update (float dt)
+void LightController::update (float dt, DoorSensor* sens = nullptr)
     {
-    //LED.setTrigger (false);
+    if (sens != nullptr)
+        LED.setTrigger (sens->isTriggered ());
+    else
+        LED.setTrigger (true);
+
     LED.update (dt);
     Lamp.update ();
     Torchere.update ();
@@ -28,7 +32,7 @@ void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)
     LED.setFreq3values (analyzer.getFreq3Values ());
     }
 
-void LightController::setProfile (byte mode)
+void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
     {
     switch (mode)
         {
@@ -58,6 +62,9 @@ void LightController::setProfile (byte mode)
             }
         case film:
             {
+            if (sens != nullptr)
+                sens->setTriggerType (DoorSensor::ifOpening);
+
             LED.setMode (StripController::RVD);
             LED.setTableMode (StripController::sync);
             Torchere.setState (BulbController::off);
