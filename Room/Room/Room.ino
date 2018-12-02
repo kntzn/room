@@ -77,6 +77,7 @@ int main ()
             }
         
         controller.update (dt, &doorSens);
+
         // !Strip coontroller
 
         doorSens.update ();
@@ -95,6 +96,11 @@ void initPins ()
     pinMode (STRIP_DATA_MAIN, OUTPUT);
     pinMode (STRIP_DATA_TABLE, OUTPUT);
     // !Strip controller
+
+    // Light controller
+    pinMode (RELAY_LAMP, OUTPUT);
+    pinMode (RELAY_TORCHERE, OUTPUT);
+    // !Light controller
 
     // Analyzer
     pinMode (MIC_INPUT, INPUT);

@@ -11,18 +11,27 @@ void LightController::restartAnimation ()
 
 LightController::LightController ()
     {
+    Lamp.setLogicLevel (true);
+    Torchere.setLogicLevel (true);
     }
 
 void LightController::update (float dt, DoorSensor* sens = nullptr)
     {
+    bool isTrig = false;
+
     if (sens != nullptr)
-        LED.setTrigger (sens->isTriggered ());
+        isTrig = sens->isTriggered ();
     else
-        LED.setTrigger (true);
+        isTrig = true;
+
+    LED.setTrigger (isTrig);
 
     LED.update (dt);
-    Lamp.update ();
-    Torchere.update ();
+    if (isTrig)
+        {
+        Lamp.update ();
+        Torchere.update ();
+        }
     }
 
 void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)
