@@ -17,9 +17,17 @@ class DoorSensor
             opened = 0,
             closed = 1
             };
+        enum triggerTp
+            {
+            ifOpen,
+            ifClosed,
+            ifOpening,
+            ifClosing
+            };
     protected:
-        bool state = opened;
-        byte input_pin = 0;
+        bool state = opened, triggered = false;
+        byte input_pin = 0, trigger_type = ifOpen;
+
     public:
         DoorSensor (byte pin)
             {
@@ -28,6 +36,9 @@ class DoorSensor
 
         void update ();
         bool getState ();
+
+        void setTriggerType (byte trg_type);
+
     };
 
 #endif

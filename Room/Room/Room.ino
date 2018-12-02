@@ -26,8 +26,8 @@ int main ()
     // Random initialization
     srand (analogRead (NC));
 
-    // Serial initialization
-    Serial.begin (BAUD_RATE_SERIAL);
+    // Serial1 initialization
+    Serial1.begin (BAUD_RATE_SERIAL);
 
     pinMode (29, INPUT_PULLUP);
     pinMode (27, INPUT_PULLUP);
@@ -113,3 +113,4 @@ void initPins ()
     pinMode (VOLTAGE_SENSOR_PIN, INPUT);
     // !Power supply
     }
+    

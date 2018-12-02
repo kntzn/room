@@ -227,7 +227,7 @@
 // Other
 #define BAUD_RATE_SERIAL 9600
 
-#define DOOR_SENSOR_PIN 43
+#define DOOR_SENSOR_PIN 23
 
 // Not connected pin used to generate random seed
 #define NC A8

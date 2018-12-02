@@ -89,16 +89,9 @@ void HardwareMonitor::print ()
         lcd.print ("CPU: ");
         lcd.print (hardwareStateFiltered [0], 1);
         lcd.print ("C; ");
-        lcd.print (hardwareStateFiltered [4], 0);
+        lcd.print (hardwareState [4][N_TICKS_SMOOTH - 1]);
         lcd.print ("%");
         
-        lcd.setCursor (0, 1);
-        lcd.print ("GPU L:");
-        lcd.print (hardwareStateFiltered [5], 0);
-        lcd.print ("% M:");
-        lcd.print (hardwareStateFiltered [7], 0);
-        lcd.print ("%");
-
         
         updAvail = false;
         }

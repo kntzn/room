@@ -15,6 +15,7 @@
 class HardwareMonitor
     {
     private:
+        
         bool updAvail = 0;
         char lastChar = 0;
         String input;
