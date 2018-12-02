@@ -36,6 +36,7 @@ class DoorSensor
 
         void update ();
         bool getState ();
+        bool isTriggered ();
 
         void setTriggerType (byte trg_type);
 

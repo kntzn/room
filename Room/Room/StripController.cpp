@@ -12,6 +12,10 @@ StripController::StripController ()
 // Visuals
 void StripController::update (float dt)
     {
+    // Trigger for animation start
+    if (!triggered)
+        mode_activation_time = millis ();
+
     // updating offsets
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;
@@ -340,6 +344,11 @@ void StripController::setFreqModeRainFreq (float newFreq)
 void StripController::setFreqModeRainOffset (float newOffset)
     {
     freq_full_rainbow_offset = newOffset;
+    }
+
+void StripController::setTrigger (bool value)
+    {
+    triggered = value;
     }
 
 // Communication

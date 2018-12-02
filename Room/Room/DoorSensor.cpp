@@ -33,6 +33,11 @@ bool DoorSensor::getState ()
     return state;
     }
 
+bool DoorSensor::isTriggered ()
+    {
+    return triggered;
+    }
+
 void DoorSensor::setTriggerType (byte trg_type)
     {
     trigger_type = trg_type;

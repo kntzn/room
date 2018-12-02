@@ -15,6 +15,7 @@ LightController::LightController ()
 
 void LightController::update (float dt)
     {
+    //LED.setTrigger (false);
     LED.update (dt);
     Lamp.update ();
     Torchere.update ();

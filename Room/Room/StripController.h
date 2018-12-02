@@ -61,6 +61,9 @@ class StripController
         // ----------------------------------------
         // Parameters
 
+        // Trigger for animation start
+        bool triggered = false;
+
         // Speed of rainbow palette (palette_offset)
         float palette_speed = 0.1f;
         // Speed of rainbow (rainbow_offset)
@@ -102,8 +105,6 @@ class StripController
             CRGB (191, 0, 255),
             CRGB (0, 178, 255)
             };
-
-        
 
         // ----------------------------------------
         // Internal Variables
@@ -212,6 +213,7 @@ class StripController
         void setFreqModeRainOffset (float newOffset);
 
         // --------------COMMUNICATION-------------
+        void setTrigger (bool value);
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
         void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);

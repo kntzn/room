@@ -65,13 +65,11 @@ int main ()
         // Strip controller
         if (!digitalRead (29))
             {
-            controller.setLedMode (StripController::mainStripMode::night);
-            controller.setLedTableMode (StripController::sync);
+            controller.setProfile (LightController::night);
             }
         if (!digitalRead (27))
             {
-            controller.setLedMode (StripController::RVD_RND);
-            controller.setLedTableMode (StripController::sync);
+            controller.setProfile (LightController::film);
             }
         if (!digitalRead (25))
             {
