@@ -621,7 +621,7 @@ void StripController::mainStrip_oldschool_mode ()
     else if (rainbow_speed == 0 ||
             (rainbow_speed != 0 && 
              millis () - mode_activation_time <
-                 float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed))))
+             float (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed))))
         {
         fillSections (currColor3sections);
         }
@@ -629,11 +629,10 @@ void StripController::mainStrip_oldschool_mode ()
         if (millis () - mode_activation_time < 
             (OLDSCHOOL_SWITCH_TIME * 60 * 1000) / (4 * abs (rainbow_speed)))
         {
-        float percent = 1.f - float (millis () - mode_activation_time -
-            (OLDSCHOOL_SWITCH_TIME * 60 * 1000 -
-                                     FADE_SWITCH_TIME * 1000)) /
-            float (FADE_SWITCH_TIME * 1000);
-
+        float oneColorDuration = (OLDSCHOOL_SWITCH_TIME * 60 * 1000 - FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed));
+        float percent = 1.f - float (millis () - mode_activation_time - oneColorDuration) / 
+                              (float (FADE_SWITCH_TIME * 1000) / (4 * abs (rainbow_speed)));
+        
         CRGB sections [N_SEC] = {};
         for (int i = 0; i < N_SEC; i++)
             sections [i] = CRGB (currColor3sections [i].r*percent,

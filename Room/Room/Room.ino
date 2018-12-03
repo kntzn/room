@@ -34,9 +34,14 @@ int main ()
     pinMode (27, INPUT_PULLUP);
     pinMode (25, INPUT_PULLUP);
 
+
+    DoorSensor doorSens (DOOR_SENSOR_PIN);
+    doorSens.setTriggerType (DoorSensor::ifOpen);
+
+
     // Initialization of controller and strip
     LightController controller;
-    controller.setLedMode (StripController::fade_switch_random);
+    controller.setLedMode (StripController::oldschoolRND);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (0.2f);
@@ -49,9 +54,7 @@ int main ()
     
     //HardwareMonitor hw_monitor;
 
-    DoorSensor doorSens (DOOR_SENSOR_PIN);
-    doorSens.setTriggerType (DoorSensor::ifOpen);
-
+    controller.setProfile (LightController::def, &doorSens);
     
     float prev_t = float (millis ());
 
