@@ -83,7 +83,10 @@ int main ()
             {
             Serial.println ("Night");
 
-            controller.setProfile (LightController::night, &doorSens);
+            if (controller.getProfile () != LightController::night)
+                controller.setProfile (LightController::night, &doorSens);
+            else
+                controller.setProfile (LightController::rise, &doorSens);
             }
         if (!digitalRead (25))
             {

@@ -39,6 +39,8 @@ void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)
 
 void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
     {
+    profile = mode;
+
     switch (mode)
         {
         case off:
@@ -82,6 +84,14 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
                 sens->setTriggerType (DoorSensor::ifClosed);
 
             LED.setMode (StripController::night);
+            LED.setTableMode (StripController::sync);
+            Torchere.setState (BulbController::off);
+            Lamp.setState (BulbController::off);
+            break;
+            }
+        case rise:
+            {
+            LED.setMode (StripController::rise);
             LED.setTableMode (StripController::sync);
             Torchere.setState (BulbController::off);
             Lamp.setState (BulbController::off);
@@ -146,4 +156,9 @@ void LightController::setTorchereState (byte newState)
 void LightController::setLampState (byte newState)
     {
     Lamp.setState (newState);
+    }
+
+byte LightController::getProfile ()
+    {
+    return profile;
     }

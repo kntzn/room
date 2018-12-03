@@ -26,6 +26,7 @@ class LightController
             noLed,
             film,
             night,
+            rise,
             def
             };
 
@@ -81,10 +82,17 @@ class LightController
         // i.e. color at the center of LED strip
         void setLedAnalyzerAnimationOffset (float newOffset);
         
+        // ---------------------------
+        // Lamps parameters setters
+
         // Sets the mode of the torchere
         void setTorchereState (byte newMode);
         // Sets the mode of the lamp
         void setLampState (byte newMode);
+
+        // ---------------------------
+        // Getters
+        byte getProfile ();
     };
 
 
