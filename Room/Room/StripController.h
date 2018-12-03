@@ -33,9 +33,9 @@ class StripController
             rise,
             oldschool6,
             oldschoolRND,
-            RVD_RND
+            RVD_RND,
             //matrix,
-            
+            n_modes
             };
         enum tableStripMode
             {

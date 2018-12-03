@@ -5,6 +5,7 @@
 */
 
 
+
 #include "DoorSensor.h"
 #include "WindowController.h"
 #include "Hbridge.h"
@@ -61,8 +62,7 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
     
-        //Serial.println (doorSens.isTriggered ());
-
+        
 
         // Analyzer
         analyzer.update (dt);
@@ -72,14 +72,22 @@ int main ()
         // Strip controller
         if (!digitalRead (27))
             {
+            Serial.println ("Film");
+
             controller.setProfile (LightController::film, &doorSens);
             }
         if (!digitalRead (29))
             {
+            Serial.println ("Night");
+
             controller.setProfile (LightController::night, &doorSens);
             }
-        if (!digitalRead (31))
+        if (!digitalRead (25))
             {
+            Serial.println ("def");
+            
+            controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
+
             controller.setProfile (LightController::def, &doorSens);
             }
         

@@ -165,8 +165,8 @@
 // Light controller defines
 
 // Pinout
-#define RELAY_LAMP 31
-#define RELAY_TORCHERE 33
+#define RELAY_LAMP 33
+#define RELAY_TORCHERE 31
 
 // !Light controller defines
 // ----------------------------------------

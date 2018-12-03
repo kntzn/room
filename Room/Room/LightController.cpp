@@ -11,8 +11,7 @@ void LightController::restartAnimation ()
 
 LightController::LightController ()
     {
-    Lamp.setLogicLevel (true);
-    Torchere.setLogicLevel (true);
+
     }
 
 void LightController::update (float dt, DoorSensor* sens = nullptr)
@@ -27,6 +26,7 @@ void LightController::update (float dt, DoorSensor* sens = nullptr)
     LED.setTrigger (isTrig);
 
     LED.update (dt);
+    
     if (isTrig)
         {
         Lamp.update ();
@@ -93,7 +93,6 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             }
         case def:
             {
-            LED.setTrigger (true);
             restartAnimation ();
             LED.setTableMode (StripController::sync);
             Torchere.setState (BulbController::on);
