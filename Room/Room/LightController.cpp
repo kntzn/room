@@ -26,12 +26,8 @@ void LightController::update (float dt, DoorSensor* sens = nullptr)
     LED.setTrigger (isTrig);
 
     LED.update (dt);
-    
-    if (isTrig)
-        {
-        Lamp.update ();
-        Torchere.update ();
-        }
+    Lamp.update ();
+    Torchere.update ();
     }
 
 void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)

@@ -38,6 +38,7 @@ class LightController
         // ---------------------------
         // Util 
         byte lastAnimationMode = StripController::off;
+        byte profile = 0;
         void restartAnimation ();
 
     public:

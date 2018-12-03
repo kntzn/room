@@ -44,8 +44,8 @@ int main ()
     controller.setLedMode (StripController::oldschoolRND);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
-    controller.setLedAnimationSpeed (0.2f);
-    controller.setLedAnimationFrequency (5.f);
+    controller.setLedAnimationSpeed (-0.05f);
+    controller.setLedAnimationFrequency (0.5f);
     controller.setLedAnalyzerAnimationFrequency (80);
     controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
     controller.setLedColor (CRGB::White);
