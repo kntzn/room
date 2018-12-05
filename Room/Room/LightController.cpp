@@ -67,6 +67,15 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             Lamp.setState (BulbController::on);
             break;
             }
+        case ledOnly:
+            {
+            restartAnimation ();
+
+            LED.setTableMode (StripController::sync);
+            Torchere.setState (BulbController::off);
+            Lamp.setState (BulbController::off);
+            break;
+            }
         case film:
             {
             if (sens != nullptr)

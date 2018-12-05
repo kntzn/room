@@ -77,7 +77,7 @@ int main ()
             {
             Serial.println ("Film");
 
-            controller.setProfile (LightController::film, &doorSens);
+            controller.setProfile (LightController::ledOnly, &doorSens);
             }
         if (!digitalRead (29))
             {

@@ -24,6 +24,7 @@ class LightController
             off,
             full,
             noLed,
+            ledOnly,
             film,
             night,
             rise,
