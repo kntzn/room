@@ -13,14 +13,17 @@
 #ifndef HOLD_TIME
 #define HOLD_TIME 1500
 #endif // !HOLD_TIME
-
-
-unsigned long int last_button_activity = 0;
-
 class Button
     {
     public:
-        enum buttonState;
+        enum buttonState
+            {
+            Unpr,
+            Rlsd,
+            Prs,
+            Prsd,
+            Hold
+            };
             
     private:
         bool flag = false;
@@ -40,4 +43,3 @@ class Button
 
 
 #endif
-

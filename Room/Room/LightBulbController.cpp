@@ -3,6 +3,8 @@
 BulbController::BulbController (byte pin)
     {
     output_pin = pin;
+
+    pinMode (output_pin, OUTPUT);
     }
 
 void BulbController::update ()

@@ -32,6 +32,8 @@ class DoorSensor
         DoorSensor (byte pin)
             {
             input_pin = pin;
+
+            pinMode (input_pin, INPUT_PULLUP);
             }
 
         void update ();

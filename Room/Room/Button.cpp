@@ -4,14 +4,7 @@
 
 #include "Button.h"
 
-enum Button::buttonState
-    {
-    Unpr,
-    Rlsd,
-    Prs,
-    Prsd,
-    Hold
-    };
+
 
 void Button::reset ()
     {

@@ -12,33 +12,24 @@
 #include "Hbridge.h"
 #include "LightController.h"
 #include "Predefined.h"
+#include "Button.h"
 
 #include "HardwareMonitor.h"
 #include "Analyzer.h"
-
-void initPins ();
 
 int main ()
     {
     // Microcontroller initialization
     init ();
-    // Pins initialization
-    initPins ();
-
+    
     // Random initialization
     srand (analogRead (NC));
 
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
-    pinMode (29, INPUT_PULLUP);
-    pinMode (27, INPUT_PULLUP);
-    pinMode (25, INPUT_PULLUP);
-
-
     DoorSensor doorSens (DOOR_SENSOR_PIN);
     doorSens.setTriggerType (DoorSensor::ifOpen);
-
 
     // Initialization of controller and strip
     LightController controller;
@@ -50,13 +41,21 @@ int main ()
     controller.setLedAnalyzerAnimationFrequency (80);
     controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
     controller.setLedColor (CRGB::White);
-    
-    Analyzer analyzer;
-    
-    //HardwareMonitor hw_monitor;
 
     controller.setProfile (LightController::def, &doorSens);
+
+
+    Analyzer analyzer;
     
+    Button button_left (BUTT_LEFT);
+    Button button_mid (BUTT_MIDL);
+    Button button_right (BUTT_RGHT);
+
+    //HardwareMonitor hw_monitor;
+
+
+
+
     float prev_t = float (millis ());
 
     while (true)
@@ -66,32 +65,39 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
     
-        
-
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
         // !Analyzer
 
+        // Buttons
+        button_left.update ();
+        button_mid.update ();
+        button_right.update ();
+        // !Buttons
+
         // Strip controller
-        if (!digitalRead (27))
+        if (button_left.getState () == Button::buttonState::Rlsd)
             {
-            Serial.println ("Film");
+            Serial.println ("Led only");
 
             controller.setProfile (LightController::ledOnly, &doorSens);
             }
-        if (!digitalRead (29))
+        if (button_right.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Night");
 
-            if (controller.getProfile () != LightController::night)
-                controller.setProfile (LightController::night, &doorSens);
-            else
-                controller.setProfile (LightController::rise, &doorSens);
+            controller.setProfile (LightController::night, &doorSens);
             }
-        if (!digitalRead (25))
+        if (button_right.getState () == Button::buttonState::Hold)
             {
-            Serial.println ("def");
+            Serial.println ("Rise");
+
+            controller.setProfile (LightController::rise, &doorSens);
+            }
+        if (button_mid.getState () == Button::buttonState::Rlsd)
+            {
+            Serial.println ("Def");
             
             controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
 
@@ -109,32 +115,4 @@ int main ()
     return 0;
     }
 
-void initPins ()
-    {
-    // Strip controller
-    pinMode (STRIP_DATA_MAIN, OUTPUT);
-    pinMode (STRIP_DATA_TABLE, OUTPUT);
-    // !Strip controller
-
-    // Light controller
-    pinMode (RELAY_LAMP, OUTPUT);
-    pinMode (RELAY_TORCHERE, OUTPUT);
-    // !Light controller
-
-    // Analyzer
-    pinMode (MIC_INPUT, INPUT);
-    pinMode (MIC_INPUT_FREQ, INPUT);
-    pinMode (JACK_INPUT, INPUT);
-    pinMode (JACK_INPUT_FREQ, INPUT);
-    // !Analyzer
-
-    // Door
-    pinMode (DOOR_SENSOR_PIN, INPUT_PULLUP);
-    // !Door
-
-    // Power supply
-    pinMode (CURRENT_SENSOR_PIN, INPUT);
-    pinMode (VOLTAGE_SENSOR_PIN, INPUT);
-    // !Power supply
-    }
     

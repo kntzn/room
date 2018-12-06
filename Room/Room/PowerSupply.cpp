@@ -46,6 +46,9 @@ PowerSupply::PowerSupply (byte pinI, byte pinV, byte pinT)
     pinCurrent = pinI;
     pinVoltage = pinV;
     
+    pinMode (pinI, INPUT);
+    pinMode (pinV, INPUT);
+
     voltage = current = power = temperature = 0.f;
 
     // Temperature sensor init

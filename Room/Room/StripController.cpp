@@ -3,6 +3,9 @@
 // Constructor
 StripController::StripController ()
     {
+    pinMode (STRIP_DATA_MAIN, OUTPUT);
+    pinMode (STRIP_DATA_TABLE, OUTPUT);
+
     LEDS.addLeds <WS2811, STRIP_DATA_MAIN, GRB> (leds_main, N_LEDS_MAIN);
     LEDS.addLeds <WS2811, STRIP_DATA_TABLE, GRB> (leds_table, N_LEDS_TABLE);
 
