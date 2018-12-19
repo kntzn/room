@@ -27,13 +27,9 @@ float Analyzer::measureVol ()
     {
     float volume = 0.f;
 
-    byte source_pin = JACK_INPUT;
-    if (source == soundSource::microphone)
-        source_pin = MIC_INPUT;
-
-    for (byte i = 0; i < 100; i++)
+    for (byte i = 0; i < N_MES; i++)
         {
-        int measured = analogRead (source_pin);
+        int measured = analogRead (JACK_INPUT);
         if (volume < measured) 
             volume = measured;
         }
@@ -115,6 +111,11 @@ void Analyzer::getPeaks ()
             freq_peaks [2] = freq [i];
     }
 
+int Analyzer::getVUout ()
+    {
+    return VU_out;
+    }
+
 float* Analyzer::getFreqValues ()
     {
     // Maps the frequencies loudness to FREQ_MAX level
@@ -147,13 +148,9 @@ float * Analyzer::getFreq3Values ()
 
 void Analyzer::analyzeAudio () 
     {
-    byte source_pin = JACK_INPUT_FREQ;
-    if (source == soundSource::microphone)
-        source_pin = MIC_INPUT_FREQ;
-
     for (int i = 0; i < FHT_N; i++) 
         {
-        int sample = analogRead (A2);
+        int sample = analogRead (JACK_INPUT_FREQ);
         fht_input [i] = sample;
         }
     // Windowing the data for better frequency response
@@ -164,5 +161,4 @@ void Analyzer::analyzeAudio ()
     fht_run ();     
     // Getting the output of the FHT
     fht_mag_log (); 
-
     }

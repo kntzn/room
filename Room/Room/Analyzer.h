@@ -16,11 +16,6 @@ class Analyzer
     public:
         // ----------------------------------------
         // Enums
-        enum soundSource
-            {
-            microphone,
-            headphones
-            };
         enum freq_peak_type
             {
             low_f,
@@ -31,8 +26,6 @@ class Analyzer
         // ----------------------------------------
         // Parameters
 
-        // Source of signal
-        byte source = headphones;
         // level of noise if VU mode
         int low_pass_filter_VU = 0;
         
@@ -94,10 +87,7 @@ class Analyzer
         void update (float dt);
 
         // ----------SETTERS and GETTERS-----------
-        int getVUout ()
-            {
-            return VU_out;
-            }
+        int getVUout ();
         float* getFreqValues ();
         float* getFreq3Values ();
 

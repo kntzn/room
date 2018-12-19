@@ -100,10 +100,8 @@
 #define LOG_OUT 1
 
 // Pinout
-#define MIC_INPUT A1
-#define MIC_INPUT_FREQ A0
-#define JACK_INPUT A3
-#define JACK_INPUT_FREQ A2
+#define JACK_INPUT A0
+#define JACK_INPUT_FREQ A1
 // ----------------------------------------
 // VU meter parameters
 
