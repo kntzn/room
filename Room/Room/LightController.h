@@ -22,6 +22,7 @@ class LightController
         enum profiles
             {
             off,
+            fullWhite,
             full,
             noLed,
             ledOnly,

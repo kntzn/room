@@ -62,12 +62,9 @@ void Button::update ()
 
         }
 
-    if (state != buttonState::Unpr)
-        last_button_activity = millis ();
     }
 
 byte Button::getState ()
     {
     return state;
     }
-

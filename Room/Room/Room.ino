@@ -82,6 +82,14 @@ int main ()
             Serial.println ("Led only");
 
             controller.setProfile (LightController::ledOnly, &doorSens);
+
+            controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
+            }
+        if (button_left.getState () == Button::buttonState::Hold)
+            {
+            Serial.println ("Rvd");
+
+            controller.setProfile (LightController::film, &doorSens);
             }
         if (button_right.getState () == Button::buttonState::Rlsd)
             {
@@ -99,9 +107,18 @@ int main ()
             {
             Serial.println ("Def");
             
+            controller.setProfile (LightController::full, &doorSens);
+            
             controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
 
+            }
+        if (button_mid.getState () == Button::buttonState::Hold)
+            {
+            Serial.println ("Def");
+
             controller.setProfile (LightController::def, &doorSens);
+            
+            controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
             }
         
         controller.update (dt, &doorSens);
@@ -110,6 +127,9 @@ int main ()
 
         doorSens.update ();
 
+
+        //hw_monitor.listenSerial ();
+        
         }
 
     return 0;

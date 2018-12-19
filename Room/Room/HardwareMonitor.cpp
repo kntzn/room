@@ -16,8 +16,39 @@ HardwareMonitor::HardwareMonitor ():
 
 void HardwareMonitor::listenSerial ()
     {
-    int parameter_ID = 0;
     
+    while (SERIAL_HW_MONITOR.available () > 0)
+        {
+        char inputChar = SERIAL_HW_MONITOR.read ();
+        if (inputChar != 'E')
+            {
+            inData [index] = inputChar;
+            index++;
+            inData [index] = '\0';
+            }
+        else
+            {
+            char *p = inData;
+            char *str;
+            index = 0;
+            while ((str = strtok_r (p, ";", &p)) != NULL) 
+                {
+                string_convert = str;
+                if (index < 8)
+                    {
+                    Serial.print ("[");
+                    Serial.print (index);
+                    Serial.print ("] = ");
+                    Serial.println (string_convert.toInt ());
+                    }
+                
+
+                index++;
+                }
+            index = 0;
+            }
+        }
+    /*
     while (SERIAL_HW_MONITOR.available ())
         {
         char aChar = SERIAL_HW_MONITOR.read ();
@@ -54,6 +85,7 @@ void HardwareMonitor::listenSerial ()
             }
             
         }
+        */
     }
 
 void HardwareMonitor::removeNoise ()

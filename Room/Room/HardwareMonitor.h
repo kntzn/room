@@ -20,6 +20,13 @@ class HardwareMonitor
         char lastChar = 0;
         String input;
 
+        int index = 0;
+
+
+
+        String string_convert;
+        char inData [512] = {};
+
         LiquidCrystal_I2C lcd;
         int hardwareState [N_HW_PARAMS][N_TICKS_SMOOTH] = {};
 

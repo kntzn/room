@@ -51,7 +51,7 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             Lamp.setState (BulbController::off);
             break;
             }
-        case full:
+        case fullWhite:
             {
             LED.setMode (StripController::fullWhite);
             LED.setTableMode (StripController::sync);
@@ -78,8 +78,7 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             }
         case film:
             {
-            if (sens != nullptr)
-                sens->setTriggerType (DoorSensor::ifOpening);
+            sens->setTriggerType (DoorSensor::ifOpening);
 
             LED.setMode (StripController::RVD);
             LED.setTableMode (StripController::sync);
@@ -106,11 +105,21 @@ void LightController::setProfile (byte mode, DoorSensor* sens = nullptr)
             Lamp.setState (BulbController::off);
             break;
             }
+        case full:
+            {
+            restartAnimation ();
+
+            LED.setTableMode (StripController::sync);
+            Torchere.setState (BulbController::on);
+            Lamp.setState (BulbController::on);
+            break;
+            }
         case def:
             {
             restartAnimation ();
+
             LED.setTableMode (StripController::sync);
-            Torchere.setState (BulbController::on);
+            Torchere.setState (BulbController::off);
             Lamp.setState (BulbController::on);
             break;
             }
