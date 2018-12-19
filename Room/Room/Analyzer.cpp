@@ -3,8 +3,6 @@
 
 Analyzer::Analyzer ()
     {
-    pinMode (MIC_INPUT, INPUT);
-    pinMode (MIC_INPUT_FREQ, INPUT);
     pinMode (JACK_INPUT, INPUT);
     pinMode (JACK_INPUT_FREQ, INPUT);
 
