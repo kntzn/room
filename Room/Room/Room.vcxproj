@@ -41,7 +41,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -63,11 +66,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Room;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\FastLED;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\LiquidCrystal_I2C-master;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\FHT;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\OneWire-master;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\Arduino-Temperature-Control-Library-master;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src\utility;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\..\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Room;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\FastLED;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\LiquidCrystal_I2C-master;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\FHT;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\OneWire-master;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries\Arduino-Temperature-Control-Library-master;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\..\..\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.Room.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>__AVR_ATmega2560__;F_CPU=16000000L;ARDUINO=10805;ARDUINO_AVR_MEGA2560;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -92,7 +96,6 @@
   <ItemGroup>
     <ClInclude Include="Analyzer.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="DoorSensor.h" />
     <ClInclude Include="HardwareMonitor.h" />
     <ClInclude Include="Hbridge.h" />
     <ClInclude Include="LightBulbController.h" />
@@ -106,7 +109,6 @@
   <ItemGroup>
     <ClCompile Include="Analyzer.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="DoorSensor.cpp" />
     <ClCompile Include="HardwareMonitor.cpp" />
     <ClCompile Include="Hbridge.cpp" />
     <ClCompile Include="LightBulbController.cpp" />

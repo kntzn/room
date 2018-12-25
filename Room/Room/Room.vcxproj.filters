@@ -42,9 +42,6 @@
     <ClInclude Include="WindowController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DoorSensor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PowerSupply.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WindowController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DoorSensor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PowerSupply.cpp">

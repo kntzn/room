@@ -61,9 +61,6 @@ class StripController
         // ----------------------------------------
         // Parameters
 
-        // Trigger for animation start
-        bool triggered = false;
-
         // Speed of rainbow palette (palette_offset)
         float palette_speed = 0.1f;
         // Speed of rainbow (rainbow_offset)

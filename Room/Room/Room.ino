@@ -4,10 +4,7 @@
  Author:	CODEBOOK
 */
 
-
-
 #include "Button.h"
-#include "DoorSensor.h"
 #include "WindowController.h"
 #include "Hbridge.h"
 #include "LightController.h"
@@ -28,9 +25,6 @@ int main ()
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
-    DoorSensor doorSens (DOOR_SENSOR_PIN);
-    doorSens.setTriggerType (DoorSensor::ifOpen);
-
     // Initialization of controller and strip
     LightController controller;
     controller.setLedMode (StripController::oldschoolRND);
@@ -42,8 +36,6 @@ int main ()
     controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
     controller.setLedColor (CRGB::White);
 
-    controller.setProfile (LightController::def, &doorSens);
-
 
     Analyzer analyzer;
     
@@ -52,9 +44,6 @@ int main ()
     Button button_right (BUTT_RGHT);
 
     //HardwareMonitor hw_monitor;
-
-
-
 
     float prev_t = float (millis ());
 
@@ -81,7 +70,7 @@ int main ()
             {
             Serial.println ("Led only");
 
-            controller.setProfile (LightController::ledOnly, &doorSens);
+            controller.setProfile (LightController::ledOnly);
 
             controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
             }
@@ -89,25 +78,25 @@ int main ()
             {
             Serial.println ("Rvd");
 
-            controller.setProfile (LightController::film, &doorSens);
+            controller.setProfile (LightController::film);
             }
         if (button_right.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Night");
 
-            controller.setProfile (LightController::night, &doorSens);
+            controller.setProfile (LightController::night);
             }
         if (button_right.getState () == Button::buttonState::Hold)
             {
             Serial.println ("Rise");
 
-            controller.setProfile (LightController::rise, &doorSens);
+            controller.setProfile (LightController::rise);
             }
         if (button_mid.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Def");
             
-            controller.setProfile (LightController::full, &doorSens);
+            controller.setProfile (LightController::full);
             
             controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
 
@@ -116,23 +105,13 @@ int main ()
             {
             Serial.println ("Def");
 
-            controller.setProfile (LightController::def, &doorSens);
+            controller.setProfile (LightController::def);
             
             controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
             }
         
-        controller.update (dt, &doorSens);
-
-        // !Strip coontroller
-
-        doorSens.update ();
-
-
-        //hw_monitor.listenSerial ();
-        
+        controller.update (dt);
         }
 
     return 0;
     }
-
-    
