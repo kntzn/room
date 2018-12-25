@@ -14,6 +14,8 @@
 #include "HardwareMonitor.h"
 #include "Analyzer.h"
 
+#include <LiquidCrystal_I2C.h>
+
 int main ()
     {
     // Microcontroller initialization
@@ -24,6 +26,11 @@ int main ()
 
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
+
+    LiquidCrystal_I2C lcd (0x27, 16, 2);
+    lcd.init ();
+    lcd.backlight ();
+    Serial1.begin (9600);
 
     // Initialization of controller and strip
     LightController controller;
@@ -54,6 +61,7 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
     
+        /*
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
@@ -111,6 +119,27 @@ int main ()
             }
         
         controller.update (dt);
+*/
+
+        float result = 0;
+        
+        for (int i = 0; i < 50; i++)
+            {
+            while (!Serial1.available ())
+                {
+                }
+
+            if (Serial1.available ())
+                {
+                result += (Serial1.read () == '1');
+                }
+            }
+        
+        lcd.print (result/50.f);
+        lcd.display ();
+        lcd.home ();
+        
+
         }
 
     return 0;
