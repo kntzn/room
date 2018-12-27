@@ -22,9 +22,6 @@
 #define N_LEDS_SUBSEC 9
 // ----------------------------------------
 
-// Pinout
-#define STRIP_DATA_MAIN 35
-#define STRIP_DATA_TABLE 37
 // ----------------------------------------
 
 
@@ -99,9 +96,6 @@
 
 #define LOG_OUT 1
 
-// Pinout
-#define JACK_INPUT A0
-#define JACK_INPUT_FREQ A1
 // ----------------------------------------
 // VU meter parameters
 
@@ -160,16 +154,6 @@
 // ----------------------------------------
 
 // ----------------------------------------
-// Light controller defines
-
-// Pinout
-#define RELAY_LAMP 33
-#define RELAY_TORCHERE 31
-
-// !Light controller defines
-// ----------------------------------------
-
-// ----------------------------------------
 // Window
 
 // Time, required to rotate the blinds by 180 deg
@@ -178,11 +162,6 @@
 // Time, required to set window in closed position (in secs)
 #define INIT_TIME_TO_OPEN FULL_OPEN_TIME
 
-// Pinout
-#define BRIDGE_0 11
-#define BRIDGE_1 12
-#define LIGHT_SENSOR_OUTSIDE A4
-#define LIGHT_SENSOR_INSIDE A5
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 30
@@ -192,24 +171,8 @@
 // !Window
 // ----------------------------------------
 
-
-// ----------------------------------------
-// Buttons
-#define BUTT_LEFT 29
-#define BUTT_MIDL 27
-#define BUTT_RGHT 25
-
-// !Buttons
-// ----------------------------------------
-
-
 // ----------------------------------------
 // Power Supply
-
-// Pinout
-#define CURRENT_SENSOR_PIN A6
-#define VOLTAGE_SENSOR_PIN A7
-#define TEMPERTURE_SENSOR_PIN 41
 
 // Reference voltage
 #define VCC_REF 1.0
@@ -236,13 +199,40 @@
 // Other
 #define BAUD_RATE_SERIAL 9600
 
-#define DOOR_SENSOR_PIN 23
+// Door cap sensor pulses period
+#define PULSES_PERIOD 1.0
 
-// Not connected pin used to generate random seed
-#define NC A8
 // !Other
 // ----------------------------------------
 
 #endif // !PREDEFINED_OFF
 
 
+
+// Pinout
+// Not connected pin used to generate random seed
+#define NC A8
+
+#define CAP_SENSOR_DOOR 23
+
+#define BUTT_LEFT 29
+#define BUTT_MIDL 27
+#define BUTT_RGHT 25
+
+#define STRIP_DATA_MAIN 35
+#define STRIP_DATA_TABLE 37
+
+#define JACK_INPUT A0
+#define JACK_INPUT_FREQ A1
+
+#define RELAY_LAMP 33
+#define RELAY_TORCHERE 31
+
+#define BRIDGE_0 11
+#define BRIDGE_1 12
+#define LIGHT_SENSOR_OUTSIDE A4
+#define LIGHT_SENSOR_INSIDE A5
+
+#define CURRENT_SENSOR_PIN A6
+#define VOLTAGE_SENSOR_PIN A7
+#define TEMPERTURE_SENSOR_PIN 41

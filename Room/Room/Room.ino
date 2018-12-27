@@ -4,6 +4,7 @@
  Author:	CODEBOOK
 */
 
+#include "DoorCapSensor.h"
 #include "Button.h"
 #include "WindowController.h"
 #include "Hbridge.h"
@@ -34,7 +35,7 @@ int main ()
 
     // Initialization of controller and strip
     LightController controller;
-    controller.setLedMode (StripController::oldschoolRND);
+    controller.setLedMode (StripController::oldschool6);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.05f);
@@ -61,7 +62,7 @@ int main ()
         prev_t += dt*1000.f;
         // !Clock
     
-        /*
+        
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
@@ -119,28 +120,21 @@ int main ()
             }
         
         controller.update (dt);
-*/
 
         float result = 0;
-        
-        for (int i = 0; i < 50; i++)
-            {
-            while (!Serial1.available ())
-                {
-                }
-
-            if (Serial1.available ())
-                {
-                result += (Serial1.read () == '1');
-                }
-            }
-        
-        lcd.print (result/50.f);
-        lcd.display ();
-        lcd.home ();
-        
+       
 
         }
 
     return 0;
     }
+
+// TODO:
+// Cap sensor for lamp
+// Autodetect microphone
+// Recreate schematic
+// Cap buttons
+// Hardware Monitor
+//
+//
+
