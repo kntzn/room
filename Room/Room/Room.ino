@@ -17,7 +17,8 @@
 
 #include <LiquidCrystal_I2C.h>
 
-#define xor(a, b) bool (bool (a) != bool (b))
+
+void randomizeParameters (LightController &controller);
 
 int main ()
     {
@@ -89,7 +90,7 @@ int main ()
 
             controller.setProfile (LightController::ledOnly);
 
-            controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
+            randomizeParameters (controller);
             }
         if (button_left.getState () == Button::buttonState::Hold)
             {
@@ -115,8 +116,7 @@ int main ()
             
             controller.setProfile (LightController::full);
             
-            controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
-
+            randomizeParameters (controller);
             }
         if (button_mid.getState () == Button::buttonState::Hold)
             {
@@ -124,16 +124,13 @@ int main ()
 
             controller.setProfile (LightController::def);
             
-            controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
+            randomizeParameters (controller);
             }
         
         if (cs_door.itIsTimeToSwitchIsntIt ())
             controller.setLampState (!controller.getLampState ());
 
         controller.update (dt);
-
-        
-
         }
 
     return 0;
@@ -145,6 +142,21 @@ int main ()
 // Recreate schematic
 // Cap buttons
 // Hardware Monitor
-//
-//
 
+    void randomizeParameters (LightController & controller)
+        {
+        controller.setLedAnimationFrequency (float (rand () % 60001 -
+                                             30000) / 60000.f);
+        controller.setLedAnimationSpeed (float (rand () % 50001 -
+                                             25000) / 100000.f);
+        controller.setLedColor (CRGB (CHSV (rand(), 
+                                            MAX_SATURATION,
+                                            MAX_BRIGHTNESS)));
+        byte mode = 0;
+        while (mode == StripController::mainStripMode::off ||
+               mode == StripController::mainStripMode::night ||
+               mode == StripController::mainStripMode::rise)
+            mode = rand () % StripController::n_modes;
+
+        controller.setLedMode (mode);
+        }
