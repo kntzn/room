@@ -24,3 +24,8 @@ void BulbController::setLogicLevel (bool lvl)
     {
     inverted = lvl;
     }
+
+bool BulbController::getState ()
+    {
+    return state;
+    }

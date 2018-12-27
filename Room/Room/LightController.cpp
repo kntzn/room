@@ -166,3 +166,13 @@ byte LightController::getProfile ()
     {
     return profile;
     }
+
+bool LightController::getTorchereState ()
+    {
+    return Torchere.getState ();
+    }
+
+bool LightController::getLampState ()
+    {
+    return Lamp.getState ();
+    }

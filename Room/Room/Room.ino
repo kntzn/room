@@ -17,6 +17,8 @@
 
 #include <LiquidCrystal_I2C.h>
 
+#define xor(a, b) bool (bool (a) != bool (b))
+
 int main ()
     {
     // Microcontroller initialization
@@ -52,6 +54,8 @@ int main ()
     Button button_right (BUTT_RGHT);
 
     //HardwareMonitor hw_monitor;
+    
+    DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
     float prev_t = float (millis ());
 
@@ -73,6 +77,10 @@ int main ()
         button_mid.update ();
         button_right.update ();
         // !Buttons
+
+        // Capacitive sensors
+        cs_door.update (dt);
+        // !Capacitive sensors
 
         // Strip controller
         if (button_left.getState () == Button::buttonState::Rlsd)
@@ -119,10 +127,12 @@ int main ()
             controller.setLedMode (rand () % (StripController::n_modes - 2) + 2);
             }
         
+        if (cs_door.itIsTimeToSwitchIsntIt ())
+            controller.setLampState (!controller.getLampState ());
+
         controller.update (dt);
 
-        float result = 0;
-       
+        
 
         }
 

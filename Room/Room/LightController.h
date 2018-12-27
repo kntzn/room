@@ -94,6 +94,9 @@ class LightController
         // ---------------------------
         // Getters
         byte getProfile ();
+
+        bool getTorchereState ();
+        bool getLampState ();
     };
 
 

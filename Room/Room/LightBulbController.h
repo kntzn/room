@@ -40,6 +40,12 @@ class BulbController
         // Sets the state of the relay pin
         void setState (bool newState);      
         void setLogicLevel (bool lvl);
+
+        // ----------------------------------------
+        // GetState  
+        // returns state variable value
+        bool getState ();
+
     };
 
 #endif
