@@ -60,6 +60,8 @@ int main ()
 
     float prev_t = float (millis ());
 
+    int max = 0;
+
     while (true)
         {
         // Clock
@@ -133,8 +135,14 @@ int main ()
             }
         controller.update (dt);
 
-        
+        if (analogRead (CAP_SENSOR_DOOR) > max)
+            max = analogRead (CAP_SENSOR_DOOR);
+
         lcd.clear ();
+        lcd.print (analogRead (CAP_SENSOR_DOOR));
+        lcd.setCursor (0, 1);
+        lcd.print (max);
+        
         lcd.home ();
         lcd.display ();
 

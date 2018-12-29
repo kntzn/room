@@ -3,7 +3,7 @@
 DoorCapSensor::DoorCapSensor (byte pin_input) :
     flag (false),
     toggle (false),
-    virtualCapCharge (0),
+    smoothAverage (0),
     sensorPin (pin_input),
     lastSwitchMillis (millis ())
     {
@@ -12,7 +12,18 @@ DoorCapSensor::DoorCapSensor (byte pin_input) :
 
 void DoorCapSensor::update (float dt)
     {
-    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > DOOR_CAP_TH);
+    // PART 0:
+    // is sensor activated?
+    
+    smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
+    Serial.println (smoothAverage);
+
+
+    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > smoothAverage + DOOR_CAP_TH);
+
+
+
+
 
     if (currentState == true)
         {

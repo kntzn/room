@@ -17,7 +17,9 @@ class DoorCapSensor
         bool toggle;
         bool flag;
         byte sensorPin;
-        float virtualCapCharge;
+        float smoothAverage;
+
+        
 
         unsigned long lastSwitchMillis;
 
