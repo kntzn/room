@@ -134,7 +134,7 @@ int main ()
         controller.update (dt);
 
         
-
+        lcd.clear ();
         lcd.home ();
         lcd.display ();
 

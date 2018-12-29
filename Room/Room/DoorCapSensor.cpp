@@ -12,7 +12,7 @@ DoorCapSensor::DoorCapSensor (byte pin_input) :
 
 void DoorCapSensor::update (float dt)
     {
-    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > 350);
+    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > DOOR_CAP_TH);
 
     if (currentState == true)
         {
@@ -42,7 +42,16 @@ bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
         {
         toggle = false;
     
-        return true;
+        if (millis () - lastSwitchMillis > 500)
+            {
+            lastSwitchMillis = millis ();
+            return true;
+            }
+        else
+            {
+            lastSwitchMillis = millis ();
+            return false;
+            }
         }
 
     return false;

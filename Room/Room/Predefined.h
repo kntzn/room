@@ -199,8 +199,8 @@
 // Other
 #define BAUD_RATE_SERIAL 9600
 
-// Door cap sensor pulses period
-#define PULSES_PERIOD 0.1
+// Door cap sensor threshold
+#define DOOR_CAP_TH 250
 
 // !Other
 // ----------------------------------------
