@@ -1,32 +1,41 @@
 #include "DoorCapSensor.h"
 
 DoorCapSensor::DoorCapSensor (byte pin_input) :
-    wasSwitched (true),
+    state (false),
+    toggle (false),
     virtualCapCharge (0),
-    sensorPin (pin_input)
+    sensorPin (pin_input),
+    lastSwitchMillis (millis ())
     {
     pinMode (pin_input, INPUT);
     }
 
 void DoorCapSensor::update (float dt)
     {
-    if (digitalRead (sensorPin))
-        virtualCapCharge = 1.0;
-    else if (virtualCapCharge > 0)
-        virtualCapCharge -= PULSES_PERIOD*dt;
+    if (state)
+        {
+        if (!digitalRead (CAP_SENSOR_DOOR))
+            toggle = false;
+        }
     else
         {
-        virtualCapCharge = 0;
-        wasSwitched = false;
+        if (digitalRead (CAP_SENSOR_DOOR))
+            toggle = true;
         }
     }
 
 bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
     {
-    if (wasSwitched == true)
+    Serial.println (toggle);
+
+    if (toggle == true && millis () - lastSwitchMillis > 2000)
         {
-        wasSwitched = false;
-        return true;
+        toggle = false;
+
+        lastSwitchMillis = millis ();
+
+        if (!digitalRead (CAP_SENSOR_DOOR))
+            return true;
         }
 
     return false;

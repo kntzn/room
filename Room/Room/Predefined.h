@@ -200,7 +200,7 @@
 #define BAUD_RATE_SERIAL 9600
 
 // Door cap sensor pulses period
-#define PULSES_PERIOD 1.0
+#define PULSES_PERIOD 0.1
 
 // !Other
 // ----------------------------------------
@@ -213,7 +213,7 @@
 // Not connected pin used to generate random seed
 #define NC A8
 
-#define CAP_SENSOR_DOOR 23
+#define CAP_SENSOR_DOOR A8
 
 #define BUTT_LEFT 29
 #define BUTT_MIDL 27

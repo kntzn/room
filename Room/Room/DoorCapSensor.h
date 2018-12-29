@@ -9,12 +9,17 @@
 	#include "WProgram.h"
 #endif
 
+#include "Predefined.h"
+
 class DoorCapSensor
     {
     private:
-        bool wasSwitched;
+        bool toggle;
+        bool state;
         byte sensorPin;
         float virtualCapCharge;
+
+        unsigned long lastSwitchMillis;
 
     public:
         DoorCapSensor (byte pin_input);

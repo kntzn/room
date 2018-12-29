@@ -46,7 +46,7 @@ int main ()
     controller.setLedAnalyzerAnimationFrequency (80);
     controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
     controller.setLedColor (CRGB::White);
-
+    controller.setProfile (LightController::def);
 
     Analyzer analyzer;
     
@@ -127,10 +127,23 @@ int main ()
             randomizeParameters (controller);
             }
         
-        if (cs_door.itIsTimeToSwitchIsntIt ())
-            controller.setLampState (!controller.getLampState ());
+        //if (cs_door.itIsTimeToSwitchIsntIt ())
+            controller.setLampState (analogRead (CAP_SENSOR_DOOR) > 400);
+        //if (cs_door.itIsTimeToSwitchIsntIt ())
+            //controller.setTorchereState (!controller.getTorchereState ());
 
         controller.update (dt);
+
+        if (digitalRead (CAP_SENSOR_DOOR))
+            lcd.print ("YESSSS");
+        else
+            lcd.print ("______");
+        
+        
+
+        lcd.home ();
+        lcd.display ();
+
         }
 
     return 0;
