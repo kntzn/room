@@ -15,7 +15,7 @@ class DoorCapSensor
     {
     private:
         bool toggle;
-        bool state;
+        bool flag;
         byte sensorPin;
         float virtualCapCharge;
 

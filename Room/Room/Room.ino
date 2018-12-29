@@ -127,18 +127,12 @@ int main ()
             randomizeParameters (controller);
             }
         
-        //if (cs_door.itIsTimeToSwitchIsntIt ())
-            controller.setLampState (analogRead (CAP_SENSOR_DOOR) > 400);
-        //if (cs_door.itIsTimeToSwitchIsntIt ())
-            //controller.setTorchereState (!controller.getTorchereState ());
-
+        if (cs_door.itIsTimeToSwitchIsntIt ())
+            {
+            controller.setTorchereState (!controller.getTorchereState ());
+            }
         controller.update (dt);
 
-        if (digitalRead (CAP_SENSOR_DOOR))
-            lcd.print ("YESSSS");
-        else
-            lcd.print ("______");
-        
         
 
         lcd.home ();
