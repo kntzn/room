@@ -21,24 +21,32 @@ float aver = 0;
 
 void (*resetFunc) (void) = 0;
 
+int max = 0;
+
 void CSread ()
     {
     long cs = cs_7_8.capacitiveSensor (100);
 
-    cs = constrain (cs, 0, 512);
+    //cs = constrain (cs, 0, 512);
 
     aver = float (cs)*0.05 + 0.95*aver;
 
-    int output = constrain (aver, 0, 1024);
+    int output = constrain (aver, 0, 500);
 
-    output = map (output, 0, 1024, 0, 255);
 
-    Serial.println (output);
+    output = map (output, 0, 500, 0, 255);
+
+    if (max < output)
+        max = output;
+
+    Serial.print (output);
+    Serial.print ('/');
+    Serial.println (max);
 
     analogWrite (9, output);
     analogWrite (11, output);
 
-    if (millis () > 60000 ||
-        output > 200)
-        resetFunc ();
+    //if (millis () > 60000)
+    //output > 200)
+    //resetFunc ();
     }
