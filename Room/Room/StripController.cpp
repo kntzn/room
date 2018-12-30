@@ -461,6 +461,8 @@ void StripController::mainStrip_night_mode ()
     float dt = float (millis () - mode_activation_time);
     float full_time = float (NIGHT_FADE_TIME) * 60.f * 1000.f;
     float brightness = float (1.f - (dt / full_time));
+    if (brightness < 0)
+        brightness = 0;
 
     for (int i = 0; i < N_LEDS_MAIN; i++)
         leds_main [i] = CRGB (NIGHT_COLOR.r*brightness, 

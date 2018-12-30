@@ -152,6 +152,7 @@ int main ()
     }
 
 // TODO:
+// dt for smoothAver ! ! ! ! 
 // Cap sensor for lamp
 // Autodetect microphone
 // Recreate schematic
