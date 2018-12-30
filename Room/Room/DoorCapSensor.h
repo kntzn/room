@@ -18,8 +18,8 @@ class DoorCapSensor
         bool flag;
         byte sensorPin;
         float smoothAverage;
-
-        
+        float rsVal = 0;
+        float maxRsVal = 0;
 
         unsigned long lastSwitchMillis;
 
@@ -29,7 +29,16 @@ class DoorCapSensor
         void update (float dt);
 
         bool itIsTimeToSwitchIsntIt ();
-        
+
+
+        float riseVal ()
+            {
+            return rsVal;
+            }
+        float maxRiseVal ()
+            {
+            return maxRsVal;
+            }
     };
 
 

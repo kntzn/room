@@ -135,16 +135,16 @@ int main ()
             }
         controller.update (dt);
 
-        if (analogRead (CAP_SENSOR_DOOR) > max)
-            max = analogRead (CAP_SENSOR_DOOR);
-
         lcd.clear ();
-        lcd.print (analogRead (CAP_SENSOR_DOOR));
+        lcd.print (cs_door.riseVal (), 0);
         lcd.setCursor (0, 1);
-        lcd.print (max);
+        lcd.print (cs_door.maxRiseVal ());
         
         lcd.home ();
         lcd.display ();
+
+
+        Serial.println (dt*1000.f);
 
         }
 

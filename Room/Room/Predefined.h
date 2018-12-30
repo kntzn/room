@@ -200,14 +200,10 @@
 #define BAUD_RATE_SERIAL 9600
 
 // Door cap sensor threshold
-#define DOOR_CAP_TH 50
+#define DOOR_CAP_TH 500
 
 // !Other
 // ----------------------------------------
-
-#endif // !PREDEFINED_OFF
-
-
 
 // Pinout
 // Not connected pin used to generate random seed
@@ -236,3 +232,7 @@
 #define CURRENT_SENSOR_PIN A6
 #define VOLTAGE_SENSOR_PIN A7
 #define TEMPERTURE_SENSOR_PIN 41
+
+#endif // !PREDEFINED_OFF
+
+

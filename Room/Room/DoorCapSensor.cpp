@@ -16,14 +16,16 @@ void DoorCapSensor::update (float dt)
     // is sensor activated?
     
     smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
-    Serial.println (smoothAverage);
+    
 
 
-    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > smoothAverage + DOOR_CAP_TH);
+    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > smoothAverage + float (DOOR_CAP_TH)*dt);
 
 
+    rsVal = analogRead (CAP_SENSOR_DOOR) - smoothAverage;
 
-
+    if (maxRsVal < rsVal && millis () > 5000)
+        maxRsVal = rsVal;
 
     if (currentState == true)
         {
@@ -56,6 +58,7 @@ bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
         if (millis () - lastSwitchMillis > 500)
             {
             lastSwitchMillis = millis ();
+            
             return true;
             }
         else
