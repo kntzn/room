@@ -71,8 +71,8 @@ int main ()
     
         
         // Analyzer
-        analyzer.update (dt);
-        controller.syncWithAnalyzer (analyzer, dt);
+        //analyzer.update (dt);
+        //controller.syncWithAnalyzer (analyzer, dt);
         // !Analyzer
 
         // Buttons
@@ -86,6 +86,8 @@ int main ()
         // !Capacitive sensors
 
         // Strip controller
+
+        
         if (button_left.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Led only");
@@ -135,17 +137,12 @@ int main ()
             }
         controller.update (dt);
 
-        lcd.clear ();
-        lcd.print (cs_door.riseVal (), 0);
+        lcd.print (cs_door.getMaxRise ());
         lcd.setCursor (0, 1);
-        lcd.print (cs_door.maxRiseVal ());
-        
+        lcd.print (dt*1000.f);
+
         lcd.home ();
         lcd.display ();
-
-
-        Serial.println (dt*1000.f);
-
         }
 
     return 0;

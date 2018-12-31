@@ -3,6 +3,7 @@
 DoorCapSensor::DoorCapSensor (byte pin_input) :
     flag (false),
     toggle (false),
+    nSwtch (0),
     smoothAverage (0),
     sensorPin (pin_input),
     lastSwitchMillis (millis ())
@@ -17,15 +18,12 @@ void DoorCapSensor::update (float dt)
     
     smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
     
-
-
-    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > smoothAverage + float (DOOR_CAP_TH)*dt);
-
-
-    rsVal = analogRead (CAP_SENSOR_DOOR) - smoothAverage;
-
-    if (maxRsVal < rsVal && millis () > 5000)
-        maxRsVal = rsVal;
+    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > smoothAverage + ((1.1 - pow (7,  (-dt / 0.280))) * 100));
+    
+    float delta = analogRead (CAP_SENSOR_DOOR) - smoothAverage;
+    
+    // PART 1:
+    // triggers
 
     if (currentState == true)
         {
@@ -59,6 +57,8 @@ bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
             {
             lastSwitchMillis = millis ();
             
+            nSwtch++;
+
             return true;
             }
         else
@@ -69,4 +69,14 @@ bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
         }
 
     return false;
+    }
+
+int DoorCapSensor::nSwitches ()
+    {
+    return nSwtch;
+    }
+
+float DoorCapSensor::getMaxRise ()
+    {
+    return risemax;
     }

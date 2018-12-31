@@ -17,12 +17,13 @@ class DoorCapSensor
         bool toggle;
         bool flag;
         byte sensorPin;
+        int nSwtch;
         float smoothAverage;
-        float rsVal = 0;
-        float maxRsVal = 0;
+
+        float risemax = 0;
+        long lasRiseMaxUpd = 0;
 
         unsigned long lastSwitchMillis;
-
     public:
         DoorCapSensor (byte pin_input);
 
@@ -30,15 +31,9 @@ class DoorCapSensor
 
         bool itIsTimeToSwitchIsntIt ();
 
+        int nSwitches ();
 
-        float riseVal ()
-            {
-            return rsVal;
-            }
-        float maxRiseVal ()
-            {
-            return maxRsVal;
-            }
+        float getMaxRise ();
     };
 
 
