@@ -58,7 +58,7 @@ int main ()
     
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
-    float prev_t = float (millis ());
+    long prev_t = millis ();
 
     int max = 0;
 
@@ -66,7 +66,8 @@ int main ()
         {
         // Clock
         float dt = (float (millis ()) - prev_t)/1000.f;
-        prev_t += dt*1000.f;
+        prev_t = millis ();
+        
         // !Clock
     
         
@@ -140,9 +141,14 @@ int main ()
         lcd.print (cs_door.getMaxRise ());
         lcd.setCursor (0, 1);
         lcd.print (dt*1000.f);
+        Serial.println (dt*1000.f, 0);
 
         lcd.home ();
         lcd.display ();
+
+
+        while (millis () - prev_t < 50)
+            {}
         }
 
     return 0;

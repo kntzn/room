@@ -38,9 +38,6 @@ void StripController::update (float dt)
         case fade_switch_random:
             mainStrip_fade_random_mode ();
             break;
-        case rainbow_Sine:
-            mainStrip_rainbow_Sine_mode ();
-            break;
         case rainbow_HSV:
             mainStrip_rainbow_HSV_mode ();
             break;
@@ -440,18 +437,7 @@ void StripController::mainStrip_fade_random_mode ()
         leds_main [i].b = fadeSwitchColor.b * brightness;
         }
     }
-void StripController::mainStrip_rainbow_Sine_mode ()
-    {
-    CRGB color;
 
-    for (int i = 0; i < N_LEDS_MAIN; i++)
-        {
-        color.r = 128 + 127 * sinf (double (rainbow_freq * i * (2 * PI) / N_LEDS_MAIN + (2 * PI)*rainbow_offset + 2 * PI / 3));
-        color.g = 128 + 127 * sinf (double (rainbow_freq * i * (2 * PI) / N_LEDS_MAIN + (2 * PI)*rainbow_offset + 4 * PI / 3));
-        color.b = 128 + 127 * sinf (double (rainbow_freq * i * (2 * PI) / N_LEDS_MAIN + (2 * PI)*rainbow_offset));
-        leds_main [i] = color;
-        }
-    }
 void StripController::mainStrip_rainbow_HSV_mode ()
     {
     for (int i = 0; i < N_LEDS_MAIN; i++)

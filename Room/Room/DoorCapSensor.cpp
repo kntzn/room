@@ -16,12 +16,22 @@ void DoorCapSensor::update (float dt)
     // PART 0:
     // is sensor activated?
     
+    int analogResult = analogRead (CAP_SENSOR_DOOR);
+
     smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
     
-    bool currentState = bool (analogRead (CAP_SENSOR_DOOR) > smoothAverage + ((1.1 - pow (7,  (-dt / 0.280))) * 100));
+    bool currentState = bool (analogResult > smoothAverage + /*((1.1 - pow (7,  (-dt / 0.280))) * 100)*/ 66);
     
-    float delta = analogRead (CAP_SENSOR_DOOR) - smoothAverage;
-    
+    float delta = analogResult - smoothAverage;
+
+    if (risemax < delta)
+        {
+        risemax = delta;
+        lasRiseMaxUpd = millis ();
+        }
+    if (millis () - lasRiseMaxUpd > 5000)
+        risemax = 0;
+
     // PART 1:
     // triggers
 
