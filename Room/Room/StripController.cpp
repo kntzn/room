@@ -8,8 +8,6 @@ StripController::StripController ()
 
     LEDS.addLeds <WS2811, STRIP_DATA_MAIN, GRB> (leds_main, N_LEDS_MAIN);
     LEDS.addLeds <WS2811, STRIP_DATA_TABLE, GRB> (leds_table, N_LEDS_TABLE);
-
-    LEDS.setBrightness (50);
     }
 
 // Visuals
@@ -66,6 +64,11 @@ void StripController::update (float dt)
         case RVD_RND:
             {
             mainStrip_RVD_RND_mode ();
+            break;
+            }
+        case fade_smooth:
+            {
+            mainStrip_fade_smooth_mode ();
             break;
             }
         default:
@@ -701,5 +704,28 @@ void StripController::mainStrip_RVD_RND_mode ()
                 leds_main [i + j] = subsec_color;
                 }
             }
+        }
+    }
+
+void StripController::mainStrip_fade_smooth_mode ()
+    {
+    float k = abs (rainbow_offset);
+
+    if (k > 1)
+        {
+        rainbow_offset -= int (rainbow_offset);
+        currColor = nextColor;
+        nextColor = Wheel (rand ());
+        
+        k--;
+        }
+
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        {
+        CRGB leds_color = CRGB (currColor.r * (1.f - k) + nextColor.r * k,
+                                currColor.g * (1.f - k) + nextColor.g * k,
+                                currColor.b * (1.f - k) + nextColor.b * k);
+
+        leds_main [i] = leds_color;
         }
     }

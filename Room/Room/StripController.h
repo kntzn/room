@@ -34,6 +34,7 @@ class StripController
             oldschool6,
             oldschoolRND,
             RVD_RND,
+            fade_smooth,
             //matrix,
             n_modes
             };
@@ -79,6 +80,7 @@ class StripController
         
         // Color of fade and mono modes
         CRGB currColor = CRGB::Black;
+        CRGB nextColor = CRGB::Black;
 
         // Color of sections
         CRGB currColor3sections [N_SEC] =
@@ -149,23 +151,6 @@ class StripController
         // HSV HUE to rgb
         CRGB Wheel (byte WheelPos);
 
-        /*
-        off,
-            fullWhite,
-            mono,
-            fade,
-            fade_switch,
-            fade_switch_random,
-            rainbow_Sine,
-            rainbow_HSV,
-            night,
-            RVD,
-            rise,
-            oldschool6,
-            oldschoolRND,
-            RVD_RND
-        */
-
         void mainStrip_off_mode ();
         void mainStrip_fullWhite_mode ();
         void mainStrip_mono_mode ();
@@ -179,6 +164,7 @@ class StripController
         void mainStrip_rise_mode ();
         void mainStrip_oldschool_mode ();
         void mainStrip_RVD_RND_mode ();
+        void mainStrip_fade_smooth_mode ();
 
         // ----------------------------------------
         // Display function
@@ -210,7 +196,6 @@ class StripController
         void setFreqModeRainOffset (float newOffset);
 
         // --------------COMMUNICATION-------------
-        void setTrigger (bool value);
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
         void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);

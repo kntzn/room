@@ -38,10 +38,10 @@ int main ()
 
     // Initialization of controller and strip
     LightController controller;
-    controller.setLedMode (StripController::oldschool6);
+    controller.setLedMode (StripController::fade_smooth);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
-    controller.setLedAnimationSpeed (-0.05f);
+    controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (0.5f);
     controller.setLedAnalyzerAnimationFrequency (80);
     controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
