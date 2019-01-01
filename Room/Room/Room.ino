@@ -78,7 +78,7 @@ int main ()
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
         if (analyzer.signalAvailable ())
-            controller.setLedTableMode (StripController::FREQ_FULL);
+            controller.setLedTableMode (StripController::VU);
         else
             controller.setLedTableMode (StripController::sync);
         // !Analyzer
