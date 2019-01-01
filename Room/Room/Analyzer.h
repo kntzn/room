@@ -33,6 +33,8 @@ class Analyzer
         // Internal values
         
         // Last recorded amplitude 
+        float volume_low_pass = 0.f;
+        // Last recorded amplitude 
         float volume = 0.f;
         // Filtered volume
         float volume_filt = 0.f;

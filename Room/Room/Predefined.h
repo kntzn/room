@@ -104,7 +104,7 @@
 // Average volume smoothness
 #define AVER_VOLUME_SMOOTH 0.995f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.65f
+#define SMOOTH_VU 0.8f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer

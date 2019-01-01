@@ -38,15 +38,17 @@ int main ()
 
     // Initialization of controller and strip
     LightController controller;
+    controller.setProfile (LightController::def);
+
     controller.setLedMode (StripController::fade_smooth);
     controller.setLedTableMode (StripController::FREQ_FULL);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (0.5f);
-    controller.setLedAnalyzerAnimationFrequency (-40);
-    controller.setLedAnalyzerAnimationOffset (HUE_BLUE);
+    controller.setLedAnalyzerAnimationFrequency (40);
+    controller.setLedAnalyzerAnimationOffset (HUE_RED);
     controller.setLedColor (CRGB::White);
-    controller.setProfile (LightController::def);
+    
 
     Analyzer analyzer;
     
@@ -70,7 +72,7 @@ int main ()
         
         // !Clock
     
-        controller.setLedTableMode (StripController::FREQ_FULL);
+        
 
         // Analyzer
         analyzer.update (dt);

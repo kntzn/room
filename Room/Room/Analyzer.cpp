@@ -10,6 +10,8 @@ Analyzer::Analyzer ()
     sbi (ADCSRA, ADPS2);
     cbi (ADCSRA, ADPS1);
     sbi (ADCSRA, ADPS0);
+
+    volume_low_pass = measureVol ();
     }
 
 void Analyzer::update (float dt)
@@ -32,9 +34,9 @@ float Analyzer::measureVol ()
             volume = measured;
         }
 
-    Serial.println (volume);
+    volume -= volume_low_pass;
 
-    return volume;
+    return (volume > 0 ) ? volume : 0.f;
     }
 
 int Analyzer::VUmeter ()
