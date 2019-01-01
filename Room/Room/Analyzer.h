@@ -80,6 +80,8 @@ class Analyzer
         float getMaxFreq ();
         // Fills the array of frequency values
         void getPeaks ();
+        // Calculates auto low pass
+        void getLowPassVU ();
 
     public:
         // ----------------------------------------
