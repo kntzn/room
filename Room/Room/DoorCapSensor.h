@@ -21,6 +21,7 @@ class DoorCapSensor
         float smoothAverage;
 
         float risemax = 0;
+        
         long lasRiseMaxUpd = 0;
 
         unsigned long lastSwitchMillis;

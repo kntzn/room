@@ -100,11 +100,11 @@
 // VU meter parameters
 
 // Ratio of max volume and average volume
-#define RATIO_MAX_TO_AVG 1.5f
+#define RATIO_MAX_TO_AVG 1.8f
 // Average volume smoothness
 #define AVER_VOLUME_SMOOTH 0.995f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.9f
+#define SMOOTH_VU 0.65f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer
@@ -117,9 +117,9 @@
 // Filter's parameters
 
 // Minimum loudness of frequency
-#define LOW_PASS_FREQ 28
+#define LOW_PASS_FREQ 40
 // Smoothness of the output
-#define SMOOTH_FREQ 0.7f
+#define SMOOTH_FREQ 0.5f
 
 // Spectrum size
 #define SPECTRUM_SIZE 32

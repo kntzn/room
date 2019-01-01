@@ -39,12 +39,12 @@ int main ()
     // Initialization of controller and strip
     LightController controller;
     controller.setLedMode (StripController::fade_smooth);
-    controller.setLedTableMode (StripController::sync);
+    controller.setLedTableMode (StripController::FREQ_FULL);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (0.5f);
-    controller.setLedAnalyzerAnimationFrequency (80);
-    controller.setLedAnalyzerAnimationOffset (HUE_ORANGE);
+    controller.setLedAnalyzerAnimationFrequency (-40);
+    controller.setLedAnalyzerAnimationOffset (HUE_BLUE);
     controller.setLedColor (CRGB::White);
     controller.setProfile (LightController::def);
 
@@ -70,10 +70,11 @@ int main ()
         
         // !Clock
     
-        
+        controller.setLedTableMode (StripController::FREQ_FULL);
+
         // Analyzer
-        //analyzer.update (dt);
-        //controller.syncWithAnalyzer (analyzer, dt);
+        analyzer.update (dt);
+        controller.syncWithAnalyzer (analyzer, dt);
         // !Analyzer
 
         // Buttons
@@ -134,20 +135,20 @@ int main ()
         
         if (cs_door.itIsTimeToSwitchIsntIt ())
             {
-            controller.setTorchereState (!controller.getTorchereState ());
+            //controller.setTorchereState (!controller.getTorchereState ());
             }
         controller.update (dt);
 
         lcd.print (cs_door.getMaxRise ());
         lcd.setCursor (0, 1);
         lcd.print (dt*1000.f);
-        Serial.println (dt*1000.f, 0);
+        //Serial.println (dt*1000.f, 0);
 
         lcd.home ();
         lcd.display ();
 
 
-        while (millis () - prev_t < 50)
+        while (millis () - prev_t < 40)
             {}
         }
 

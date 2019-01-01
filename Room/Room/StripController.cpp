@@ -92,14 +92,14 @@ void StripController::update (float dt)
             }
         case VU:
             {
-            int len = map (VU_val, 0, ANALOG_VU_MAX, 0, N_LEDS_TABLE / 2);
+            float len = map (VU_val, 0, ANALOG_VU_MAX, 0, N_LEDS_TABLE / 2);
 
             for (int i = 0; i <= N_LEDS_TABLE/2; i++)
                 {
                 if (i >= N_LEDS_TABLE / 2 - len)
                     leds_table [i] = CHSV (HSV_VU_START + HSV_VU_END * i / (N_LEDS_TABLE / 2), 255, MAX_BRIGHTNESS);
-                else
-                    leds_table [i] = CRGB::Black;
+                else 
+                    leds_table [i] = CHSV (HSV_VU_START + HSV_VU_END * i / (N_LEDS_TABLE / 2), 255, MAX_BRIGHTNESS / 5);
 
 
                 leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
