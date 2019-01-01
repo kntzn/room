@@ -11,12 +11,14 @@ Analyzer::Analyzer ()
     cbi (ADCSRA, ADPS1);
     sbi (ADCSRA, ADPS0);
 
-    volume_low_pass = measureVol ();
+    // Additional 5% t
+    volume_low_pass = measureVol ()*1.05f;
     }
 
 void Analyzer::update (float dt)
     {
-    // Measuring the volume
+    
+    // Measuring the volume 
     VU_out = VUmeter ();
 
     // Dividing the sound into freqencies
@@ -36,7 +38,13 @@ float Analyzer::measureVol ()
 
     volume -= volume_low_pass;
 
-    return (volume > 0 ) ? volume : 0.f;
+    if (volume > 0)
+        {
+        lastSignal = millis ();
+        return volume;
+        }
+
+    return 0.f;
     }
 
 int Analyzer::VUmeter ()
@@ -111,6 +119,11 @@ void Analyzer::getPeaks ()
     for (int i = LOWEST + N_LOW + N_MID; i < SPECTRUM_SIZE; i++)
         if (freq_peaks [2] < freq [i])
             freq_peaks [2] = freq [i];
+    }
+
+bool Analyzer::signalAvailable ()
+    {
+    return (millis () - lastSignal < 60000);
     }
 
 int Analyzer::getVUout ()

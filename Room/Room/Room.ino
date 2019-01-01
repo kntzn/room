@@ -41,7 +41,7 @@ int main ()
     controller.setProfile (LightController::def);
 
     controller.setLedMode (StripController::fade_smooth);
-    controller.setLedTableMode (StripController::FREQ_FULL);
+    controller.setLedTableMode (StripController::VU);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (0.5f);
@@ -72,11 +72,15 @@ int main ()
         
         // !Clock
     
-        
+       
 
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
+        if (analyzer.signalAvailable ())
+            controller.setLedTableMode (StripController::FREQ_FULL);
+        else
+            controller.setLedTableMode (StripController::sync);
         // !Analyzer
 
         // Buttons

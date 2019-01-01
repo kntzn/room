@@ -54,6 +54,10 @@ class Analyzer
         // The loudest frequency
         float freq_max_filt = 0.f;
 
+
+        // Last recorded signal time
+        long lastSignal = millis ();
+
         // ----------------------------------------
         // Communication
         // VU meter output
@@ -89,9 +93,11 @@ class Analyzer
         void update (float dt);
 
         // ----------SETTERS and GETTERS-----------
+        bool signalAvailable ();
         int getVUout ();
         float* getFreqValues ();
         float* getFreq3Values ();
+
 
         // --------------COMMUNICATION-------------
     };
