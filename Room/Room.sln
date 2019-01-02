@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ESP", "ESP\ESP.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CapacitiveSensorSketch", "..\..\..\..\Documents\Arduino\My Examples\CapacitiveSensorSketch\CapacitiveSensorSketch.vcxproj", "{EDF112E3-17F4-4A12-A86A-402BBD286C32}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HWM test", "HWM test\HWM test.vcxproj", "{EEABF2B6-77D9-455C-8CF4-9755936E27CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +37,12 @@ Global
 		{EDF112E3-17F4-4A12-A86A-402BBD286C32}.Release|x64.ActiveCfg = Release|Win32
 		{EDF112E3-17F4-4A12-A86A-402BBD286C32}.Release|x86.ActiveCfg = Release|Win32
 		{EDF112E3-17F4-4A12-A86A-402BBD286C32}.Release|x86.Build.0 = Release|Win32
+		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Debug|x64.ActiveCfg = Debug|Win32
+		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Debug|x86.ActiveCfg = Debug|Win32
+		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Debug|x86.Build.0 = Debug|Win32
+		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Release|x64.ActiveCfg = Release|Win32
+		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Release|x86.ActiveCfg = Release|Win32
+		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

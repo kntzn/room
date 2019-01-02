@@ -39,7 +39,7 @@ float Analyzer::measureVol ()
 
     volume -= volume_low_pass;
 
-    if (volume > 0)
+    if (volume > volume_low_pass * 0.05f)
         lastSignal = millis ();
 
     return volume;
@@ -131,6 +131,8 @@ void Analyzer::getLowPassVU ()
         if (volume_low_pass < measured)
             volume_low_pass = measured;
         }
+
+    volume_low_pass *= 1.05f;
     }
 
 bool Analyzer::signalAvailable ()
