@@ -11,7 +11,7 @@
 
 #include <SoftwareSerial.h>
 
-char inData [500];       // массив входных значений (СИМВОЛЫ)
+char inData [270];       // массив входных значений (СИМВОЛЫ)
 int PCdata [50];        // массив численных значений показаний с компьютера
 byte index = 0;
 String string_convert;
@@ -32,7 +32,7 @@ long last_millis = millis ();
 
 int parsingTime = 0;
 int nIter = 0;
-
+int bufSize = 0;
 
 
 void loop ()
@@ -118,15 +118,14 @@ void loop ()
         Serial.print ("Hard disk: ");
         Serial.println (PCdata [32]);
 
-
         Serial.println ();
         Serial.print (millis () - lastUpd);
         Serial.print (" ");
         Serial.print (parsingTime);
-        Serial.print (" in ");
-        Serial.println (nIter);
+        Serial.print (" buf: ");
+        Serial.println (bufSize);
         
-        parsingTime = nIter = 0;
+        parsingTime = nIter = bufSize = 0;
         }
 
 
@@ -143,6 +142,8 @@ void parsing ()
 
     while (Serial1.available () > 0)
         {
+        bufSize++;
+
         lastUpd = millis ();
 
         char aChar = Serial1.read ();
