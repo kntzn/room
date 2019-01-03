@@ -49,8 +49,10 @@ class LightController
         // ---------------------------
         // Main functions
 
-        // Upates all light sources
+        // Updates all light sources
         void update (float dt);
+        // Updates only lamps
+        void updateLamps ();
 
         // Gets information from analyzer and sets parameters to led strips
         void syncWithAnalyzer (Analyzer &analyzer, float dt);

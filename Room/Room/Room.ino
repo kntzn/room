@@ -97,7 +97,6 @@ int main ()
         hw_monitor.update ();
         hw_monitor.update ();
         
-        
         if (button_left.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Led only");
@@ -149,19 +148,21 @@ int main ()
             //controller.setTorchereState (!controller.getTorchereState ());
             }
 
-        controller.update (dt);
-        
-        
-        hw_monitor.update ();
-        hw_monitor.update ();
-        hw_monitor.update ();
-        
-        
-        while (millis () - prev_t < 20)
+        if (hw_monitor.available ())
+            controller.updateLamps ();
+        else
             {
-            hw_monitor.update ();
+            controller.update (dt);
             }
 
+        hw_monitor.update ();
+        
+        // Creates constant dt
+        while (millis () - prev_t < 40)
+            {
+            // Why not update instead of waiting?
+            hw_monitor.update ();
+            }
         }
 
     return 0;
@@ -174,6 +175,8 @@ int main ()
 
 // Cap buttons
 // Hardware Monitor
+
+// XOR (HWM, Mode != mono)
 
 void randomizeParameters (LightController & controller)
     {

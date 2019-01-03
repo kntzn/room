@@ -21,6 +21,12 @@ void LightController::update (float dt)
     Torchere.update ();
     }
 
+void LightController::updateLamps ()
+    {
+    Lamp.update ();
+    Torchere.update ();
+    }
+
 void LightController::syncWithAnalyzer (Analyzer & analyzer, float dt)
     {
     LED.setFreqValues (analyzer.getFreqValues ());

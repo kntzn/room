@@ -75,7 +75,7 @@ void HardwareMonitor::update ()
         lcd.clear ();
         lcd.home ();
 
-        if (millis () - lastHWMupdate > 5000)
+        if (millis () - lastHWMupdate > HWM_TIMEOUT*1000)
             {
             lcd.print ("HWM is not");
             lcd.setCursor (4, 1);
@@ -83,12 +83,19 @@ void HardwareMonitor::update ()
             }
         else
             {
+            /*
             Serial.println ();
             Serial.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
             Serial.print (" ");
             Serial.println (getParameter (HardwareMonitor::paramId::HardDisk));
+            */
             }
 
         lcd.display ();
         }
+    }
+
+bool HardwareMonitor::available ()
+    {
+    return (millis () - lastHWMupdate < HWM_TIMEOUT * 1000);
     }

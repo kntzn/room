@@ -81,6 +81,7 @@ class HardwareMonitor
 
         void update ();
 
+        bool available ();
 
     };
 

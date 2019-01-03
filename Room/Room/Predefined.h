@@ -186,9 +186,14 @@
 
 // ----------------------------------------
 // Hardware Monitor
-#define SERIAL_HW_MONITOR Serial2
+#define SERIAL_HW_MONITOR Serial1
 
+// Updates of HWM screen per second
 #define UPS_HWM 2
+
+// Timeout in seconds
+#define HWM_TIMEOUT 3
+
 // !Hardware Monitor
 // ----------------------------------------
 
