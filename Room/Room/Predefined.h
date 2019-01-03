@@ -8,7 +8,7 @@
 // LED strip controller defines
 
 // FastLED lib defines
-//#define FASTLED_ALLOW_INTERRUPTS 1
+
 
 // Number of leds
 #define N_LEDS_MAIN 164

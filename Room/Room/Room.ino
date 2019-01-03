@@ -76,6 +76,7 @@ int main ()
             controller.setLedTableMode (StripController::sync);
         // !Analyzer
 
+
         // Buttons
         button_left.update ();
         button_mid.update ();
@@ -142,16 +143,21 @@ int main ()
 
         hwm.update ();
 
-        Serial.println (hwm.HWMuptime ());
         
-        if (hwm.becomeAvailable ())
+        //if (hwm.available ())
             {
-            controller.setLedMode (StripController::mono);
-            controller.setLedTableMode (StripController::sync);
+            //controller.setLedMode (StripController::mono);
+            //controller.setLedTableMode (StripController::sync);
             }
 
-        controller.setLedFreeze (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f));
+        Serial.println (hwm.HWMuptime ());
+
+        //controller.setLedFreeze (bool (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f)));
+
+
+
         controller.update (dt);
+        
 
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)

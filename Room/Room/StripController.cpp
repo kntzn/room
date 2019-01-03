@@ -204,8 +204,7 @@ void StripController::update (float dt)
         default:
             break;
         }
-        
-
+    
     // Creates fade effect when mode is switched
     if (millis () - mode_activation_time <= MODE_SWITCH_FADE_TIME * 1000 &&
         mode != oldschool6 && mode != oldschoolRND)
@@ -232,13 +231,14 @@ void StripController::update (float dt)
     
         }
     
-    if (!freezed)
-        display ();
+    //if (freezed == false)
+        //display ();
     }
 
     
 void StripController::display () 
     { 
+    
     LEDS.show ();
     }
 

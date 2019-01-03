@@ -11,6 +11,7 @@
 
 #include "Predefined.h"
 
+#define FASTLED_ALLOW_INTERRUPTS 1
 #include <FastLED.h>
 
 class StripController
@@ -169,9 +170,11 @@ class StripController
         // ----------------------------------------
         // Display function
         // Shows the array
+        
+    public:
+
         void display ();
 
-    public:
         // ----------------------------------------
         // Constructor
         // Initializes led strips
