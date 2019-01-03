@@ -236,9 +236,7 @@ void StripController::update (float dt)
     
         }
     
-    long start = millis ();
     LEDS.show ();
-    Serial.print (millis () - start);
     }
 
     

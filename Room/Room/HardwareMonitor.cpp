@@ -1,3 +1,4 @@
+#include "HardwareMonitor.h"
 // 
 // 
 // 
@@ -5,12 +6,21 @@
 #include "HardwareMonitor.h"
 
 
+long HardwareMonitor::HWMuptime ()
+    {
+    return millis () - availStart;
+    }
+
 HardwareMonitor::HardwareMonitor () :
+    lastState (false),
     lcd (0x27, 16, 2),
     raw_input ({}),
     params (),
     index (0),
-    converted_string ("")
+    converted_string (""),
+    lastUpdate (-UPS_HWM*1000),
+    lastHWMupdate (-UPS_HWM * 1000),
+    availStart (millis ())
     {
     SERIAL_HW_MONITOR.begin (BAUD_RATE_SERIAL);
 
@@ -24,7 +34,7 @@ void HardwareMonitor::listenSerial ()
     {
     while (SERIAL_HW_MONITOR.available () > 0)
         {
-        // Updates timer
+        // Updates the timer
         lastHWMupdate = millis ();
 
         char aChar = SERIAL_HW_MONITOR.read ();
@@ -66,11 +76,11 @@ void HardwareMonitor::update ()
     {
     listenSerial ();
 
-    if (millis () - lastUpdate > 1000.f / static_cast <float> (UPS_HWM))
+    if (millis () - lastUpdate > 1000.f / (UPS_HWM))
         {
         lastUpdate = millis ();
 
-        Serial.println ();
+        //Serial.println ();
 
         lcd.clear ();
         lcd.home ();
@@ -97,5 +107,24 @@ void HardwareMonitor::update ()
 
 bool HardwareMonitor::available ()
     {
-    return (millis () - lastHWMupdate < HWM_TIMEOUT * 1000);
+    bool avail = (millis () - lastHWMupdate < HWM_TIMEOUT * 1000);
+
+    if (!avail)
+        availStart = millis ();
+
+    return avail;
     }
+
+bool HardwareMonitor::becomeAvailable ()
+    {
+    if (lastState == false &&
+        available () == true)
+        {
+        lastState = available ();
+        return true;
+        }
+    
+    lastState = available ();
+    return false;
+    }
+

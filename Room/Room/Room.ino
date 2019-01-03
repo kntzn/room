@@ -45,22 +45,19 @@ int main ()
     controller.setLedAnalyzerAnimationOffset (HUE_RED);
     controller.setLedColor (CRGB::White);
     
-
     Analyzer analyzer;
     
     Button button_left (BUTT_LEFT);
     Button button_mid (BUTT_MIDL);
     Button button_right (BUTT_RGHT);
 
-    HardwareMonitor hw_monitor;
+    HardwareMonitor hwm;
     
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
     pinMode (46, OUTPUT);
 
     long prev_t = millis ();
-
-    int max = 0;
 
     while (true)
         {
@@ -69,9 +66,6 @@ int main ()
         prev_t = millis ();
         
         // !Clock
-        hw_monitor.update ();
-        hw_monitor.update ();
-        hw_monitor.update ();
         
         // Analyzer
         analyzer.update (dt);
@@ -93,9 +87,6 @@ int main ()
         // !Capacitive sensors
 
         // Strip controller
-        hw_monitor.update ();
-        hw_monitor.update ();
-        hw_monitor.update ();
         
         if (button_left.getState () == Button::buttonState::Rlsd)
             {
@@ -148,20 +139,24 @@ int main ()
             //controller.setTorchereState (!controller.getTorchereState ());
             }
 
-        if (hw_monitor.available ())
-            controller.updateLamps ();
-        else
+        if (hwm.becomeAvailable ())
             {
-            controller.update (dt);
+            controller.setLedMode (StripController::mono);
             }
 
-        hw_monitor.update ();
+        if (hwm.available ())
+            controller.updateLamps ();
+        else
+            controller.update (dt);
+            
+
+        hwm.update ();
         
-        // Creates constant dt
+        // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
             // Why not update instead of waiting?
-            hw_monitor.update ();
+            hwm.update ();
             }
         }
 
