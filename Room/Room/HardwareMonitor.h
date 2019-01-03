@@ -80,6 +80,8 @@ class HardwareMonitor
         int getParameter (paramId id);
 
         void update ();
+
+
     };
 
 #endif

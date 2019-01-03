@@ -8,7 +8,7 @@
 // LED strip controller defines
 
 // FastLED lib defines
-#define FASTLED_ALLOW_INTERRUPTS 1
+//#define FASTLED_ALLOW_INTERRUPTS 1
 
 // Number of leds
 #define N_LEDS_MAIN 164
@@ -186,7 +186,7 @@
 
 // ----------------------------------------
 // Hardware Monitor
-#define SERIAL_HW_MONITOR Serial1
+#define SERIAL_HW_MONITOR Serial2
 
 #define UPS_HWM 2
 // !Hardware Monitor

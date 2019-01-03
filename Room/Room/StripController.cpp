@@ -16,7 +16,9 @@ void StripController::update (float dt)
     // updating offsets
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;
+    
 
+    
     // Main strip modes switch
     switch (mode)
         {
@@ -71,7 +73,9 @@ void StripController::update (float dt)
         default:
             break;
         }
-        
+    
+
+
     // VU_bright mode sets it's own brightness
     // Otherwise, brightness is maximal
     if (mode != VU_bright)
@@ -204,7 +208,7 @@ void StripController::update (float dt)
         default:
             break;
         }
-
+        
 
     // Creates fade effect when mode is switched
     if (millis () - mode_activation_time <= MODE_SWITCH_FADE_TIME * 1000 &&
@@ -232,12 +236,18 @@ void StripController::update (float dt)
     
         }
     
-    display ();
+    long start = millis ();
+    LEDS.show ();
+    Serial.print (millis () - start);
     }
+
+    
 void StripController::display () 
     { 
-    LEDS.show (); 
+    
     }
+
+
 
 // Util
 void StripController::sync_strips ()

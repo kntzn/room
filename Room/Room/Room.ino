@@ -4,6 +4,7 @@
  Author:	CODEBOOK
 */
 
+
 #include "DoorCapSensor.h"
 #include "Button.h"
 #include "WindowController.h"
@@ -30,11 +31,6 @@ int main ()
 
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
-
-    LiquidCrystal_I2C lcd (0x27, 16, 2);
-    lcd.init ();
-    lcd.backlight ();
-    Serial1.begin (9600);
 
     // Initialization of controller and strip
     LightController controller;
@@ -73,9 +69,10 @@ int main ()
         prev_t = millis ();
         
         // !Clock
-    
-       
-
+        hw_monitor.update ();
+        hw_monitor.update ();
+        hw_monitor.update ();
+        
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
@@ -96,7 +93,10 @@ int main ()
         // !Capacitive sensors
 
         // Strip controller
-
+        hw_monitor.update ();
+        hw_monitor.update ();
+        hw_monitor.update ();
+        
         
         if (button_left.getState () == Button::buttonState::Rlsd)
             {
@@ -148,27 +148,20 @@ int main ()
 
             //controller.setTorchereState (!controller.getTorchereState ());
             }
+
         controller.update (dt);
-
-        hw_monitor.listenSerial ();
         
-        lcd.clear ();
-        lcd.print (cs_door.getMaxRise ());
-        lcd.setCursor (0, 1);
-        lcd.print (dt*1000.f);
+        
+        hw_monitor.update ();
+        hw_monitor.update ();
+        hw_monitor.update ();
+        
+        
+        while (millis () - prev_t < 20)
+            {
+            hw_monitor.update ();
+            }
 
-        lcd.print (' ');
-        lcd.print (hw_monitor.getParameter (HardwareMonitor::paramId::freqCore0));
-
-
-        //Serial.println (dt*1000.f, 0);
-
-        lcd.home ();
-        lcd.display ();
-
-
-        while (millis () - prev_t < 40)
-            {}
         }
 
     return 0;

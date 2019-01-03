@@ -14,6 +14,7 @@ HardwareMonitor::HardwareMonitor () :
     {
     SERIAL_HW_MONITOR.begin (BAUD_RATE_SERIAL);
 
+    
     lcd.init ();
     lcd.backlight ();
     }
@@ -69,6 +70,7 @@ void HardwareMonitor::update ()
         {
         lastUpdate = millis ();
 
+        Serial.println ();
 
         lcd.clear ();
         lcd.home ();
@@ -81,10 +83,12 @@ void HardwareMonitor::update ()
             }
         else
             {
-            // HWM output
+            Serial.println ();
+            Serial.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
+            Serial.print (" ");
+            Serial.println (getParameter (HardwareMonitor::paramId::HardDisk));
             }
 
         lcd.display ();
         }
     }
-
