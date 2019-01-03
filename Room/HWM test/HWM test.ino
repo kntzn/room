@@ -87,12 +87,15 @@ void loop ()
         Serial.print (" /DRAM: ");
         Serial.println (PCdata [18]);
         Serial.println ();
+
         Serial.print ("RAM load: ");
         Serial.print (PCdata [20]);
         Serial.print (" GB (");
         Serial.print (PCdata [19]);
         Serial.println ("%)");
-        Serial.println ();
+        Serial.print ("Hard disk: ");
+        Serial.print (PCdata [32]);
+        Serial.println (" %");
         //Serial.println (PCdata [21]); - avail ram mem
         
         Serial.print ("GPU Core: ");
@@ -114,9 +117,6 @@ void loop ()
         //Serial.println (PCdata [29]); - gpu mem free
         //Serial.println (PCdata [30]); - gpu mem used
         //Serial.println (PCdata [31]); - gpu mem total
-
-        Serial.print ("Hard disk: ");
-        Serial.println (PCdata [32]);
 
         Serial.println ();
         Serial.print (millis () - lastUpd);

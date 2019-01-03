@@ -60,6 +60,8 @@ int main ()
     
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
+    pinMode (46, OUTPUT);
+
     long prev_t = millis ();
 
     int max = 0;
@@ -141,6 +143,9 @@ int main ()
         
         if (cs_door.itIsTimeToSwitchIsntIt ())
             {
+            //Test
+            digitalWrite (46, !digitalRead (46));
+
             //controller.setTorchereState (!controller.getTorchereState ());
             }
         controller.update (dt);

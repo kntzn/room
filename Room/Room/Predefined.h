@@ -200,7 +200,7 @@
 #define BAUD_RATE_SERIAL 9600
 
 // Door cap sensor threshold
-#define DOOR_CAP_TH 600
+#define DOOR_CAP_TH 45
 
 // !Other
 // ----------------------------------------

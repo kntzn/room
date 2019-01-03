@@ -15,33 +15,20 @@
 class HardwareMonitor
     {
     private:
-        
-        bool updAvail = 0;
-        char lastChar = 0;
-        String input;
-
-        int index = 0;
-
-
-
-        String string_convert;
-        char inData [512] = {};
+        char raw_input [270];
+        int params [50];
+        byte index;
+        String converted_string;
 
         LiquidCrystal_I2C lcd;
-        int hardwareState [N_HW_PARAMS][N_TICKS_SMOOTH] = {};
-
-        float hardwareStateFiltered [N_HW_PARAMS] = {};
 
     public:
+        
         HardwareMonitor ();
 
         void listenSerial ();
         
-        void removeNoise ();
-
-        void log ();
-        void print ();
-
+        //int getParameter ();
     };
 
 #endif

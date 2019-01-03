@@ -20,7 +20,7 @@ void DoorCapSensor::update (float dt)
 
     smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
     
-    bool currentState = bool (analogResult > smoothAverage + /*((1.1 - pow (7,  (-dt / 0.280))) * 100)*/ 66);
+    bool currentState = bool (analogResult > smoothAverage + /*((1.1 - pow (7,  (-dt / 0.280))) * 100)*/ DOOR_CAP_TH);
     
     float delta = analogResult - smoothAverage;
 
