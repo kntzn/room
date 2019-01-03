@@ -56,7 +56,7 @@ int main ()
     Button button_mid (BUTT_MIDL);
     Button button_right (BUTT_RGHT);
 
-    //HardwareMonitor hw_monitor;
+    HardwareMonitor hw_monitor;
     
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
@@ -150,9 +150,17 @@ int main ()
             }
         controller.update (dt);
 
+        hw_monitor.listenSerial ();
+        
+        lcd.clear ();
         lcd.print (cs_door.getMaxRise ());
         lcd.setCursor (0, 1);
         lcd.print (dt*1000.f);
+
+        lcd.print (' ');
+        lcd.print (hw_monitor.getParameter (HardwareMonitor::paramId::freqCore0));
+
+
         //Serial.println (dt*1000.f, 0);
 
         lcd.home ();
@@ -167,27 +175,27 @@ int main ()
     }
 
 // TODO:
-// dt for smoothAver ! ! ! ! 
+
 // Cap sensor for lamp
-// Autodetect microphone
-// Recreate schematic
+
+
 // Cap buttons
 // Hardware Monitor
 
-    void randomizeParameters (LightController & controller)
-        {
-        controller.setLedAnimationFrequency (float (rand () % 60001 -
-                                             30000) / 60000.f);
-        controller.setLedAnimationSpeed (float (rand () % 50001 -
-                                             25000) / 100000.f);
-        controller.setLedColor (CRGB (CHSV (rand(), 
-                                            MAX_SATURATION,
-                                            MAX_BRIGHTNESS)));
-        byte mode = 0;
-        while (mode == StripController::mainStripMode::off ||
-               mode == StripController::mainStripMode::night ||
-               mode == StripController::mainStripMode::rise)
-            mode = rand () % StripController::n_modes;
+void randomizeParameters (LightController & controller)
+    {
+    controller.setLedAnimationFrequency (float (rand () % 60001 -
+                                            30000) / 60000.f);
+    controller.setLedAnimationSpeed (float (rand () % 50001 -
+                                            25000) / 100000.f);
+    controller.setLedColor (CRGB (CHSV (rand(), 
+                                        MAX_SATURATION,
+                                        MAX_BRIGHTNESS)));
+    byte mode = 0;
+    while (mode == StripController::mainStripMode::off ||
+            mode == StripController::mainStripMode::night ||
+            mode == StripController::mainStripMode::rise)
+        mode = rand () % StripController::n_modes;
 
-        controller.setLedMode (mode);
-        }
+    controller.setLedMode (mode);
+    }

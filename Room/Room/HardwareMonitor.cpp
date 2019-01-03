@@ -7,7 +7,7 @@
 
 HardwareMonitor::HardwareMonitor () :
     lcd (0x27, 16, 2),
-    raw_input (""),
+    raw_input ({}),
     params (),
     index (0),
     converted_string ("")
@@ -46,4 +46,15 @@ void HardwareMonitor::listenSerial ()
             }
         }
 
+    }
+
+int HardwareMonitor::getParameter (paramId id)
+    {
+    if (paramId::lowVal      < id &&
+        paramId::nParameters > id)
+        {
+        return params [static_cast <int> (id)];
+        }
+
+    return -1;
     }
