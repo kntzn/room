@@ -139,19 +139,20 @@ int main ()
             //controller.setTorchereState (!controller.getTorchereState ());
             }
 
+
+        hwm.update ();
+
+        Serial.println (hwm.HWMuptime ());
+        
         if (hwm.becomeAvailable ())
             {
             controller.setLedMode (StripController::mono);
+            controller.setLedTableMode (StripController::sync);
             }
 
-        if (hwm.available ())
-            controller.updateLamps ();
-        else
-            controller.update (dt);
-            
+        controller.setLedFreeze (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f));
+        controller.update (dt);
 
-        hwm.update ();
-        
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {

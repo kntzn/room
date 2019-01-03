@@ -6,10 +6,7 @@
 #include "HardwareMonitor.h"
 
 
-long HardwareMonitor::HWMuptime ()
-    {
-    return millis () - availStart;
-    }
+
 
 HardwareMonitor::HardwareMonitor () :
     lastState (false),
@@ -61,6 +58,11 @@ void HardwareMonitor::listenSerial ()
         }
     }
 
+long HardwareMonitor::HWMuptime ()
+    {
+    return millis () - availStart;
+    }
+
 int HardwareMonitor::getParameter (paramId id)
     {
     if (paramId::lowVal      < id &&
@@ -76,11 +78,14 @@ void HardwareMonitor::update ()
     {
     listenSerial ();
 
+    // Just to update timer
+    available ();
+
     if (millis () - lastUpdate > 1000.f / (UPS_HWM))
         {
         lastUpdate = millis ();
 
-        //Serial.println ();
+        Serial.println ();
 
         lcd.clear ();
         lcd.home ();
@@ -93,12 +98,11 @@ void HardwareMonitor::update ()
             }
         else
             {
-            /*
-            Serial.println ();
-            Serial.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
-            Serial.print (" ");
-            Serial.println (getParameter (HardwareMonitor::paramId::HardDisk));
-            */
+            
+            lcd.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
+            lcd.print (" ");
+            lcd.print (getParameter (HardwareMonitor::paramId::HardDisk));
+            
             }
 
         lcd.display ();

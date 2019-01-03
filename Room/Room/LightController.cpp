@@ -120,6 +120,11 @@ void LightController::setProfile (byte mode)
         }
     }
 
+void LightController::setLedFreeze (bool freeze)
+    {
+    LED.setFreeze (freeze);
+    }
+
 void LightController::setLedMode (byte newMode)
     {
     if (newMode != StripController::mainStripMode::off &&

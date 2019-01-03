@@ -17,8 +17,6 @@ void StripController::update (float dt)
     palette_offset += palette_speed*dt;
     rainbow_offset += rainbow_speed*dt;
     
-
-    
     // Main strip modes switch
     switch (mode)
         {
@@ -74,8 +72,6 @@ void StripController::update (float dt)
             break;
         }
     
-
-
     // VU_bright mode sets it's own brightness
     // Otherwise, brightness is maximal
     if (mode != VU_bright)
@@ -236,13 +232,14 @@ void StripController::update (float dt)
     
         }
     
-    LEDS.show ();
+    if (!freezed)
+        display ();
     }
 
     
 void StripController::display () 
     { 
-    
+    LEDS.show ();
     }
 
 
@@ -380,6 +377,11 @@ void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
     {
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         frequency_full [i] = newFreqVal [i];
+    }
+
+void StripController::setFreeze (bool freeze)
+    {
+    freezed = freeze;
     }
 
 // Modes defenitions

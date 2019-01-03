@@ -63,6 +63,8 @@ class LightController
         // ---------------------------
         // Led strip parameters setters
 
+        // Freezes the leds
+        void setLedFreeze (bool freeze);
         // Sets the mode of main led strip
         void setLedMode (byte newMode);
         // Sets the mode for table led strip
