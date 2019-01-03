@@ -30,8 +30,6 @@
 #define MAX_SATURATION 255
 // ----------------------------------------
 
-// Modes' defines
-#define SWITCH_BRIGHTNESS 2
 // ----------------------------------------
 
 // VU mode parameters
@@ -72,7 +70,7 @@
 // Rise mode color
 #define RISE_COLOR CRGB (255, 170, 0)
 // Rise mode stage rise time (min)
-#define RISE_MODE_RISE_TIME 2.f
+#define RISE_MODE_RISE_TIME 1.5f
 // Max brightness of night mode strip
 #define RISE_BRIGHTNESS_MAX 255
 
@@ -189,9 +187,8 @@
 // ----------------------------------------
 // Hardware Monitor
 #define SERIAL_HW_MONITOR Serial1
-#define N_HW_PARAMS 8
-#define N_TICKS_SMOOTH 2
 
+#define UPS_HWM 2
 // !Hardware Monitor
 // ----------------------------------------
 
@@ -207,7 +204,7 @@
 
 // Pinout
 // Not connected pin used to generate random seed
-#define NC A8
+#define NC A9
 
 #define CAP_SENSOR_DOOR A8
 

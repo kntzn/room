@@ -23,6 +23,9 @@ void HardwareMonitor::listenSerial ()
     {
     while (SERIAL_HW_MONITOR.available () > 0)
         {
+        // Updates timer
+        lastHWMupdate = millis ();
+
         char aChar = SERIAL_HW_MONITOR.read ();
         if (aChar != 'E')
             {
@@ -45,7 +48,6 @@ void HardwareMonitor::listenSerial ()
             index = 0;
             }
         }
-
     }
 
 int HardwareMonitor::getParameter (paramId id)
@@ -58,3 +60,31 @@ int HardwareMonitor::getParameter (paramId id)
 
     return -1;
     }
+
+void HardwareMonitor::update ()
+    {
+    listenSerial ();
+
+    if (millis () - lastUpdate > 1000.f / static_cast <float> (UPS_HWM))
+        {
+        lastUpdate = millis ();
+
+
+        lcd.clear ();
+        lcd.home ();
+
+        if (millis () - lastHWMupdate > 5000)
+            {
+            lcd.print ("HWM is not");
+            lcd.setCursor (4, 1);
+            lcd.print ("available");
+            }
+        else
+            {
+            // HWM output
+            }
+
+        lcd.display ();
+        }
+    }
+

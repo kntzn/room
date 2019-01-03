@@ -66,6 +66,8 @@ class HardwareMonitor
         byte index;
         String converted_string;
 
+        long lastUpdate, lastHWMupdate;
+
         LiquidCrystal_I2C lcd;
 
     public:
@@ -76,6 +78,8 @@ class HardwareMonitor
         void listenSerial ();
         
         int getParameter (paramId id);
+
+        void update ();
     };
 
 #endif
