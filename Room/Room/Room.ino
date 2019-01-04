@@ -62,18 +62,13 @@ int main ()
 
     long prev_t = millis ();
 
-    byte x = 0;
-
     while (true)
         {
         Wire.beginTransmission (8);
-        
-        for (int i = 0; i < 618; i++)
-            Wire.write ((i+5) %256);
-        
+        Wire.write ("Sample text 228 1337 557\n");
         Wire.endTransmission ();
+        Serial.print ("Sample text 228 1337 557\n");
 
-        x++;
 
         // Clock
         float dt = (float (millis ()) - prev_t)/1000.f;
@@ -173,7 +168,7 @@ int main ()
         //if (hwm.available ())
           //  controller.updateLamps ();
         //else
-            controller.update (dt);
+            //controller.update (dt);
 
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
