@@ -25,16 +25,6 @@ HardwareMonitor::HardwareMonitor () :
     lcd.backlight ();
     }
 
-void HardwareMonitor::readBuffer ()
-    {
-    }
-
-long HardwareMonitor::msSinceLastHWMupdate ()
-    {
-    return millis () - lastHWMupdate;
-    }
-
-
 void HardwareMonitor::listenSerial ()
     {
     while (SERIAL_HW_MONITOR.available () > 0)
@@ -66,11 +56,6 @@ void HardwareMonitor::listenSerial ()
             index = 0;
             }
         }
-    }
-
-long HardwareMonitor::HWMuptime ()
-    {
-    return millis () - availStart;
     }
 
 int HardwareMonitor::getParameter (paramId id)
@@ -109,9 +94,9 @@ void HardwareMonitor::update ()
             }
         else
             {
-            lcd.print (params [0]);
+            lcd.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
             lcd.print (" ");
-            lcd.print (params [1]);
+            lcd.print (getParameter (HardwareMonitor::paramId::HardDisk));
             }
 
         lcd.display ();
@@ -127,17 +112,3 @@ bool HardwareMonitor::available ()
 
     return avail;
     }
-
-bool HardwareMonitor::becomeAvailable ()
-    {
-    if (lastState == false &&
-        available () == true)
-        {
-        lastState = available ();
-        return true;
-        }
-    
-    lastState = available ();
-    return false;
-    }
-

@@ -4,7 +4,6 @@
  Author:	CODEBOOK
 */
 
-#include <AltSoftSerial.h>
 #include <SoftwareSerial.h>
 
 SoftwareSerial Serial1 (4, 2);
@@ -34,6 +33,4 @@ void loop()
         if (digitalRead (3) == LOW)
             Serial1.print (char (Serial.read ()));
         }
-        
-    
     }

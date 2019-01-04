@@ -55,20 +55,19 @@ class HardwareMonitor
             GPUmemUsed = 30,
             GPUmemTotal = 31,
 
-            HardDisk = 33,
+            HardDisk = 32,
 
-            nParameters = 35
+            nParameters = 33
             };
 
     private:
-        
         bool lastState;
         char raw_input [270];
         int params [static_cast <int> (paramId::nParameters)];
         byte index;
         String converted_string;
 
-        long lastUpdate, lastHWMupdate, availStart;
+        long lastUpdate, lastHWMupdate;
 
         LiquidCrystal_I2C lcd;
         
@@ -77,19 +76,11 @@ class HardwareMonitor
     public:
         HardwareMonitor ();
 
-        void readBuffer ();
-
-        long msSinceLastHWMupdate ();
-
-        long HWMuptime ();
-
         int getParameter (paramId id);
 
         void update ();
 
         bool available ();
-
-        bool becomeAvailable ();
 
     };
 

@@ -151,36 +151,17 @@ int main ()
             {
             //Test
             digitalWrite (44, !digitalRead (44));
-
-            //controller.setTorchereState (!controller.getTorchereState ());
             }
-
-        //while (SERIAL_HW_MONITOR.available ())
-          //  Serial.print ((char) SERIAL_HW_MONITOR.read ());
-
-        //SERIAL_HW_MONITOR.print ('R');
 
         hwm.update ();
         
-
-        
-        //if (hwm.available ())
-            {
-            //controller.setLedMode (StripController::mono);
-            //controller.setLedTableMode (StripController::sync);
-            }
-
- //       Serial.println (hwm.HWMuptime ());
-
-        //controller.setLedFreeze (bool (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f)));
-
         controller.update (dt);
             
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
             // Why not update instead of waiting?
-            
+            hwm.update ();
             }
         
         
