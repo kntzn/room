@@ -18,11 +18,24 @@ HardwareMonitor::HardwareMonitor () :
     lastUpdate (-UPS_HWM*1000),
     lastHWMupdate (-UPS_HWM * 1000)
     {
-    SERIAL_HW_MONITOR.begin (BAUD_RATE_SERIAL);
+    SERIAL_HW_MONITOR.begin (9600);
 
     
     lcd.init ();
     lcd.backlight ();
+    }
+
+void HardwareMonitor::readBuffer ()
+    {
+
+    while (!SERIAL_HW_MONITOR.available ())
+        {
+        SERIAL_HW_MONITOR.print ('R');
+        Serial.println ("W");
+        }
+    byte size = SERIAL_HW_MONITOR.read ();
+    SERIAL_HW_MONITOR.readBytes (raw_input, size);
+    Serial.println ("R");
     }
 
 long HardwareMonitor::msSinceLastHWMupdate ()
@@ -81,7 +94,14 @@ int HardwareMonitor::getParameter (paramId id)
 
 void HardwareMonitor::update ()
     {
-    
+    readBuffer ();
+
+    Serial.print (raw_input [0]);
+    Serial.print (raw_input [1]);
+    Serial.print (raw_input [2]);
+    Serial.println (raw_input [3]);
+
+    /*
     listenSerial ();
     
 
@@ -112,6 +132,7 @@ void HardwareMonitor::update ()
 
         lcd.display ();
         }
+    */
     }
 
 bool HardwareMonitor::available ()

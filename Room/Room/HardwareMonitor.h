@@ -77,6 +77,8 @@ class HardwareMonitor
     public:
         HardwareMonitor ();
 
+        void readBuffer ();
+
         long msSinceLastHWMupdate ();
 
         long HWMuptime ();
