@@ -64,14 +64,16 @@ int main ()
 
     while (true)
         {
-        Wire.beginTransmission (8);
-        Wire.write ('s');
+        if (millis () > 8000)
+            {
+            Wire.beginTransmission (8);
+            Wire.write ('m');
         
-        for (int i = 0; i < 16; i++)
-            Wire.write (2);
+            for (int i = 0; i < 16; i++)
+                Wire.write (StripController::mono);
 
-        Wire.endTransmission ();
-        
+            Wire.endTransmission ();
+            }
 
 
         // Clock

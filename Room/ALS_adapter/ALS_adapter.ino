@@ -11,10 +11,26 @@
 
 
 // Global vars for the receiveEvent
-bool readyToInterpret = false;
+bool paramUpdAvail = false;
 byte args [17] = {};
 byte args_safe_copy [17] = {};
 int commandCharCounter = 0;
+
+void interpret (StripController &ctrlr)
+    {
+    if (paramUpdAvail)
+        {
+        paramUpdAvail = false;
+
+        if (args_safe_copy [0] == 0)
+            ctrlr.setMode (args_safe_copy [1]);
+        if (args_safe_copy [0] == 1)
+            ctrlr.setTableMode (args_safe_copy [1]);
+        if (args_safe_copy [0] == 2)
+            ctrlr.setColor (CRGB (args_safe_copy [1], args_safe_copy [2], args_safe_copy [3]));
+        
+        }
+    }
 
 int main ()
     {
@@ -44,6 +60,7 @@ int main ()
         prev_t = millis ();
         // !Clock
 
+        interpret (controller);
         controller.update (0.05f);
         controller.display ();
         
@@ -62,16 +79,16 @@ int main ()
 // char + char + char + char \0
 
 // Commands list
-// m - mode + 1 val
-// t - table mode + 1 val
-// c - set color + 3 val
-// f - anim freq + 1 val
-// s - anim speed + 1 val
-// r - freq mode rain freq + 1 val
-// o - freq mode rain offset + 1 val
-// v - set vu val + 1 val
-// p - set peaks val + 3 val
-// a - set freq values + 16 values
+// [0] m - mode + 1 val
+// [1] t - table mode + 1 val
+// [2] c - set color + 3 val
+// [3] f - anim freq + 1 val
+// [4] s - anim speed + 1 val
+// [5] r - freq mode rain freq + 1 val
+// [6] o - freq mode rain offset + 1 val
+// [7] v - set vu val + 1 val
+// [8] p - set peaks val + 3 val
+// [9] a - set freq values + 16 values
 
 
 
@@ -83,12 +100,7 @@ int main ()
 
 void receiveEvent (int howMany)
     {
-    if (Wire.available ())
-        {
-        
-
-
-        while (Wire.available ())
+    while (Wire.available ())
             {
             byte c = Wire.read ();
 
@@ -111,9 +123,9 @@ void receiveEvent (int howMany)
                 if (c == 'v')
                     args [commandCharCounter] = 7;
                 if (c == 'p')
-                    args [commandCharCounter] = 9;
+                    args [commandCharCounter] = 8;
                 if (c == 'a')
-                    args [commandCharCounter] = 10;
+                    args [commandCharCounter] = 9;
 
                 
                 commandCharCounter++;
@@ -125,7 +137,7 @@ void receiveEvent (int howMany)
 
                 if (commandCharCounter >= 17)
                     {
-                    readyToInterpret = true;
+                    paramUpdAvail = true;
 
                     for (int i = 0; i < 17; i++)
                         args_safe_copy [i] = args [i];
@@ -135,8 +147,6 @@ void receiveEvent (int howMany)
                 }
 
             }
-        
-        }
     }
 
     
