@@ -65,9 +65,13 @@ int main ()
     while (true)
         {
         Wire.beginTransmission (8);
-        Wire.write ("Sample text 228 1337 557\n");
+        Wire.write ('s');
+        
+        for (int i = 0; i < 16; i++)
+            Wire.write (2);
+
         Wire.endTransmission ();
-        Serial.print ("Sample text 228 1337 557\n");
+        
 
 
         // Clock
