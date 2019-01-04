@@ -186,7 +186,7 @@
 
 // ----------------------------------------
 // Hardware Monitor
-#define SERIAL_HW_MONITOR altSerial
+#define SERIAL_HW_MONITOR Serial1
 
 // Updates of HWM screen per second
 #define UPS_HWM 2

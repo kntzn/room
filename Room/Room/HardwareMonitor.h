@@ -11,7 +11,6 @@
 
 #include <LiquidCrystal_I2C.h>
 #include "Predefined.h"
-#include <AltSoftSerial.h>
 
 class HardwareMonitor
     {
@@ -56,9 +55,9 @@ class HardwareMonitor
             GPUmemUsed = 30,
             GPUmemTotal = 31,
 
-            HardDisk = 32,
+            HardDisk = 33,
 
-            nParameters = 33
+            nParameters = 35
             };
 
     private:
@@ -72,9 +71,6 @@ class HardwareMonitor
         long lastUpdate, lastHWMupdate, availStart;
 
         LiquidCrystal_I2C lcd;
-        
-        AltSoftSerial SERIAL_HW_MONITOR;
-        
         
         void listenSerial ();
 

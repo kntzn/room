@@ -16,8 +16,7 @@ HardwareMonitor::HardwareMonitor () :
     index (0),
     converted_string (""),
     lastUpdate (-UPS_HWM*1000),
-    lastHWMupdate (-UPS_HWM * 1000),
-    availStart (millis ())
+    lastHWMupdate (-UPS_HWM * 1000)
     {
     SERIAL_HW_MONITOR.begin (BAUD_RATE_SERIAL);
 
@@ -56,7 +55,7 @@ void HardwareMonitor::listenSerial ()
                 {
                 converted_string = str;
                 params [index] = converted_string.toInt ();
-                Serial.println (params [index]);
+                //Serial.println (params [index]);
                 index++;
                 }
             index = 0;
@@ -82,7 +81,9 @@ int HardwareMonitor::getParameter (paramId id)
 
 void HardwareMonitor::update ()
     {
+    
     listenSerial ();
+    
 
     // Just to update timer
     available ();
@@ -104,11 +105,9 @@ void HardwareMonitor::update ()
             }
         else
             {
-            
-            lcd.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
+            lcd.print (getParameter (HardwareMonitor::paramId::RAMload));
             lcd.print (" ");
             lcd.print (getParameter (HardwareMonitor::paramId::HardDisk));
-            
             }
 
         lcd.display ();

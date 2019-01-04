@@ -40,7 +40,7 @@ int main ()
     controller.setProfile (LightController::def);
 
     controller.setLedMode (StripController::fade_smooth);
-    controller.setLedTableMode (StripController::VU);
+    controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (0.5f);
@@ -54,7 +54,7 @@ int main ()
     Button button_mid (BUTT_MIDL);
     Button button_right (BUTT_RGHT);
 
-    //HardwareMonitor hwm;
+    HardwareMonitor hwm;
     
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
@@ -85,10 +85,10 @@ int main ()
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
-        if (analyzer.signalAvailable ())
-            controller.setLedTableMode (StripController::VU);
-        else
-            controller.setLedTableMode (StripController::sync);
+        //if (analyzer.signalAvailable ())
+            //controller.setLedTableMode (StripController::VU);
+        //else
+            //controller.setLedTableMode (StripController::sync);
         // !Analyzer
 
 
@@ -156,7 +156,7 @@ int main ()
             }
 
 
-        //hwm.update ();
+        hwm.update ();
 
         
         //if (hwm.available ())
@@ -169,19 +169,16 @@ int main ()
 
         //controller.setLedFreeze (bool (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f)));
 
-
-        
-        //if (hwm.available ())
-          //  controller.updateLamps ();
-        //else
-            //controller.update (dt);
-
+        controller.update (dt);
+            
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
             // Why not update instead of waiting?
-            //hwm.update ();
+            
             }
+        
+        Serial.println ();
         }
 
     return 0;
