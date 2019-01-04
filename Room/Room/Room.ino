@@ -158,7 +158,7 @@ int main ()
         //while (SERIAL_HW_MONITOR.available ())
           //  Serial.print ((char) SERIAL_HW_MONITOR.read ());
 
-        SERIAL_HW_MONITOR.print ('R');
+        //SERIAL_HW_MONITOR.print ('R');
 
         hwm.update ();
         
@@ -174,7 +174,7 @@ int main ()
 
         //controller.setLedFreeze (bool (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f)));
 
-        //controller.update (dt);
+        controller.update (dt);
             
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
@@ -183,7 +183,7 @@ int main ()
             
             }
         
-        Serial.println ();
+        
         }
 
     return 0;

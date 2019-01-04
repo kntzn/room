@@ -27,15 +27,6 @@ HardwareMonitor::HardwareMonitor () :
 
 void HardwareMonitor::readBuffer ()
     {
-
-    while (!SERIAL_HW_MONITOR.available ())
-        {
-        SERIAL_HW_MONITOR.print ('R');
-        Serial.println ("W");
-        }
-    byte size = SERIAL_HW_MONITOR.read ();
-    SERIAL_HW_MONITOR.readBytes (raw_input, size);
-    Serial.println ("R");
     }
 
 long HardwareMonitor::msSinceLastHWMupdate ()
@@ -52,6 +43,7 @@ void HardwareMonitor::listenSerial ()
         lastHWMupdate = millis ();
 
         char aChar = SERIAL_HW_MONITOR.read ();
+
         if (aChar != 'E')
             {
             raw_input [index] = aChar;
@@ -68,7 +60,7 @@ void HardwareMonitor::listenSerial ()
                 {
                 converted_string = str;
                 params [index] = converted_string.toInt ();
-                //Serial.println (params [index]);
+                Serial.println (params [index]);
                 index++;
                 }
             index = 0;
@@ -94,14 +86,7 @@ int HardwareMonitor::getParameter (paramId id)
 
 void HardwareMonitor::update ()
     {
-    readBuffer ();
-
-    Serial.print (raw_input [0]);
-    Serial.print (raw_input [1]);
-    Serial.print (raw_input [2]);
-    Serial.println (raw_input [3]);
-
-    /*
+    
     listenSerial ();
     
 
@@ -112,8 +97,7 @@ void HardwareMonitor::update ()
         {
         lastUpdate = millis ();
 
-        Serial.println ();
-
+      
         lcd.clear ();
         lcd.home ();
 
@@ -125,14 +109,13 @@ void HardwareMonitor::update ()
             }
         else
             {
-            lcd.print (getParameter (HardwareMonitor::paramId::RAMload));
+            lcd.print (params [0]);
             lcd.print (" ");
-            lcd.print (getParameter (HardwareMonitor::paramId::HardDisk));
+            lcd.print (params [1]);
             }
 
         lcd.display ();
         }
-    */
     }
 
 bool HardwareMonitor::available ()
