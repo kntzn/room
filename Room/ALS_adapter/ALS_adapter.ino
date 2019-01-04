@@ -7,44 +7,56 @@
 #include <Wire.h>
 
 #include <FastLED.h>
+#include "StripController.h"
 
 
-#define N_LEDS_MAIN 164
-#define N_LEDS_TABLE 42
-
-#define STRIP_DATA_MAIN 5
-#define STRIP_DATA_TABLE 7
-
-CRGB leds_main [N_LEDS_MAIN] = {};
-CRGB leds_table [N_LEDS_TABLE] = {};
-
-int commandCharCounter = 0;
+// Global vars for the receiveEvent
+bool readyToInterpret = false;
 byte args [17] = {};
+byte args_safe_copy [17] = {};
+int commandCharCounter = 0;
 
-void setup ()
+int main ()
     {
-    LEDS.addLeds <WS2811, STRIP_DATA_MAIN, GRB> (leds_main, N_LEDS_MAIN);
-    LEDS.addLeds <WS2811, STRIP_DATA_TABLE, GRB> (leds_table, N_LEDS_TABLE);
+    init ();
+    
+    StripController controller;
+    controller.setColor (CRGB::Red);
+    controller.setMode (StripController::fade_smooth);
+    controller.setTableMode (StripController::sync);
+    controller.setRainbowSpeed (0.1f);
 
     Wire.begin (8);                // join i2c bus with address #8
     Wire.onReceive (receiveEvent); // register event
-    Serial.begin (9600);           // start serial for output
-    }
-
-void loop ()
-    {
     
-    for (int i = 0; i < N_LEDS_MAIN; i++)
-        leds_main [i] = CHSV (i, 255, 255);
 
-    for (int i = 0; i < N_LEDS_TABLE; i++)
-        leds_table [i] = CHSV (i, 255, 255);
+    pinMode (LED_BUILTIN, OUTPUT);
 
-    //Serial.println (LEDS.getFPS ());
+    // start serial for output
+    //Serial.begin (9600);        
+    
+    long prev_t = millis ();
 
-    LEDS.show ();
+    while (true)
+        {
+        // Clock
+        float dt = (float (millis ()) - prev_t) / 1000.f;
+        prev_t = millis ();
+        // !Clock
+
+        controller.update (0.05f);
+        controller.display ();
+        
+        digitalWrite (LED_BUILTIN, !digitalRead (LED_BUILTIN));
+
+        //while (millis () - prev_t < 15)
+            //{}
+
+        //Serial.println (dt*1000.f);
+        }
     }
 
+// Proto
 
 //  0   1   2  3  4   5  6   7
 // char + char + char + char \0
@@ -62,8 +74,13 @@ void loop ()
 // a - set freq values + 16 values
 
 
+
+
+
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
+
+
 void receiveEvent (int howMany)
     {
     if (Wire.available ())
@@ -108,13 +125,10 @@ void receiveEvent (int howMany)
 
                 if (commandCharCounter >= 17)
                     {
-                    for (int i = 0; i < 17; i++)
-                        {
-                        Serial.print (int (args [i]));
-                        Serial.print (' ');
-                        }
+                    readyToInterpret = true;
 
-                    Serial.println ();
+                    for (int i = 0; i < 17; i++)
+                        args_safe_copy [i] = args [i];
 
                     commandCharCounter = 0;
                     }
@@ -124,3 +138,5 @@ void receiveEvent (int howMany)
         
         }
     }
+
+    

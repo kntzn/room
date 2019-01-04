@@ -75,9 +75,9 @@ int main ()
 
 
         // Clock
-        float dt = (float (millis ()) - prev_t)/1000.f;
+        float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
-        
+
         // !Clock
         
         // Analyzer

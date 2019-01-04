@@ -116,7 +116,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Predefined.h" />
+    <ClInclude Include="StripController.h" />
     <ClInclude Include="__vm\.ALS_adapter.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StripController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
