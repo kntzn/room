@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CapacitiveSensorSketch", ".
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HWM test", "HWM test\HWM test.vcxproj", "{EEABF2B6-77D9-455C-8CF4-9755936E27CF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALS_adapter", "ALS_adapter\ALS_adapter.vcxproj", "{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,6 +45,12 @@ Global
 		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Release|x64.ActiveCfg = Release|Win32
 		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Release|x86.ActiveCfg = Release|Win32
 		{EEABF2B6-77D9-455C-8CF4-9755936E27CF}.Release|x86.Build.0 = Release|Win32
+		{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}.Debug|x64.ActiveCfg = Debug|Win32
+		{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}.Debug|x86.ActiveCfg = Debug|Win32
+		{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}.Debug|x86.Build.0 = Debug|Win32
+		{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}.Release|x64.ActiveCfg = Release|Win32
+		{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}.Release|x86.ActiveCfg = Release|Win32
+		{9DD4ACE9-4B8E-4E64-B581-B8A0EBE8D485}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

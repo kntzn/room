@@ -11,7 +11,7 @@
 
 #include "Predefined.h"
 
-#define FASTLED_ALLOW_INTERRUPTS 1
+#define FASTLED_ALLOW_INTERRUPTS 0
 #include <FastLED.h>
 
 class StripController

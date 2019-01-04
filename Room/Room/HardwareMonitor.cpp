@@ -26,6 +26,11 @@ HardwareMonitor::HardwareMonitor () :
     lcd.backlight ();
     }
 
+long HardwareMonitor::msSinceLastHWMupdate ()
+    {
+    return millis () - lastHWMupdate;
+    }
+
 
 void HardwareMonitor::listenSerial ()
     {
@@ -51,6 +56,7 @@ void HardwareMonitor::listenSerial ()
                 {
                 converted_string = str;
                 params [index] = converted_string.toInt ();
+                Serial.println (params [index]);
                 index++;
                 }
             index = 0;

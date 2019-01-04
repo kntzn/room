@@ -5,6 +5,7 @@
 */
 
 
+
 #include "DoorCapSensor.h"
 #include "Button.h"
 #include "WindowController.h"
@@ -17,12 +18,14 @@
 #include "Analyzer.h"
 
 #include <LiquidCrystal_I2C.h>
-
+#include <Wire.h>
 
 void randomizeParameters (LightController &controller);
 
 int main ()
     {
+    Wire.begin (); // join i2c bus (address optional for master)
+
     // Microcontroller initialization
     init ();
     
@@ -51,16 +54,27 @@ int main ()
     Button button_mid (BUTT_MIDL);
     Button button_right (BUTT_RGHT);
 
-    HardwareMonitor hwm;
+    //HardwareMonitor hwm;
     
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
-    pinMode (46, OUTPUT);
+    pinMode (44, OUTPUT);
 
     long prev_t = millis ();
 
+    byte x = 0;
+
     while (true)
         {
+        Wire.beginTransmission (8);
+        
+        for (int i = 0; i < 618; i++)
+            Wire.write ((i+5) %256);
+        
+        Wire.endTransmission ();
+
+        x++;
+
         // Clock
         float dt = (float (millis ()) - prev_t)/1000.f;
         prev_t = millis ();
@@ -135,13 +149,13 @@ int main ()
         if (cs_door.itIsTimeToSwitchIsntIt ())
             {
             //Test
-            digitalWrite (46, !digitalRead (46));
+            digitalWrite (44, !digitalRead (44));
 
             //controller.setTorchereState (!controller.getTorchereState ());
             }
 
 
-        hwm.update ();
+        //hwm.update ();
 
         
         //if (hwm.available ())
@@ -150,20 +164,22 @@ int main ()
             //controller.setLedTableMode (StripController::sync);
             }
 
-        Serial.println (hwm.HWMuptime ());
+ //       Serial.println (hwm.HWMuptime ());
 
         //controller.setLedFreeze (bool (hwm.HWMuptime () > 1.5f * (MODE_SWITCH_FADE_TIME * 1000.f)));
 
 
-
-        controller.update (dt);
         
+        //if (hwm.available ())
+          //  controller.updateLamps ();
+        //else
+            controller.update (dt);
 
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
             // Why not update instead of waiting?
-            hwm.update ();
+            //hwm.update ();
             }
         }
 

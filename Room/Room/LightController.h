@@ -43,7 +43,6 @@ class LightController
         byte profile = 0;
         void restartAnimation ();
 
-        int iter = 0;
 
     public:
         LightController ();

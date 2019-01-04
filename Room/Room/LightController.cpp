@@ -17,11 +17,8 @@ LightController::LightController ()
 void LightController::update (float dt)
     {
     LED.update (dt);
-
-    if (iter % 100 == 0)
-        LED.display ();
-    iter++;
-
+    LED.display ();
+    
     Lamp.update ();
     Torchere.update ();
     }
