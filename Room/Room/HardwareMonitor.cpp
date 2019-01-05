@@ -20,6 +20,7 @@ HardwareMonitor::HardwareMonitor () :
     {
     SERIAL_HW_MONITOR.begin (9600);
 
+    pinMode (LED_BUILTIN, OUTPUT);
     
     lcd.init ();
     lcd.backlight ();
@@ -29,6 +30,8 @@ void HardwareMonitor::listenSerial ()
     {
     while (SERIAL_HW_MONITOR.available () > 0)
         {
+        digitalWrite (LED_BUILTIN, HIGH);
+
         // Updates the timer
         lastHWMupdate = millis ();
 
@@ -50,12 +53,14 @@ void HardwareMonitor::listenSerial ()
                 {
                 converted_string = str;
                 params [index] = converted_string.toInt ();
-                Serial.println (params [index]);
+                //Serial.println (params [index]);
                 index++;
                 }
             index = 0;
             }
         }
+
+    digitalWrite (LED_BUILTIN, LOW);
     }
 
 int HardwareMonitor::getParameter (paramId id)
@@ -75,8 +80,9 @@ void HardwareMonitor::update ()
     listenSerial ();
     
 
-    // Just to update timer
-    available ();
+    // Just to update flag
+    if (!available ())
+        index = 0;
 
     if (millis () - lastUpdate > 1000.f / (UPS_HWM))
         {
@@ -86,7 +92,7 @@ void HardwareMonitor::update ()
         lcd.clear ();
         lcd.home ();
 
-        if (millis () - lastHWMupdate > HWM_TIMEOUT*1000)
+        if (!available())
             {
             lcd.print ("HWM is not");
             lcd.setCursor (4, 1);
@@ -94,11 +100,27 @@ void HardwareMonitor::update ()
             }
         else
             {
-            lcd.print (getParameter (HardwareMonitor::paramId::RAMloadPerc));
-            lcd.print (" ");
-            lcd.print (getParameter (HardwareMonitor::paramId::HardDisk));
-            }
+            lcd.setBacklight (127);
 
+            lcd.print ("TDP: ");
+            lcd.print (getParameter (HardwareMonitor::paramId::TDPpackage));
+            lcd.print ("W;");
+
+            lcd.setCursor (9, 0);
+            lcd.print ("TEMP:");
+
+            lcd.setCursor (0, 1);
+            
+            lcd.print (getParameter (HardwareMonitor::paramId::tempCore0));
+            lcd.print ("C|");
+            lcd.print (getParameter (HardwareMonitor::paramId::tempCore1));
+            lcd.print ("C|");
+            lcd.print (getParameter (HardwareMonitor::paramId::tempCore2));
+            lcd.print ("C|");
+            lcd.print (getParameter (HardwareMonitor::paramId::tempCore3));
+            lcd.print ("C|");
+            }
+        
         lcd.display ();
         }
     }
@@ -107,8 +129,7 @@ bool HardwareMonitor::available ()
     {
     bool avail = (millis () - lastHWMupdate < HWM_TIMEOUT * 1000);
 
-    if (!avail)
-        availStart = millis ();
+    
 
     return avail;
     }

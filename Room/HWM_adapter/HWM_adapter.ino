@@ -22,15 +22,12 @@ void setup()
 int lastCharIter = 0;
 char buffer [270] = {};
 
-
 // the loop function runs over and over again until power down or reset
 void loop() 
     {
     digitalWrite (LED_BUILTIN, !digitalRead (3));
 
     if (Serial.available ())
-        {
         if (digitalRead (3) == LOW)
             Serial1.print (char (Serial.read ()));
-        }
     }
