@@ -160,6 +160,8 @@
 // Time, required to set window in closed position (in secs)
 #define INIT_TIME_TO_OPEN FULL_OPEN_TIME
 
+// Zero speed value
+#define WINDOW_ZERO_SPEED 114
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 30
@@ -226,8 +228,9 @@
 #define RELAY_LAMP 33
 #define RELAY_TORCHERE 31
 
-#define BRIDGE_0 11
-#define BRIDGE_1 12
+
+#define WINDOW_OUTPUT 47
+
 #define LIGHT_SENSOR_OUTSIDE A4
 #define LIGHT_SENSOR_INSIDE A5
 

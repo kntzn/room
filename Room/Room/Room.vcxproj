@@ -98,7 +98,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="DoorCapSensor.h" />
     <ClInclude Include="HardwareMonitor.h" />
-    <ClInclude Include="Hbridge.h" />
     <ClInclude Include="LightBulbController.h" />
     <ClInclude Include="LightController.h" />
     <ClInclude Include="Predefined.h" />
@@ -112,7 +111,6 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="DoorCapSensor.cpp" />
     <ClCompile Include="HardwareMonitor.cpp" />
-    <ClCompile Include="Hbridge.cpp" />
     <ClCompile Include="LightBulbController.cpp" />
     <ClCompile Include="LightController.cpp" />
     <ClCompile Include="StripController.cpp" />

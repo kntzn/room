@@ -38,9 +38,11 @@ int main ()
     Serial.begin (BAUD_RATE_SERIAL);
 
     Servo window;
-    window.attach (47);
-    
+    window.attach (WINDOW_OUTPUT);
+    window.write (WINDOW_ZERO_SPEED);
 
+
+    byte nrfBuf [16] = {};
     RF24 nrf (48, 49);
     nrf.begin ();
     nrf.powerUp ();
@@ -48,10 +50,7 @@ int main ()
     nrf.openReadingPipe (1, 0xF0F0F0F0F0);
     nrf.setChannel (0x57);
     nrf.setPayloadSize (16);
-    byte nrfBuf [16] = {};
     
-
-
     // Initialization of controller and strip
     LightController controller;
     controller.setProfile (LightController::def);
@@ -81,8 +80,6 @@ int main ()
 
     while (true)
         {
-        window.write (113);
-
         // Clock
         float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
@@ -172,11 +169,12 @@ int main ()
 
         hwm.update ();
 
-        //window.detach ();
-        
+
+
+        // detaching servo to avoid signal distortion
+        window.detach ();
         controller.update (dt);
-        
-        //window.attach (47);
+        window.attach (WINDOW_OUTPUT);
 
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
