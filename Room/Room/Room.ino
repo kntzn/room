@@ -18,14 +18,15 @@
 #include "Analyzer.h"
 
 #include <LiquidCrystal_I2C.h>
-#include <Wire.h>
+
+#include <printf.h>
+#include <RF24-master\RF24.h>
+
 
 void randomizeParameters (LightController &controller);
 
 int main ()
     {
-    Wire.begin (); // join i2c bus (address optional for master)
-
     // Microcontroller initialization
     init ();
     
@@ -34,6 +35,18 @@ int main ()
 
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
+
+
+    RF24 nrf (48, 49);
+    nrf.begin ();
+    nrf.powerUp ();
+    nrf.startListening ();
+    nrf.openReadingPipe (1, 0xF0F0F0F0F0);
+    nrf.setChannel (0x57);
+    nrf.setPayloadSize (16);
+    byte nrfBuf [16] = {};
+    
+
 
     // Initialization of controller and strip
     LightController controller;
@@ -64,17 +77,12 @@ int main ()
 
     while (true)
         {
-        if (millis () > 8000)
+        while (nrf.available ())
             {
-            Wire.beginTransmission (8);
-            Wire.write ('m');
-        
-            for (int i = 0; i < 16; i++)
-                Wire.write (StripController::mono);
+            nrf.read (nrfBuf, 16);
 
-            Wire.endTransmission ();
+            Serial.println (int (nrfBuf [0]));
             }
-
 
         // Clock
         float dt = (float (millis ()) - prev_t) / 1000.f;
