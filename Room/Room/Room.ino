@@ -19,8 +19,9 @@
 
 #include <LiquidCrystal_I2C.h>
 
-#include <printf.h>
 #include <RF24-master\RF24.h>
+
+#include <Servo.h>
 
 
 void randomizeParameters (LightController &controller);
@@ -36,6 +37,9 @@ int main ()
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
+    Servo window;
+    window.attach (47);
+    
 
     RF24 nrf (48, 49);
     nrf.begin ();
@@ -77,12 +81,7 @@ int main ()
 
     while (true)
         {
-        while (nrf.available ())
-            {
-            nrf.read (nrfBuf, 16);
-
-            Serial.println (int (nrfBuf [0]));
-            }
+        window.write (113);
 
         // Clock
         float dt = (float (millis ()) - prev_t) / 1000.f;
@@ -93,10 +92,10 @@ int main ()
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
-        //if (analyzer.signalAvailable ())
-            //controller.setLedTableMode (StripController::VU);
-        //else
-            //controller.setLedTableMode (StripController::sync);
+        if (analyzer.signalAvailable ())
+            controller.setLedTableMode (StripController::VU);
+        else
+            controller.setLedTableMode (StripController::sync);
         // !Analyzer
 
 
@@ -109,6 +108,16 @@ int main ()
         // Capacitive sensors
         cs_door.update (dt);
         // !Capacitive sensors
+
+
+        // NRF24L01
+        while (nrf.available ())
+            {
+            nrf.read (nrfBuf, 16);
+
+            Serial.println (int (nrfBuf [0]));
+            }
+        // !NRF24L01
 
         // Strip controller
         
@@ -162,9 +171,13 @@ int main ()
             }
 
         hwm.update ();
+
+        //window.detach ();
         
         controller.update (dt);
-            
+        
+        //window.attach (47);
+
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
