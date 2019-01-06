@@ -161,7 +161,7 @@
 #define INIT_TIME_TO_OPEN FULL_OPEN_TIME
 
 // Zero speed value
-#define WINDOW_ZERO_SPEED 114
+#define WINDOW_ZERO_SPEED 112
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 30

@@ -10,8 +10,8 @@ WindowController::WindowController ()
 
     while (millis () - init_start < INIT_TIME_TO_OPEN*1000)
         {
-        bridge.setSpeed (255);
-        bridge.update ();
+        //bridge.setSpeed (255);
+        //bridge.update ();
         }
 
     }
@@ -47,12 +47,12 @@ void WindowController::update ()
             if (mode == closed_in &&
                 dt < FULL_OPEN_TIME / 2)
                 {
-                bridge.setSpeed (255);
+                //bridge.setSpeed (255);
                 }
             if (mode == closed_out &&
                 dt < FULL_OPEN_TIME / 2)
                 {
-                bridge.setSpeed (-255);
+                //bridge.setSpeed (-255);
                 }
             }
         else if (prev_mode == closed_in &&
@@ -61,12 +61,12 @@ void WindowController::update ()
             if (mode == opened &&
                 dt < FULL_OPEN_TIME / 2)
                 {
-                bridge.setSpeed (-255);
+                //bridge.setSpeed (-255);
                 }
             if (mode == closed_out &&
                 dt < FULL_OPEN_TIME)
                 {
-                bridge.setSpeed (-255);
+                //bridge.setSpeed (-255);
                 }
             }
         else if (prev_mode == closed_out &&
@@ -74,22 +74,22 @@ void WindowController::update ()
             {
             if (mode == opened && dt < FULL_OPEN_TIME / 2)
                 {
-                bridge.setSpeed (255);
+                //bridge.setSpeed (255);
                 }
             if (mode == closed_in && dt < FULL_OPEN_TIME)
                 {
-                bridge.setSpeed (255);
+                //bridge.setSpeed (255);
                 }
             }
         else
-            bridge.setSpeed (0);
+            {}//bridge.setSpeed (0);
 
         }
     else
         prev_mode = mode;
 
     // Updates the bridge
-    bridge.update ();
+    //bridge.update ();
     }
 
 void WindowController::listenBrightness ()

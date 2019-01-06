@@ -9,7 +9,6 @@
 	#include "WProgram.h"
 #endif
 
-#include "Hbridge.h"
 #include "Predefined.h"
 
 struct BrightnessListener
@@ -65,7 +64,6 @@ class WindowController
         unsigned long int mode_switch = 0;
         BrightnessListener outside = BrightnessListener (LIGHT_SENSOR_OUTSIDE);
         BrightnessListener inside = BrightnessListener (LIGHT_SENSOR_INSIDE);
-        Hbridge bridge = Hbridge (BRIDGE_0, BRIDGE_1);
         
     public:
         WindowController ();
