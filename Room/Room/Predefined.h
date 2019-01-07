@@ -155,13 +155,8 @@
 // Window
 
 // Time, required to rotate the blinds by 180 deg
-#define FULL_OPEN_TIME 1.0f
+#define FULL_OPEN_TIME 1.8f
 
-// Time, required to set window in closed position (in secs)
-#define INIT_TIME_TO_OPEN FULL_OPEN_TIME
-
-// Zero speed value
-#define WINDOW_ZERO_SPEED 112
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 15

@@ -58,19 +58,15 @@ class WindowController
         enum state
             {
             closed_in,
-            opened,
-            closed_out
+            opened
             };
     private:
         bool autoMode = false;
         byte mode = closed_in, prev_mode = closed_in;
-        unsigned long int mode_switch = 0;
+        unsigned long int mode_switch = 0, millis_init = 0;
         BrightnessListener outside = BrightnessListener (LIGHT_SENSOR_OUTSIDE);
         BrightnessListener inside = BrightnessListener (LIGHT_SENSOR_INSIDE);
-        
-        float aver = 0.f;
-
-
+       
         Servo window;
 
     public:
