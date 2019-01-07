@@ -10,13 +10,14 @@
 
 HardwareMonitor::HardwareMonitor () :
     lastState (false),
-    lcd (0x27, 16, 2),
     raw_input ({}),
-    params (),
     index (0),
+    params (),
+    brightnessLevel (0.f),
+    lastUpdate (-UPS_HWM * 1000),
+    lastHWMupdate (-UPS_HWM * 1000),
     converted_string (""),
-    lastUpdate (-UPS_HWM*1000),
-    lastHWMupdate (-UPS_HWM * 1000)
+    lcd (0x27, 16, 2)
     {
     SERIAL_HW_MONITOR.begin (9600);
 
@@ -49,7 +50,6 @@ void HardwareMonitor::listenSerial ()
             char *p = raw_input;
             char *str;
             index = 0;
-            String value = "";
             while ((str = strtok_r (p, ";", &p)) != NULL)
                 {
                 converted_string = str;
@@ -80,8 +80,20 @@ void HardwareMonitor::update ()
     listenSerial ();
     
     // Auto brightness (finally, i've done it)
+    // Measures average value
+    unsigned long int measuredBrightness = 0;
+    for (int i = 0; i < N_MES; i++)
+        measuredBrightness += analogRead (LIGHT_SENSOR_INSIDE);
+    measuredBrightness /= N_MES;
+
+    // Creates value limit
+    measuredBrightness = constrain (measuredBrightness, 50, 400);
+    // Filters the value
+    brightnessLevel =  0.05f * measuredBrightness + 0.95f * float (measuredBrightness);
     analogWrite (HWM_AUTO_BRIGHTNESS_PIN, 
-                 map (analogRead (LIGHT_SENSOR_INSIDE), 0, 1023, 0, 255));
+                 map (brightnessLevel, 0, 400, 0, 255));
+
+    Serial.println (map (brightnessLevel, 0, 400, 0, 255));
 
     // Just to update flag
     if (!available ())

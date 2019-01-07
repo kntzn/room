@@ -63,13 +63,14 @@ class HardwareMonitor
     private:
         bool lastState;
         char raw_input [270];
-        int params [static_cast <int> (paramId::nParameters)];
         byte index;
-        String converted_string;
-
+        int params [static_cast <int> (paramId::nParameters)];
+        float brightnessLevel;
         long lastUpdate, lastHWMupdate;
-
+        
+        String converted_string;
         LiquidCrystal_I2C lcd;
+        
         
         void listenSerial ();
 

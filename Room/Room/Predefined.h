@@ -162,7 +162,7 @@
 #define FULL_OPEN_TIME 1.8f
 
 // Brightness threshold
-#define BRIGHTNESS_TH 100
+#define BRIGHTNESS_TH 50
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 15
