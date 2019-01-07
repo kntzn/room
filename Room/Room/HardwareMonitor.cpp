@@ -21,7 +21,8 @@ HardwareMonitor::HardwareMonitor () :
     SERIAL_HW_MONITOR.begin (9600);
 
     pinMode (LED_BUILTIN, OUTPUT);
-    
+    pinMode (HWM_AUTO_BRIGHTNESS_PIN, OUTPUT);
+
     lcd.init ();
     lcd.backlight ();
     }
@@ -76,9 +77,11 @@ int HardwareMonitor::getParameter (paramId id)
 
 void HardwareMonitor::update ()
     {
-    
     listenSerial ();
     
+    // Auto brightness (finally, i've done it)
+    analogWrite (HWM_AUTO_BRIGHTNESS_PIN, 
+                 map (analogRead (LIGHT_SENSOR_INSIDE), 0, 1023, 0, 255));
 
     // Just to update flag
     if (!available ())

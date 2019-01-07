@@ -162,7 +162,7 @@
 #define FULL_OPEN_TIME 1.8f
 
 // Brightness threshold
-#define BRIGHTNESS_TH 200
+#define BRIGHTNESS_TH 100
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 15
@@ -223,21 +223,21 @@
 #define STRIP_DATA_MAIN 35
 #define STRIP_DATA_TABLE 37
 
-#define JACK_INPUT A0
-#define JACK_INPUT_FREQ A1
-
 #define RELAY_LAMP 33
 #define RELAY_TORCHERE 31
 
+#define JACK_INPUT A0
+#define JACK_INPUT_FREQ A1
 
 #define WINDOW_OUTPUT 47
-
 #define LIGHT_SENSOR_OUTSIDE A2
 #define LIGHT_SENSOR_INSIDE A3
 
 #define CURRENT_SENSOR_PIN A6
 #define VOLTAGE_SENSOR_PIN A7
 #define TEMPERTURE_SENSOR_PIN 41
+
+#define HWM_AUTO_BRIGHTNESS_PIN 2
 
 #endif // !PREDEFINED_OFF
 
