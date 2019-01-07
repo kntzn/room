@@ -122,8 +122,7 @@ int main ()
             Serial.println ("Led only");
 
             controller.setProfile (LightController::ledOnly);
-            window.setMode (WindowController::opened);
-
+            
             randomizeParameters (controller);
             }
         if (button_left.getState () == Button::buttonState::Hold)
@@ -137,7 +136,8 @@ int main ()
             {
             Serial.println ("Night");
 
-            window.setMode (WindowController::closed_in);
+            //window.setMode (WindowController::state::opened);
+
             controller.setProfile (LightController::night);
             }
         if (button_right.getState () == Button::buttonState::Hold)

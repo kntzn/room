@@ -4,15 +4,20 @@
 
 #include "WindowController.h"
 
-WindowController::WindowController ()
+WindowController::WindowController () :
+    autoMode (false),
+    mode (state::closed_in),
+    prev_mode (state::closed_in),
+    mode_switch (0),
+    millis_init (millis ()),
+    outside (LIGHT_SENSOR_OUTSIDE),
+    inside (LIGHT_SENSOR_INSIDE)
     {
     window.attach (WINDOW_OUTPUT);
-    window.write (2300);
-    
-    millis_init = millis ();
+    window.write (SERVO_POSITIVE_SPEED);
     }
 
-void WindowController::setMode (byte newMode)    
+void WindowController::setMode (state newMode)
     {
     if (mode != newMode &&
         millis () - mode_switch > (FULL_OPEN_TIME * 1000))
@@ -35,8 +40,8 @@ void WindowController::update ()
     listenBrightness ();
 
     // Moves the blind to initial position (closed)
-    if (millis () - millis_init < FULL_OPEN_TIME * 1000)
-        window.writeMicroseconds (2300);
+    if (millis () - millis_init < (FULL_OPEN_TIME * 1000))
+        window.writeMicroseconds (SERVO_POSITIVE_SPEED);
     // Mode switch logic
     else
         {
@@ -50,21 +55,12 @@ void WindowController::update ()
         // Servo logic
         if (dt < (FULL_OPEN_TIME * 1000) / 2)
             {
-            if (prev_mode == opened)
-                {
-                if (mode == closed_in)
-                    {
-                    window.writeMicroseconds (2300);
-                    }
-                }
-            else if (prev_mode == closed_in &&
-                     dt < (FULL_OPEN_TIME * 1000))
-                {
-                if (mode == opened)
-                    {
-                    window.writeMicroseconds (800);
-                    }
-                }
+            if (prev_mode == state::opened)
+                if (mode == state::closed_in)
+                    window.writeMicroseconds (SERVO_POSITIVE_SPEED);
+            else if (prev_mode == state::closed_in)
+                if (mode == state::opened)
+                    window.writeMicroseconds (SERVO_NEGATIVE_SPEED);   
             }
         else
             {
@@ -72,7 +68,6 @@ void WindowController::update ()
             window.detach ();
             }
         }
-
     }
 
 void WindowController::listenBrightness ()
@@ -82,20 +77,9 @@ void WindowController::listenBrightness ()
         inside.update ();
         outside.update ();
 
-        Serial.print ("IN:");
-        Serial.print (inside.getBrightness ());
-        Serial.print (" OUT:");
-        Serial.print (outside.getBrightness ());
-
-        if (outside.getBrightness () < inside.getBrightness () - 200)
-            {
-            Serial.print (" Closing...");
-            setMode (closed_in);
-            }
+        if (outside.getBrightness () < inside.getBrightness () - BRIGHTNESS_TH)
+            setMode (state::closed_in);
         else
-            {
-            Serial.print (" Opening...");
-            setMode (opened);
-            }
+            setMode (state::opened);
         }
     }

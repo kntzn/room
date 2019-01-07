@@ -154,8 +154,15 @@
 // ----------------------------------------
 // Window
 
+// Servo speeds
+#define SERVO_NEGATIVE_SPEED 800
+#define SERVO_POSITIVE_SPEED 2300
+
 // Time, required to rotate the blinds by 180 deg
 #define FULL_OPEN_TIME 1.8f
+
+// Brightness threshold
+#define BRIGHTNESS_TH 200
 
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 15

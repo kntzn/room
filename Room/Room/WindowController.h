@@ -56,26 +56,25 @@ struct BrightnessListener
 class WindowController
     {
     public:
-        enum state
+        enum class state
             {
-            closed_in,
-            opened
+            closed_in = 0,
+            opened = 1
             };
     private:
-        bool autoMode = false;
-        byte mode = closed_in, prev_mode = closed_in;
-        unsigned long int mode_switch = 0, millis_init = 0;
-        BrightnessListener outside = BrightnessListener (LIGHT_SENSOR_OUTSIDE);
-        BrightnessListener inside = BrightnessListener (LIGHT_SENSOR_INSIDE);
+        bool autoMode;
+        state mode, prev_mode;
+        unsigned long int mode_switch, millis_init;
+        BrightnessListener outside, inside;
        
         Servo window;
 
     public:
         WindowController ();
 
-        void setMode (byte newMode);
+        void setMode (state newMode);
         void setAutoMode (bool isAuto);
-
+        
         void update ();
 
         void listenBrightness ();
