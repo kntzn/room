@@ -20,8 +20,6 @@
 
 #include <RF24-master\RF24.h>
 
-#include <Servo.h>
-
 
 void randomizeParameters (LightController &controller);
 
@@ -36,9 +34,11 @@ int main ()
     // Serial1 initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
-    Servo window;
-    window.attach (WINDOW_OUTPUT);
-    window.write (WINDOW_ZERO_SPEED);
+    //Servo window;
+    //window.attach (WINDOW_OUTPUT);
+    //window.write (WINDOW_ZERO_SPEED);
+
+    WindowController window;
 
 
     byte nrfBuf [16] = {};
@@ -168,12 +168,13 @@ int main ()
 
         hwm.update ();
 
-
+        window.update ();
+        
 
         // detaching servo to avoid signal distortion
-        window.detach ();
+        //window.detach ();
         controller.update (dt);
-        window.attach (WINDOW_OUTPUT);
+        //window.attach (WINDOW_OUTPUT);
 
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)

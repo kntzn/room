@@ -164,7 +164,7 @@
 #define WINDOW_ZERO_SPEED 112
 
 // Brightness value update period (sec)
-#define BRIGHTNESS_UPDATE_PERIOD 30
+#define BRIGHTNESS_UPDATE_PERIOD 15
 // Number of measurements
 #define N_MES 100
 

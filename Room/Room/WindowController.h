@@ -9,6 +9,9 @@
 	#include "WProgram.h"
 #endif
 
+
+#include <Servo.h>
+
 #include "Predefined.h"
 
 struct BrightnessListener
@@ -65,6 +68,8 @@ class WindowController
         BrightnessListener outside = BrightnessListener (LIGHT_SENSOR_OUTSIDE);
         BrightnessListener inside = BrightnessListener (LIGHT_SENSOR_INSIDE);
         
+        Servo window;
+
     public:
         WindowController ();
 
