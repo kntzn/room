@@ -39,7 +39,7 @@ int main ()
     //window.write (WINDOW_ZERO_SPEED);
 
     WindowController window;
-
+    window.setAutoMode (true);
 
     byte nrfBuf [16] = {};
     RF24 nrf (48, 49);

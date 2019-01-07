@@ -157,7 +157,6 @@
 // Time, required to rotate the blinds by 180 deg
 #define FULL_OPEN_TIME 1.8f
 
-
 // Brightness value update period (sec)
 #define BRIGHTNESS_UPDATE_PERIOD 15
 // Number of measurements
@@ -226,8 +225,8 @@
 
 #define WINDOW_OUTPUT 47
 
-#define LIGHT_SENSOR_OUTSIDE A4
-#define LIGHT_SENSOR_INSIDE A5
+#define LIGHT_SENSOR_OUTSIDE A2
+#define LIGHT_SENSOR_INSIDE A3
 
 #define CURRENT_SENSOR_PIN A6
 #define VOLTAGE_SENSOR_PIN A7

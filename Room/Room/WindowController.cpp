@@ -14,8 +14,7 @@ WindowController::WindowController ()
 
 void WindowController::setMode (byte newMode)    
     {
-    if (!autoMode && 
-        mode != newMode &&
+    if (mode != newMode &&
         millis () - mode_switch > (FULL_OPEN_TIME * 1000))
         {
         window.attach (WINDOW_OUTPUT);
@@ -32,8 +31,13 @@ void WindowController::setAutoMode (bool isAuto)
 
 void WindowController::update ()
     {
+    // Updates the mode if autoMode is enabled
+    listenBrightness ();
+
+    // Moves the blind to initial position (closed)
     if (millis () - millis_init < FULL_OPEN_TIME * 1000)
         window.writeMicroseconds (2300);
+    // Mode switch logic
     else
         {
         // Time scice mode switch
@@ -75,9 +79,23 @@ void WindowController::listenBrightness ()
     {
     if (autoMode)
         {
-        if (100 + outside.getBrightness () < inside.getBrightness ())
-            mode = closed_in;
+        inside.update ();
+        outside.update ();
+
+        Serial.print ("IN:");
+        Serial.print (inside.getBrightness ());
+        Serial.print (" OUT:");
+        Serial.print (outside.getBrightness ());
+
+        if (outside.getBrightness () < inside.getBrightness () - 200)
+            {
+            Serial.print (" Closing...");
+            setMode (closed_in);
+            }
         else
-            mode = opened;
+            {
+            Serial.print (" Opening...");
+            setMode (opened);
+            }
         }
     }

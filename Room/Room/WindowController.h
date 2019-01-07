@@ -33,7 +33,7 @@ struct BrightnessListener
         for (int i = 0; i < N_MES; i++)
             value += analogRead (pin);
 
-        return (value/ N_MES);
+        return (value / N_MES);
         }
 
     void update ()
@@ -47,6 +47,7 @@ struct BrightnessListener
 
     int getValue ()
         {
+
         return output_value;
         }
 
