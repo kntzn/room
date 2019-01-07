@@ -68,6 +68,9 @@ class WindowController
         BrightnessListener outside = BrightnessListener (LIGHT_SENSOR_OUTSIDE);
         BrightnessListener inside = BrightnessListener (LIGHT_SENSOR_INSIDE);
         
+        float aver = 0.f;
+
+
         Servo window;
 
     public:
@@ -79,6 +82,7 @@ class WindowController
         void update ();
 
         void listenBrightness ();
+
 
     };
 

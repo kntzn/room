@@ -155,7 +155,7 @@
 // Window
 
 // Time, required to rotate the blinds by 180 deg
-#define FULL_OPEN_TIME 3
+#define FULL_OPEN_TIME 1.0f
 
 // Time, required to set window in closed position (in secs)
 #define INIT_TIME_TO_OPEN FULL_OPEN_TIME
