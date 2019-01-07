@@ -7,13 +7,16 @@
 WindowController::WindowController ()
     {
     window.attach (WINDOW_OUTPUT);
+    window.write (2300);
     
     millis_init = millis ();
     }
 
 void WindowController::setMode (byte newMode)    
     {
-    if (!autoMode && mode != newMode)
+    if (!autoMode && 
+        mode != newMode &&
+        millis () - mode_switch > (FULL_OPEN_TIME * 1000))
         {
         window.attach (WINDOW_OUTPUT);
         mode_switch = millis ();
