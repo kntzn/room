@@ -14,43 +14,19 @@
 
 #include "Predefined.h"
 
-struct BrightnessListener
+class BrightnessListener
     {
-    byte pin = 255;
-    int output_value = 0;
-    unsigned long int measurementTime = 0;
-
-
-    BrightnessListener (byte newPin)
-        {
-        pin = newPin;
-        measurementTime = millis ();
-        }
+    private:
+        byte pin = 255;
+        int output_value = 0;
+        unsigned long int measurementTime = 0;
+    public:
+        BrightnessListener (byte newPin);
     
-    int getBrightness ()
-        {
-        unsigned long int value = 0;
-        for (int i = 0; i < N_MES; i++)
-            value += analogRead (pin);
+        void update ();
 
-        return (value / N_MES);
-        }
-
-    void update ()
-        {
-        if (millis () - measurementTime > BRIGHTNESS_UPDATE_PERIOD * 1000)
-            {
-            output_value = getBrightness ();
-            measurementTime = millis ();
-            }
-        }
-
-    int getValue ()
-        {
-
-        return output_value;
-        }
-
+        int getBrightness ();
+        int getValue ();
     };
 
 class WindowController

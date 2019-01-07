@@ -4,6 +4,39 @@
 
 #include "WindowController.h"
 
+
+BrightnessListener::BrightnessListener (byte newPin)
+    {
+    pin = newPin;
+    measurementTime = millis ();
+    }
+
+int BrightnessListener::getBrightness ()
+    {
+    unsigned long int value = 0;
+    for (int i = 0; i < N_MES; i++)
+        value += analogRead (pin);
+
+    return (value / N_MES);
+    }
+
+void BrightnessListener::update ()
+    {
+    if (millis () - measurementTime > BRIGHTNESS_UPDATE_PERIOD * 1000)
+        {
+        output_value = getBrightness ();
+        measurementTime = millis ();
+        }
+    }
+
+int BrightnessListener::getValue ()
+    {
+    return output_value;
+    }
+
+
+
+
 WindowController::WindowController () :
     autoMode (false),
     mode (state::closed_in),
@@ -77,7 +110,7 @@ void WindowController::listenBrightness ()
         inside.update ();
         outside.update ();
 
-        if (outside.getBrightness () < inside.getBrightness () - BRIGHTNESS_TH)
+        if (outside.getValue () < inside.getBrightness () - BRIGHTNESS_TH)
             setMode (state::closed_in);
         else
             setMode (state::opened);
