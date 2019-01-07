@@ -89,11 +89,19 @@ void WindowController::update ()
         if (dt < (FULL_OPEN_TIME * 1000) / 2)
             {
             if (prev_mode == state::opened)
+                {
                 if (mode == state::closed_in)
-                    window.writeMicroseconds (SERVO_POSITIVE_SPEED);
+                    {
+                    window.writeMicroseconds (2300);
+                    }
+                }
             else if (prev_mode == state::closed_in)
+                {
                 if (mode == state::opened)
-                    window.writeMicroseconds (SERVO_NEGATIVE_SPEED);   
+                    {
+                    window.writeMicroseconds (800);
+                    }
+                }
             }
         else
             {
