@@ -54,7 +54,7 @@ void HardwareMonitor::listenSerial ()
                 {
                 converted_string = str;
                 params [index] = converted_string.toInt ();
-                Serial.println (params [index]);
+                
                 index++;
                 }
             index = 0;
@@ -92,8 +92,6 @@ void HardwareMonitor::update ()
     brightnessLevel =  0.05f * measuredBrightness + 0.95f * float (measuredBrightness);
     analogWrite (HWM_AUTO_BRIGHTNESS_PIN, 
                  map (brightnessLevel, 0, 400, 0, 255));
-
-    Serial.println (map (brightnessLevel, 0, 400, 0, 255));
 
     // Just to update flag
     if (!available ())

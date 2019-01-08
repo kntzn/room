@@ -20,6 +20,7 @@
 
 #include <RF24-master\RF24.h>
 
+#include <CapacitiveSensor.h>
 
 void randomizeParameters (LightController &controller);
 
@@ -71,6 +72,7 @@ int main ()
 
     HardwareMonitor hwm;
     
+    CapButton cs_lamp (40, 42, 15000);
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
     pinMode (44, OUTPUT);
@@ -101,10 +103,11 @@ int main ()
         button_right.update ();
         // !Buttons
 
+
         // Capacitive sensors
         cs_door.update (dt);
+        cs_lamp.update ();
         // !Capacitive sensors
-
 
         // NRF24L01
         while (nrf.available ())
@@ -163,10 +166,15 @@ int main ()
             randomizeParameters (controller);
             }
         
-        if (cs_door.itIsTimeToSwitchIsntIt ())
+        if (cs_lamp.getState () == CapButton::Hold)
             {
             //Test
             digitalWrite (44, !digitalRead (44));
+            }
+
+        if (cs_door.itIsTimeToSwitchIsntIt ())
+            {
+            
             }
 
         hwm.update ();

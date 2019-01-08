@@ -18,7 +18,6 @@ Analyzer::Analyzer ()
 
 void Analyzer::update (float dt)
     {
-    
     // Measuring the volume 
     VU_out = VUmeter ();
 
@@ -43,7 +42,6 @@ float Analyzer::measureVol ()
         lastSignal = millis ();
 
     return volume;
-        
     }
 
 int Analyzer::VUmeter ()

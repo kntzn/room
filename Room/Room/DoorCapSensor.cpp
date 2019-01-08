@@ -1,5 +1,70 @@
 #include "DoorCapSensor.h"
 
+
+void CapButton::reset ()
+    {
+    flag = false;
+    state = buttonState::Prsd;
+    }
+
+CapButton::CapButton (byte b_pin0, byte b_pin1, int threshold):
+    cs (b_pin0, b_pin1),
+    th (threshold)
+    {
+    }
+
+void CapButton::update ()
+    {
+    bool active = (cs.capacitiveSensor (100) > th);
+
+    if (active)
+        {
+        if (flag == false)
+            {
+            flag = true;
+            last_press = millis ();
+            state = buttonState::Prs;
+            }
+        else
+            {
+            if (millis () - last_press > HOLD_TIME)
+                {
+                if (hold_flag == false)
+                    {
+                    hold_flag = true;
+                    state = buttonState::Hold;
+                    }
+                else
+                    state = buttonState::Unpr;
+                }
+
+            else
+                state = buttonState::Prsd;
+            }
+        }
+    else
+        {
+        if (flag == true && hold_flag == false)
+            {
+            flag = false;
+            state = buttonState::Rlsd;
+            }
+        else
+            {
+            state = buttonState::Unpr;
+            hold_flag = false;
+            flag = false;
+            }
+
+        }
+
+    }
+
+byte CapButton::getState ()
+    {
+    return state;
+    }
+
 DoorCapSensor::DoorCapSensor (byte pin_input) :
     flag (false),
     toggle (false),
@@ -52,13 +117,6 @@ void DoorCapSensor::update (float dt)
 
 bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
     {
-    /*
-    delay (100);
-    Serial.println (toggle);
-    if (toggle)
-        Serial.println ("------------\n------------\n------------\n------------\n------------\n");
-        */
-
     if (toggle == true)
         {
         toggle = false;

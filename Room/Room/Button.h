@@ -9,10 +9,11 @@
 	#include "WProgram.h"
 #endif
 
-#pragma once
 #ifndef HOLD_TIME
 #define HOLD_TIME 1500
 #endif // !HOLD_TIME
+
+
 class Button
     {
     public:
