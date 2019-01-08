@@ -402,7 +402,7 @@ void StripController::mainStrip_mono_mode ()
     }
 void StripController::mainStrip_fade_mode ()
     {
-    float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+    float brightness = (1 - cosf (double ((2 * PI)*rainbow_offset))) / 2.f;
 
     for (int i = 0; i < N_LEDS_MAIN; i++)
         {
@@ -413,12 +413,16 @@ void StripController::mainStrip_fade_mode ()
     }
 void StripController::mainStrip_fade_switch_mode ()
     {
-    float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+    float brightness = (1 - cosf (double ((2 * PI)*rainbow_offset))) / 2.f;
 
     // Generates new color at low brightness
-    if (rainbow_offset > 1.0)
+    if (rainbow_offset > 1.0 ||
+        rainbow_offset < -1.0)
         {
-        rainbow_offset -= 1.0;
+        if (rainbow_offset > 0)
+            rainbow_offset -= 1.0;
+        else
+            rainbow_offset += 1.0;
 
         if (fadeSwitchColor == CRGB (CRGB::Red))
             fadeSwitchColor = CRGB::Yellow;
@@ -443,12 +447,18 @@ void StripController::mainStrip_fade_switch_mode ()
     }
 void StripController::mainStrip_fade_random_mode ()
     {
-    float brightness = (1 + sinf (double ((2 * PI)*rainbow_offset))) / 2.f;
+    float brightness = (1 - cosf (double ((2 * PI)*rainbow_offset))) / 2.f;
+    
+    Serial.println (rainbow_offset);
     
     // Generates new color at low brightness
-    if (rainbow_offset > 1.0)
+    if (rainbow_offset > 1.0 ||
+        rainbow_offset < -1.0)
         {
-        rainbow_offset -= 1.0;
+        if (rainbow_offset > 0)
+            rainbow_offset -= 1.0;
+        else
+            rainbow_offset += 1.0;
         
         fadeSwitchColor = CRGB (CHSV (rand (), MAX_SATURATION, MAX_BRIGHTNESS));        
         }

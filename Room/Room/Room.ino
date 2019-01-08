@@ -17,9 +17,7 @@
 #include "Analyzer.h"
 
 #include <LiquidCrystal_I2C.h>
-
 #include <RF24-master\RF24.h>
-
 #include <CapacitiveSensor.h>
 
 void randomizeParameters (LightController &controller);
@@ -32,12 +30,8 @@ int main ()
     // Random initialization
     srand (analogRead (NC));
 
-    // Serial1 initialization
+    // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
-
-    //Servo window;
-    //window.attach (WINDOW_OUTPUT);
-    //window.write (WINDOW_ZERO_SPEED);
 
     WindowController window;
     window.setAutoMode (true);
@@ -55,7 +49,7 @@ int main ()
     LightController controller;
     controller.setProfile (LightController::full);
 
-    controller.setLedMode (StripController::fade_smooth);
+    controller.setLedMode (StripController::fade_switch_random);
     controller.setLedTableMode (StripController::sync);
     controller.setLedAnimationSpeedVU (20.f);
     controller.setLedAnimationSpeed (-0.25f);
