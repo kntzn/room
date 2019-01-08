@@ -113,8 +113,6 @@ void HardwareMonitor::update ()
             }
         else
             {
-            lcd.setBacklight (127);
-
             lcd.print ("TDP: ");
             lcd.print (getParameter (HardwareMonitor::paramId::TDPpackage));
             lcd.print ("W;");

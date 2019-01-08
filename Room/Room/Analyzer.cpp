@@ -135,7 +135,7 @@ void Analyzer::getLowPassVU ()
 
 bool Analyzer::signalAvailable ()
     {
-    return (millis () - lastSignal < 60000);
+    return (millis () - lastSignal < (ANALYZER_TIMEOUT * 1000));
     }
 
 int Analyzer::getVUout ()

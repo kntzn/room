@@ -145,6 +145,8 @@
 
 #define FREQ_MODE_FADE_C 50.f
 
+// Signal avialable timeout (secs)
+#define ANALYZER_TIMEOUT 15
 
 // ----------------------------------------
 
@@ -192,7 +194,7 @@
 #define SERIAL_HW_MONITOR Serial1
 
 // Updates of HWM screen per second
-#define UPS_HWM 2
+#define UPS_HWM 1
 
 // Timeout in seconds
 #define HWM_TIMEOUT 3

@@ -120,7 +120,6 @@ int main ()
         // !NRF24L01
 
         // Strip controller
-        
         if (button_left.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Led only");
@@ -136,6 +135,7 @@ int main ()
             
             controller.setProfile (LightController::film);
             }
+        
         if (button_right.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Night");
@@ -150,6 +150,7 @@ int main ()
 
             controller.setProfile (LightController::rise);
             }
+
         if (button_mid.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Def");
@@ -187,20 +188,9 @@ int main ()
         
         controller.update (dt);
         
-
-        if (dt*1000.f > 60)
-            {
-            
-            }
-
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
-            {
-            // Why not update instead of waiting?
-            //hwm.update ();
-            }
-
-
+            {}
         }
 
     return 0;
