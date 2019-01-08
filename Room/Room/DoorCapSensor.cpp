@@ -11,11 +11,16 @@ CapButton::CapButton (byte b_pin0, byte b_pin1, int threshold):
     cs (b_pin0, b_pin1),
     th (threshold)
     {
+    cs.set_CS_AutocaL_Millis (1000);
     }
 
 void CapButton::update ()
     {
-    bool active = (cs.capacitiveSensor (100) > th);
+    long int value = cs.capacitiveSensorRaw (100);
+
+    bool active = (value > th);
+    //Serial.println (value);
+
 
     if (active)
         {

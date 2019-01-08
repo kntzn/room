@@ -72,7 +72,7 @@ int main ()
 
     HardwareMonitor hwm;
     
-    CapButton cs_lamp (40, 42, 15000);
+    CapButton cs_lamp (40, 42, 12000);
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
     pinMode (44, OUTPUT);
@@ -169,24 +169,23 @@ int main ()
         if (cs_lamp.getState () == CapButton::Hold)
             {
             //Test
-            digitalWrite (44, !digitalRead (44));
+            controller.setLampState (!controller.getLampState ());
             }
+        Serial.println (cs_lamp.getState ());
 
         if (cs_door.itIsTimeToSwitchIsntIt ())
             {
+            controller.setTorchereState (!controller.getTorchereState ());
             
+            digitalWrite (44, !digitalRead (44));
             }
 
         hwm.update ();
 
         window.update ();
         
-
-        // detaching servo to avoid signal distortion
-        //window.detach ();
         controller.update (dt);
-        //window.attach (WINDOW_OUTPUT);
-
+        
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
