@@ -73,8 +73,8 @@ int main ()
     HardwareMonitor hwm;
     
     LampCapSensor cs_lamp (40, 42, 
-                           10000,
-                           40000);
+                           600,
+                           1100);
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
     pinMode (44, OUTPUT);
@@ -86,7 +86,7 @@ int main ()
         // Clock
         float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
-
+        
         // !Clock
         
         // Analyzer
@@ -105,12 +105,11 @@ int main ()
         button_right.update ();
         // !Buttons
 
-
         // Capacitive sensors
         cs_door.update (dt);
         cs_lamp.update (controller.getLampState ());
         // !Capacitive sensors
-
+        
         // NRF24L01
         while (nrf.available ())
             {
@@ -181,20 +180,27 @@ int main ()
             digitalWrite (44, !digitalRead (44));
             }
 
+        
         hwm.update ();
 
         window.update ();
         
         controller.update (dt);
         
+
+        if (dt*1000.f > 60)
+            {
+            
+            }
+
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < 40)
             {
             // Why not update instead of waiting?
-            hwm.update ();
+            //hwm.update ();
             }
-        
-        
+
+
         }
 
     return 0;

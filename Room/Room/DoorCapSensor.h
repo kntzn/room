@@ -34,6 +34,7 @@ class LampCapSensor
         bool flag = false;
         bool hold_flag = false;
         byte state = 0;
+        float averageValue = 0.f;
         long int th0 = 0, th1 = 0;
         unsigned long int last_press = 0;
 

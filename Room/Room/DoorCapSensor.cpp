@@ -18,14 +18,17 @@ LampCapSensor::LampCapSensor (byte b_pin0, byte b_pin1,
 
 void LampCapSensor::update (bool isActive)
     {
-    long int value = cs.capacitiveSensorRaw (100);
-
+    long start = millis ();
+    long int value = cs.capacitiveSensor (60);
+ 
     long int threshold = th1;
     if (!isActive)
         threshold = th0;
 
     bool active = (value > threshold);
     
+    //Serial.print ();
+
     if (active)
         {
         if (flag == false)
