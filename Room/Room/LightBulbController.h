@@ -21,7 +21,7 @@ class BulbController
     private:
         // ----------------------------------------
         // Internal variables
-        bool state = off;
+        bool state = on;
         bool inverted = false;
         byte output_pin = 0;
 

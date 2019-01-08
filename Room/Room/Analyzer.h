@@ -80,9 +80,7 @@ class Analyzer
         float getMaxFreq ();
         // Fills the array of frequency values
         void getPeaks ();
-        // Calculates auto low pass
-        void getLowPassVU ();
-
+        
     public:
         // ----------------------------------------
         // Constructor
@@ -93,6 +91,9 @@ class Analyzer
         // Update function
         // Listens and filter music's volume
         void update (float dt);
+
+        // Calculates auto low pass
+        void updateLowPassVU ();
 
         // ----------SETTERS and GETTERS-----------
         bool signalAvailable ();

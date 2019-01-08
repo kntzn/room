@@ -53,7 +53,7 @@ int main ()
     
     // Initialization of controller and strip
     LightController controller;
-    controller.setProfile (LightController::def);
+    controller.setProfile (LightController::full);
 
     controller.setLedMode (StripController::fade_smooth);
     controller.setLedTableMode (StripController::sync);
@@ -72,33 +72,32 @@ int main ()
 
     HardwareMonitor hwm;
     
+    DoorCapSensor cs_door (CAP_SENSOR_DOOR);
     LampCapSensor cs_lamp (40, 42, 
                            600,
                            1100);
-    DoorCapSensor cs_door (CAP_SENSOR_DOOR);
-
-    pinMode (44, OUTPUT);
-
+    
     long prev_t = millis ();
 
     while (true)
         {
         // Clock
+        // Creates constant dt (limits the UPS)
+        while (millis () - prev_t < 40)
+            {}
         float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
-        
         // !Clock
         
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
         if (analyzer.signalAvailable ())
-            controller.setLedTableMode (StripController::VU);
+            controller.setLedTableMode (StripController::VU_rain);
         else
             controller.setLedTableMode (StripController::sync);
         // !Analyzer
-
-
+        
         // Buttons
         button_left.update ();
         button_mid.update ();
@@ -117,25 +116,23 @@ int main ()
 
             Serial.println (int (nrfBuf [0]));
             }
-        // !NRF24L01
-
-        // Strip controller
+        
+        // UI
         if (button_left.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Led only");
 
             controller.setProfile (LightController::ledOnly);
-            
+
             randomizeParameters (controller);
             }
         if (button_left.getState () == Button::buttonState::Hold)
             {
             Serial.println ("Rvd");
-            
-            
+
             controller.setProfile (LightController::film);
             }
-        
+
         if (button_right.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Night");
@@ -154,43 +151,31 @@ int main ()
         if (button_mid.getState () == Button::buttonState::Rlsd)
             {
             Serial.println ("Def");
-            
-            controller.setProfile (LightController::full);
-            
-            randomizeParameters (controller);
-            }
-        if (button_mid.getState () == Button::buttonState::Hold)
-            {
-            Serial.println ("Def");
 
-            controller.setProfile (LightController::def);
-            
+            controller.setProfile (LightController::full);
+
             randomizeParameters (controller);
             }
-        
+        // !UI
+
+        // Light controller
         if (cs_lamp.getState () == LampCapSensor::Hold)
             {
-            //Test
             controller.setLampState (!controller.getLampState ());
             }
-
         if (cs_door.itIsTimeToSwitchIsntIt ())
             {
             controller.setTorchereState (!controller.getTorchereState ());
-            
-            digitalWrite (44, !digitalRead (44));
             }
 
-        
-        hwm.update ();
-
-        window.update ();
-        
         controller.update (dt);
+        // !Light controller
+
+        // Hardware monitor
+        hwm.update ();
         
-        // Creates constant dt (limits the UPS)
-        while (millis () - prev_t < 40)
-            {}
+        // Window controller
+        window.update ();
         }
 
     return 0;

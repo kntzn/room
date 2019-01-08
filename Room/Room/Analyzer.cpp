@@ -11,7 +11,7 @@ Analyzer::Analyzer ()
     cbi (ADCSRA, ADPS1);
     sbi (ADCSRA, ADPS0);
 
-    getLowPassVU ();
+    updateLowPassVU ();
     }
 
 
@@ -118,7 +118,7 @@ void Analyzer::getPeaks ()
             freq_peaks [2] = freq [i];
     }
 
-void Analyzer::getLowPassVU ()
+void Analyzer::updateLowPassVU ()
     {
     volume_low_pass = measureVol ();
 
