@@ -1,26 +1,34 @@
 #include "DoorCapSensor.h"
 
 
-void CapButton::reset ()
+void LampCapSensor::reset ()
     {
     flag = false;
     state = buttonState::Prsd;
     }
 
-CapButton::CapButton (byte b_pin0, byte b_pin1, int threshold):
+LampCapSensor::LampCapSensor (byte b_pin0, byte b_pin1, 
+                              long int threshold0, long int threshold1):
     cs (b_pin0, b_pin1),
-    th (threshold)
+    th0 (threshold0),
+    th1 (threshold1)
     {
     cs.set_CS_AutocaL_Millis (1000);
     }
 
-void CapButton::update ()
+void LampCapSensor::update (bool isActive)
     {
     long int value = cs.capacitiveSensorRaw (100);
 
-    bool active = (value > th);
-    //Serial.println (value);
+    long int threshold = th1;
+    if (!isActive)
+        threshold = th0;
 
+    bool active = (value > threshold);
+    
+    Serial.print (value);
+    Serial.print (' ');
+    Serial.println (threshold);
 
     if (active)
         {
@@ -65,10 +73,16 @@ void CapButton::update ()
 
     }
 
-byte CapButton::getState ()
+byte LampCapSensor::getState ()
     {
     return state;
     }
+
+
+
+
+
+
 
 DoorCapSensor::DoorCapSensor (byte pin_input) :
     flag (false),

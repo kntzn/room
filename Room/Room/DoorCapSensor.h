@@ -18,7 +18,7 @@
 #endif // !HOLD_TIME
 
 
-class CapButton
+class LampCapSensor
     {
     public:
         enum buttonState
@@ -34,7 +34,7 @@ class CapButton
         bool flag = false;
         bool hold_flag = false;
         byte state = 0;
-        int th = 0;
+        long int th0 = 0, th1 = 0;
         unsigned long int last_press = 0;
 
         CapacitiveSensor cs;
@@ -42,9 +42,10 @@ class CapButton
         void reset ();
 
     public:
-        CapButton (byte b_pin0, byte b_pin1, int threshold);
+        LampCapSensor (byte b_pin0, byte b_pin1, 
+                       long int threshold0, long int threshold1);
 
-        void update ();
+        void update (bool isActive);
         byte getState ();
     };
 

@@ -72,7 +72,9 @@ int main ()
 
     HardwareMonitor hwm;
     
-    CapButton cs_lamp (40, 42, 12000);
+    LampCapSensor cs_lamp (40, 42, 
+                           10000,
+                           40000);
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
 
     pinMode (44, OUTPUT);
@@ -106,7 +108,7 @@ int main ()
 
         // Capacitive sensors
         cs_door.update (dt);
-        cs_lamp.update ();
+        cs_lamp.update (controller.getLampState ());
         // !Capacitive sensors
 
         // NRF24L01
@@ -166,12 +168,11 @@ int main ()
             randomizeParameters (controller);
             }
         
-        if (cs_lamp.getState () == CapButton::Hold)
+        if (cs_lamp.getState () == LampCapSensor::Hold)
             {
             //Test
             controller.setLampState (!controller.getLampState ());
             }
-        Serial.println (cs_lamp.getState ());
 
         if (cs_door.itIsTimeToSwitchIsntIt ())
             {
