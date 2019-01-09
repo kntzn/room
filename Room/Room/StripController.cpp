@@ -449,8 +449,6 @@ void StripController::mainStrip_fade_random_mode ()
     {
     float brightness = (1 - cosf (double ((2 * PI)*rainbow_offset))) / 2.f;
     
-    Serial.println (rainbow_offset);
-    
     // Generates new color at low brightness
     if (rainbow_offset > 1.0 ||
         rainbow_offset < -1.0)

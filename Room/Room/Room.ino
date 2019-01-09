@@ -174,10 +174,13 @@ int main ()
         // Hardware monitor
         hwm.update ();
         // UI
-        ui.update (controller, hwm);
+        ui.update (hwm, controller);
         
         // Window controller
         window.update ();
+
+
+        Serial.println (dt*1000.f);
         }
 
     return 0;

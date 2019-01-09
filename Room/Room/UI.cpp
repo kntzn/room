@@ -5,6 +5,7 @@
 #include "UI.h"
 
 UI::UI () :
+    currScreen (hwmScreens::MAIN_SCR),
     brightnessLevel (0.f),
     lButton (BUTT_LEFT),
     mButton (BUTT_MIDL),
@@ -33,54 +34,54 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
                  map (brightnessLevel, 0, 400, 0, 255));
 
     //lcd.clear ();
-    lcd.home ();
+    //if ()
 
+    showHwmInfo (hwm, currScreen);
     
     lcd.display ();
-
     }
 
 void UI::showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId)
     {
     if (!hwm.available ())
         {
-        lcd.print ("HWM is not");
-        lcd.setCursor (4, 1);
-        lcd.print ("available");
+        lcd.setCursor (0, 0);
+        lcd.print ("  HWM is not    ");
+        lcd.setCursor (0, 1);
+        lcd.print ("     available  ");
         }
     else
         {
         switch (hwmScreenId)
             {
             case hwmScreens::MAIN_SCR:
+                // CPU
                 lcd.setCursor (0, 0);
                 lcd.print ("CPU:");
-                //lcd.print (hwm.getParameter (HardwareMonitor::paramId::))
-                //hwm.getParameter (HardwareMonitor::paramId::)
+                lcd.print (hwm.getCPUtemp ());
+                lcd.print ('C');
+                lcd.setCursor (8, 0);
+                lcd.print (hwm.getCPUload ());
+                lcd.print ('%');
 
+                // GPU
+                lcd.setCursor (0, 1);
+                lcd.print ("GPU:");
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUcoreLoad));
+                lcd.print ('C');
+
+                // RAM
+                lcd.setCursor (7, 0);
+                lcd.print ("RAM:");
+                lcd.print (static_cast <float> 
+                           (hwm.getParameter (HardwareMonitor::paramId::RAMload)) 
+                           / 1000.f, 1);
+                lcd.print ("GB");
+                
                 break;
             default:
                 break;
             }
-        /*
-        lcd.print ("TDP: ");
-        lcd.print (hwm.getParameter (HardwareMonitor::paramId::TDPpackage));
-        lcd.print ("W;");
-
-        lcd.setCursor (9, 0);
-        lcd.print ("TEMP:");
-
-        lcd.setCursor (0, 1);
-
-        lcd.print (hwm.getParameter (HardwareMonitor::paramId::tempCore0));
-        lcd.print ("C|");
-        lcd.print (hwm.getParameter (HardwareMonitor::paramId::tempCore1));
-        lcd.print ("C|");
-        lcd.print (hwm.getParameter (HardwareMonitor::paramId::tempCore2));
-        lcd.print ("C|");
-        lcd.print (hwm.getParameter (HardwareMonitor::paramId::tempCore3));
-        lcd.print ("C|");
-        */
         }
 
 

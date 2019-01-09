@@ -17,10 +17,6 @@
 class UI
     {
     private: 
-        float brightnessLevel;
-        Button lButton, mButton, rButton;
-        LiquidCrystal_I2C lcd;
-
         enum class hwmScreens
             {
             MAIN_SCR,
@@ -28,6 +24,11 @@ class UI
             GPU_SCR,
             MEM_SCR
             };
+
+        hwmScreens currScreen;
+        float brightnessLevel;
+        Button lButton, mButton, rButton;
+        LiquidCrystal_I2C lcd;
 
     public:
         UI ();

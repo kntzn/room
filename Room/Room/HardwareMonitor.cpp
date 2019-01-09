@@ -59,17 +59,6 @@ void HardwareMonitor::listenSerial ()
     digitalWrite (LED_BUILTIN, LOW);
     }
 
-int HardwareMonitor::getParameter (paramId id)
-    {
-    if (paramId::lowVal      < id &&
-        paramId::nParameters > id)
-        {
-        return params [static_cast <int> (id)];
-        }
-
-    return -1;
-    }
-
 void HardwareMonitor::update ()
     {
     listenSerial ();
@@ -82,9 +71,38 @@ void HardwareMonitor::update ()
         //lastUpdate = millis ();
     }
 
+int HardwareMonitor::getParameter (paramId id)
+    {
+    if (paramId::lowVal      < id &&
+        paramId::nParameters > id)
+        {
+        return params [static_cast <int> (id)];
+        }
+
+    return -1;
+    }
+
 bool HardwareMonitor::available ()
     {
     bool avail = (millis () - lastHWMupdate < HWM_TIMEOUT * 1000);
 
     return avail;
+    }
+
+int HardwareMonitor::getCPUload ()
+    {
+    return getParameter (HardwareMonitor::paramId::loadCore0) +
+           getParameter (HardwareMonitor::paramId::loadCore1) +
+           getParameter (HardwareMonitor::paramId::loadCore2) +
+           getParameter (HardwareMonitor::paramId::loadCore3);
+    }
+
+int HardwareMonitor::getCPUtemp ()
+    {
+    int core0 = getParameter (HardwareMonitor::paramId::tempCore0);
+    int core1 = getParameter (HardwareMonitor::paramId::tempCore1);
+    int core2 = getParameter (HardwareMonitor::paramId::tempCore2);
+    int core3 = getParameter (HardwareMonitor::paramId::tempCore3);
+
+    return max (max (core0, core1), max (core2, core3));
     }

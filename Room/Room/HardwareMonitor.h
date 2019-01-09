@@ -74,11 +74,14 @@ class HardwareMonitor
     public:
         HardwareMonitor ();
 
-        int getParameter (paramId id);
 
         void update ();
 
+        int getParameter (paramId id);
         bool available ();
+
+        int getCPUload ();
+        int getCPUtemp ();
 
     };
 
