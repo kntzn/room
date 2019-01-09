@@ -193,9 +193,6 @@
 // Hardware Monitor
 #define SERIAL_HW_MONITOR Serial1
 
-// Updates of HWM screen per second
-#define UPS_HWM 1
-
 // Timeout in seconds
 #define HWM_TIMEOUT 3
 
@@ -205,6 +202,9 @@
 // ----------------------------------------
 // Other
 #define BAUD_RATE_SERIAL 9600
+
+// Updates of the screen per second
+#define UPS_SCREEN 1
 
 // Door cap sensor threshold
 #define DOOR_CAP_TH 45

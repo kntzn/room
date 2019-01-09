@@ -27,8 +27,10 @@ class UI
 
         hwmScreens currScreen;
         float brightnessLevel;
+        unsigned long lastScreenUpdate;
         Button lButton, mButton, rButton;
         LiquidCrystal_I2C lcd;
+        
 
     public:
         UI ();

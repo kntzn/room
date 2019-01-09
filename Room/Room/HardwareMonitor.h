@@ -65,7 +65,7 @@ class HardwareMonitor
         byte index;
         int params [static_cast <int> (paramId::nParameters)];
         float brightnessLevel;
-        long lastUpdate, lastHWMupdate;
+        long lastHWMupdate;
         
         String converted_string;
         

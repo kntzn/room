@@ -7,6 +7,7 @@
 UI::UI () :
     currScreen (hwmScreens::MAIN_SCR),
     brightnessLevel (0.f),
+    lastScreenUpdate (0),
     lButton (BUTT_LEFT),
     mButton (BUTT_MIDL),
     rButton (BUTT_RGHT),
@@ -33,12 +34,16 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     analogWrite (HWM_AUTO_BRIGHTNESS_PIN,
                  map (brightnessLevel, 0, 400, 0, 255));
 
-    //lcd.clear ();
-    //if ()
+    // Updates the screen
+    if (millis () - lastScreenUpdate > 1000 / (UPS_SCREEN))
+        {
+        lastScreenUpdate = millis ();
+        
+        showHwmInfo (hwm, currScreen);
+        
+        lcd.display ();
+        }
 
-    showHwmInfo (hwm, currScreen);
-    
-    lcd.display ();
     }
 
 void UI::showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId)
@@ -46,9 +51,9 @@ void UI::showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId)
     if (!hwm.available ())
         {
         lcd.setCursor (0, 0);
-        lcd.print ("  HWM is not    ");
+        lcd.print ("   HWM is not   ");
         lcd.setCursor (0, 1);
-        lcd.print ("     available  ");
+        lcd.print ("   available    ");
         }
     else
         {
@@ -59,24 +64,23 @@ void UI::showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId)
                 lcd.setCursor (0, 0);
                 lcd.print ("CPU:");
                 lcd.print (hwm.getCPUtemp ());
-                lcd.print ('C');
+                lcd.print ("C   ");
                 lcd.setCursor (8, 0);
+                lcd.print ("LOAD:");
                 lcd.print (hwm.getCPUload ());
-                lcd.print ('%');
+                lcd.print ("%   ");
 
                 // GPU
                 lcd.setCursor (0, 1);
                 lcd.print ("GPU:");
-                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUcoreLoad));
-                lcd.print ('C');
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUmemLoad));
+                lcd.print ("% ");
 
                 // RAM
-                lcd.setCursor (7, 0);
+                lcd.setCursor (8, 1);
                 lcd.print ("RAM:");
-                lcd.print (static_cast <float> 
-                           (hwm.getParameter (HardwareMonitor::paramId::RAMload)) 
-                           / 1000.f, 1);
-                lcd.print ("GB");
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMloadPerc));
+                lcd.print ("%");
                 
                 break;
             default:

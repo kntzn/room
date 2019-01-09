@@ -14,8 +14,7 @@ HardwareMonitor::HardwareMonitor () :
     index (0),
     params (),
     brightnessLevel (0.f),
-    lastUpdate (-UPS_HWM * 1000),
-    lastHWMupdate (-UPS_HWM * 1000),
+    lastHWMupdate (0),
     converted_string ("")
     {
     SERIAL_HW_MONITOR.begin (9600);
@@ -91,10 +90,10 @@ bool HardwareMonitor::available ()
 
 int HardwareMonitor::getCPUload ()
     {
-    return getParameter (HardwareMonitor::paramId::loadCore0) +
-           getParameter (HardwareMonitor::paramId::loadCore1) +
-           getParameter (HardwareMonitor::paramId::loadCore2) +
-           getParameter (HardwareMonitor::paramId::loadCore3);
+    return (getParameter (HardwareMonitor::paramId::loadCore0) +
+            getParameter (HardwareMonitor::paramId::loadCore1) +
+            getParameter (HardwareMonitor::paramId::loadCore2) +
+            getParameter (HardwareMonitor::paramId::loadCore3)) / 4;
     }
 
 int HardwareMonitor::getCPUtemp ()
