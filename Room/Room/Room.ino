@@ -20,6 +20,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <RF24-master\RF24.h>
 #include <CapacitiveSensor.h>
+#include "UI.h"
 
 void randomizeParameters (LightController &controller);
 
@@ -69,7 +70,8 @@ int main ()
     Button button_right (BUTT_RGHT);
 
     HardwareMonitor hwm;
-    
+    UI ui;
+
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
     LampCapSensor cs_lamp (40, 42, 
                            600,
@@ -171,6 +173,8 @@ int main ()
 
         // Hardware monitor
         hwm.update ();
+        // UI
+        ui.update (controller, hwm);
         
         // Window controller
         window.update ();

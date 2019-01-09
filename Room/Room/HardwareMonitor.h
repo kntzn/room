@@ -9,7 +9,6 @@
 	#include "WProgram.h"
 #endif
 
-#include <LiquidCrystal_I2C.h>
 #include "Predefined.h"
 
 class HardwareMonitor
@@ -69,8 +68,6 @@ class HardwareMonitor
         long lastUpdate, lastHWMupdate;
         
         String converted_string;
-        LiquidCrystal_I2C lcd;
-        
         
         void listenSerial ();
 
