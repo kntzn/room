@@ -6,6 +6,7 @@
 
 
 
+#include "UI.h"
 #include "DoorCapSensor.h"
 #include "Button.h"
 #include "WindowController.h"
@@ -26,6 +27,9 @@ int main ()
     {
     // Microcontroller initialization
     init ();
+    // This reduces the flashes while initializing
+    digitalWrite (RELAY_TORCHERE, HIGH);
+    digitalWrite (RELAY_LAMP, HIGH);
     
     // Random initialization
     srand (analogRead (NC));
