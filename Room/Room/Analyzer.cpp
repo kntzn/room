@@ -11,7 +11,8 @@ Analyzer::Analyzer ()
     cbi (ADCSRA, ADPS1);
     sbi (ADCSRA, ADPS0);
 
-    updateLowPassVU ();
+    //updateLowPassVU ();
+    volume_low_pass = 350;
     }
 
 
@@ -20,6 +21,8 @@ void Analyzer::update (float dt)
     {
     // Measuring the volume 
     VU_out = VUmeter ();
+
+
 
     // Dividing the sound into freqencies
     analyzer (dt);
@@ -35,6 +38,8 @@ float Analyzer::measureVol ()
         if (volume < measured) 
             volume = measured;
         }
+
+    Serial.println (volume);
 
     volume -= volume_low_pass;
 

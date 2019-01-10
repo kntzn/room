@@ -100,9 +100,9 @@
 // Ratio of max volume and average volume
 #define RATIO_MAX_TO_AVG 1.8f
 // Average volume smoothness
-#define AVER_VOLUME_SMOOTH 0.995f
+#define AVER_VOLUME_SMOOTH 0.990f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.8f
+#define SMOOTH_VU 0.85f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer

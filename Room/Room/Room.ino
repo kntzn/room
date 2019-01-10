@@ -74,8 +74,8 @@ int main ()
 
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
     LampCapSensor cs_lamp (40, 42, 
-                           600,
-                           1100);
+                           800,
+                           1400);
     
     long prev_t = millis ();
 
@@ -93,7 +93,7 @@ int main ()
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
         if (analyzer.connected () && analyzer.signalAvailable ())
-            controller.setLedTableMode (StripController::VU_rain);
+            controller.setLedTableMode (StripController::FREQ_5);
         else
             controller.setLedTableMode (StripController::sync);
         // !Analyzer
@@ -178,9 +178,6 @@ int main ()
         
         // Window controller
         window.update ();
-
-
-        Serial.println (dt*1000.f);
         }
 
     return 0;
