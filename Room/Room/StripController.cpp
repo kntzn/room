@@ -184,7 +184,7 @@ void StripController::update (float dt)
             {
             for (int i = 0; i < N_LEDS_TABLE / 2; i++)
                 {
-                int curr_pos_freq_array = int (i * SPECTRUM_SIZE / (N_LEDS_TABLE / 2));
+                int curr_pos_freq_array = int (i * (SPECTRUM_SIZE-LOWEST) / (N_LEDS_TABLE / 2)) + LOWEST;
 
                 float brightness = 0;
 

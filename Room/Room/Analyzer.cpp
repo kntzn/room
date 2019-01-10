@@ -39,7 +39,7 @@ float Analyzer::measureVol ()
             volume = measured;
         }
 
-    Serial.println (volume);
+    //Serial.println (volume);
 
     volume -= volume_low_pass;
 
@@ -170,6 +170,13 @@ float* Analyzer::getFreqValues ()
 
 float * Analyzer::getFreq3Values ()
     {
+    Serial.println (freq_peaks [0]);
+
+    // Corrections for each freq type 
+    freq_peaks [0] = pow (freq_peaks [0] / 100, 2) * 100;
+    freq_peaks [1] = pow (freq_peaks [1] / 100, 3) * 100;
+    freq_peaks [2] = pow (freq_peaks [2] / 100, 2) * 100;
+
     // Maps the frequencies loudness to FREQ_MAX level
     float max = max (freq_peaks [0], max (freq_peaks [1], freq_peaks [2]));
 
@@ -178,7 +185,10 @@ float * Analyzer::getFreq3Values ()
             freq3_map [i] = freq_peaks [i] * float (FREQ_MAX) / max;
     else if (max == 0)
         for (int i = 0; i < 3; i++)
-            freq3_map [i] *= 0.9;
+            freq3_map [i] *= 0;
+
+    //for (int i = 0; i < 3; i++)
+        //freq3_map [i] = pow (freq3_map [i] / float (FREQ_MAX), 0.8) * float (FREQ_MAX);
 
     return freq3_map;
     }

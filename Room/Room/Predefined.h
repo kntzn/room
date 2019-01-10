@@ -115,7 +115,7 @@
 // Filter's parameters
 
 // Minimum loudness of frequency
-#define LOW_PASS_FREQ 40
+#define LOW_PASS_FREQ 50 // 40 
 // Smoothness of the output
 #define SMOOTH_FREQ 0.5f
 
