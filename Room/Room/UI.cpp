@@ -79,8 +79,9 @@ void UI::showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId)
                 // RAM
                 lcd.setCursor (8, 1);
                 lcd.print ("RAM:");
-                lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMloadPerc));
-                lcd.print ("%");
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMload)/1000.f, 1);
+                lcd.setCursor (14, 1);
+                lcd.print ("GB");
                 
                 break;
             default:
