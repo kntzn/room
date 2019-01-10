@@ -4,7 +4,7 @@
 Analyzer::Analyzer ()
     {
     pinMode (JACK_INPUT, INPUT);
-    pinMode (JACK_INPUT_FREQ, INPUT);
+    pinMode (ANALYZER_SIGNAL_AVAIL, INPUT_PULLUP);
 
     // Increasing measurements frequency
     sbi (ADCSRA, ADPS2);
@@ -136,6 +136,11 @@ void Analyzer::updateLowPassVU ()
 bool Analyzer::signalAvailable ()
     {
     return (millis () - lastSignal < (ANALYZER_TIMEOUT * 1000));
+    }
+
+bool Analyzer::connected ()
+    {
+    return !digitalRead (ANALYZER_SIGNAL_AVAIL);
     }
 
 int Analyzer::getVUout ()

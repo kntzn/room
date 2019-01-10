@@ -56,7 +56,7 @@ int main ()
 
     controller.setLedMode (StripController::fade_switch_random);
     controller.setLedTableMode (StripController::sync);
-    controller.setLedAnimationSpeedVU (20.f);
+    controller.setLedAnimationSpeedVU (-20.f);
     controller.setLedAnimationSpeed (-0.25f);
     controller.setLedAnimationFrequency (0.5f);
     controller.setLedAnalyzerAnimationFrequency (40);
@@ -92,7 +92,7 @@ int main ()
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
-        if (analyzer.signalAvailable ())
+        if (analyzer.connected () && analyzer.signalAvailable ())
             controller.setLedTableMode (StripController::VU_rain);
         else
             controller.setLedTableMode (StripController::sync);

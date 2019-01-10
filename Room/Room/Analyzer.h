@@ -97,6 +97,7 @@ class Analyzer
 
         // ----------SETTERS and GETTERS-----------
         bool signalAvailable ();
+        bool connected ();
         int getVUout ();
         float* getFreqValues ();
         float* getFreq3Values ();
