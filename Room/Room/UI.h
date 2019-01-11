@@ -29,7 +29,7 @@ class UI
             MAX_VAL
             };
         bool on;
-        byte screenId;
+        signed char screenId;
         float brightnessLevel;
         unsigned long lastScreenUpdate;
         Button lButton, mButton, rButton;

@@ -78,7 +78,6 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         else
             printLightingProfile (screenId);
             
-
         lcd.display ();
         }
 

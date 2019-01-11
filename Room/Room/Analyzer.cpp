@@ -170,8 +170,6 @@ float* Analyzer::getFreqValues ()
 
 float * Analyzer::getFreq3Values ()
     {
-    Serial.println (freq_peaks [0]);
-
     // Corrections for each freq type 
     freq_peaks [0] = pow (freq_peaks [0] / 100, 2) * 100;
     freq_peaks [1] = pow (freq_peaks [1] / 100, 3) * 100;
