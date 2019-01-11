@@ -28,7 +28,7 @@ class UI
 
             MAX_VAL
             };
-        bool on;
+        bool on, scrUpdAvail;
         signed char screenId;
         float brightnessLevel;
         unsigned long lastScreenUpdate;

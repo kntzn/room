@@ -5,7 +5,8 @@
 #include "UI.h"
 
 UI::UI () :
-    on (false),
+    on (false), 
+    scrUpdAvail (true),
     screenId (0),
     brightnessLevel (0.f),
     lastScreenUpdate (0),
@@ -42,15 +43,23 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
 
     // Buttons' actions
     if (lButton.getState () == Button::Rlsd)
-        screenId--;
-    if (rButton.getState () == Button::Rlsd)
-        screenId++;
-    if (mButton.getState () == Button::Hold)
-        on = !on;
-    if (!on && mButton.getState () == Button::Rlsd)
         {
-        ctrlr.setProfile (screenId);
+        screenId--;
+        scrUpdAvail = true;
         }
+    if (rButton.getState () == Button::Rlsd)
+        {
+        screenId++;
+        scrUpdAvail = true;
+        }
+    if (mButton.getState () == Button::Hold)
+        {
+        on = !on;
+        scrUpdAvail = true;
+        }
+    if (!on && mButton.getState () == Button::Rlsd)
+        ctrlr.setProfile (screenId);
+        
 
     // Constrains screenId
     if (on)
@@ -68,18 +77,24 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
             screenId = 0;
         }
 
+    // Updates the screen every 1/UPS_SCREEN seconds
+    if (millis () - lastScreenUpdate > 1000 / (UPS_SCREEN) && on)
+        scrUpdAvail = true;
+
     // Updates the screen
-    if (millis () - lastScreenUpdate > 1000 / (UPS_SCREEN))
+    if (scrUpdAvail)
         {
+        scrUpdAvail = false;
         lastScreenUpdate = millis ();
-        
+
         if (on)
             showHwmInfo (hwm, screenId);
         else
             printLightingProfile (screenId);
-            
+
         lcd.display ();
         }
+        
 
     }
 

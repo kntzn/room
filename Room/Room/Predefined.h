@@ -204,7 +204,7 @@
 #define BAUD_RATE_SERIAL 9600
 
 // Updates of the screen per second
-#define UPS_SCREEN 3
+#define UPS_SCREEN 1
 
 // Door cap sensor threshold
 #define DOOR_CAP_TH 45
