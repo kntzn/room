@@ -40,20 +40,45 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     mButton.update ();
     rButton.update ();
 
-    if (lButton.getState () == Button::Rlsd && 
-        screenId > byte (hwmScreens::MIN_VAL) + 1)
+    // Buttons' actions
+    if (lButton.getState () == Button::Rlsd)
         screenId--;
-    if (rButton.getState () == Button::Rlsd &&
-        screenId < byte (hwmScreens::MAX_VAL) - 1)
+    if (rButton.getState () == Button::Rlsd)
         screenId++;
+    if (mButton.getState () == Button::Hold)
+        on = !on;
+    if (!on && mButton.getState () == Button::Rlsd)
+        {
+        ctrlr.setProfile (screenId);
+        }
+
+    // Constrains screenId
+    if (on)
+        {
+        if (screenId <= byte (hwmScreens::MIN_VAL))
+            screenId = byte (hwmScreens::MIN_VAL) + 1;
+        if (screenId >= byte (hwmScreens::MAX_VAL))
+            screenId = byte (hwmScreens::MAX_VAL) - 1;
+        }
+    else
+        {
+        if (screenId < 0)
+            screenId = LightController::n_profiles - 1;
+        if (screenId > LightController::n_profiles - 1)
+            screenId = 0;
+        }
 
     // Updates the screen
     if (millis () - lastScreenUpdate > 1000 / (UPS_SCREEN))
         {
         lastScreenUpdate = millis ();
         
-        showHwmInfo (hwm, screenId);
-        
+        if (on)
+            showHwmInfo (hwm, screenId);
+        else
+            printLightingProfile (screenId);
+            
+
         lcd.display ();
         }
 
@@ -61,54 +86,84 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
 
 void UI::showHwmInfo (HardwareMonitor & hwm, byte hwmScreenId)
     {
-    if (on)
+    if (!hwm.available ())
         {
-        if (!hwm.available ())
-            {
-            lcd.setCursor (0, 0);
-            lcd.print ("   HWM is not   ");
-            lcd.setCursor (0, 1);
-            lcd.print ("   available    ");
-            }
-        else
-            {
-            switch (static_cast <hwmScreens> (hwmScreenId))
-                {
-                case hwmScreens::MAIN_SCR:
-                    // CPU
-                    lcd.setCursor (0, 0);
-                    lcd.print ("CPU:");
-                    lcd.print (hwm.getCPUtemp ());
-                    lcd.print ("C   ");
-                    lcd.setCursor (8, 0);
-                    lcd.print ("LOAD:");
-                    lcd.print (hwm.getCPUload ());
-                    lcd.print ("%   ");
-
-                    // GPU
-                    lcd.setCursor (0, 1);
-                    lcd.print ("GPU:");
-                    lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUmemLoad));
-                    lcd.print ("% ");
-
-                    // RAM
-                    lcd.setCursor (8, 1);
-                    lcd.print ("RAM:");
-                    lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMload) / 1000.f, 1);
-                    lcd.setCursor (14, 1);
-                    lcd.print ("GB");
-
-                    break;
-                default:
-                    break;
-                }
-            }
+        lcd.setCursor (0, 0);
+        lcd.print ("   HWM is not   ");
+        lcd.setCursor (0, 1);
+        lcd.print ("   available    ");
         }
     else
         {
-        lcd.home ();
-        lcd.print (" Your ad could  ");
-        lcd.setCursor (0, 1);
-        lcd.print ("     be here    ");
+        switch (static_cast <hwmScreens> (hwmScreenId))
+            {
+            case hwmScreens::MAIN_SCR:
+                // CPU
+                lcd.setCursor (0, 0);
+                lcd.print ("CPU:");
+                lcd.print (hwm.getCPUtemp ());
+                lcd.print ("C   ");
+                lcd.setCursor (8, 0);
+                lcd.print ("LOAD:");
+                lcd.print (hwm.getCPUload ());
+                lcd.print ("%   ");
+
+                // GPU
+                lcd.setCursor (0, 1);
+                lcd.print ("GPU:");
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUmemLoad));
+                lcd.print ("% ");
+
+                // RAM
+                lcd.setCursor (8, 1);
+                lcd.print ("RAM:");
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMload) / 1000.f, 1);
+                lcd.setCursor (14, 1);
+                lcd.print ("GB");
+
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+void UI::printLightingProfile (byte profile)
+    {
+    lcd.setCursor (0, 0);
+    lcd.print ("  Light profile ");
+    lcd.setCursor (0, 1);
+
+    switch (profile)
+        {
+        case LightController::off:
+            lcd.print ("       OFF      ");
+            break;
+        case LightController::ledOnly:
+            lcd.print ("    LED only    ");
+            break;
+        case LightController::film:
+            lcd.print ("     Film       ");
+            break;
+        case LightController::def:
+            lcd.print ("    Default     ");
+            break;
+        case LightController::full:
+            lcd.print ("  All light s.  ");
+            break;
+        case LightController::fullWhite:
+            lcd.print (" Max brightness ");
+            break;
+        case LightController::noLed:
+            lcd.print (" Lamp; torchere ");
+            break;
+        case LightController::night:
+            lcd.print ("     Night      ");
+            break;
+        case LightController::rise:
+            lcd.print ("      Rise      ");
+            break;
+        default:
+            break;
         }
     }

@@ -28,7 +28,9 @@ class LightController
             film,
             night,
             rise,
-            def
+            def,
+
+            n_profiles
             };
 
     private:

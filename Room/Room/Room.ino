@@ -74,8 +74,8 @@ int main ()
 
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
     LampCapSensor cs_lamp (40, 42, 
-                           800,
-                           1400);
+                           600,
+                           1100);
     
     long prev_t = millis ();
 
@@ -117,47 +117,6 @@ int main ()
             Serial.println (int (nrfBuf [0]));
             }
         
-        // UI
-        if (button_left.getState () == Button::buttonState::Rlsd)
-            {
-            Serial.println ("Led only");
-
-            controller.setProfile (LightController::ledOnly);
-
-            randomizeParameters (controller);
-            }
-        if (button_left.getState () == Button::buttonState::Hold)
-            {
-            Serial.println ("Rvd");
-
-            controller.setProfile (LightController::film);
-            }
-
-        if (button_right.getState () == Button::buttonState::Rlsd)
-            {
-            Serial.println ("Night");
-
-            //window.setMode (WindowController::state::opened);
-
-            controller.setProfile (LightController::night);
-            }
-        if (button_right.getState () == Button::buttonState::Hold)
-            {
-            Serial.println ("Rise");
-
-            controller.setProfile (LightController::rise);
-            }
-
-        if (button_mid.getState () == Button::buttonState::Rlsd)
-            {
-            Serial.println ("Def");
-
-            controller.setProfile (LightController::full);
-
-            randomizeParameters (controller);
-            }
-        // !UI
-
         // Light controller
         if (cs_lamp.getState () == LampCapSensor::Hold)
             {

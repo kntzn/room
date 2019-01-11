@@ -42,6 +42,8 @@ class UI
         void update (HardwareMonitor &hwm, LightController &ctrlr);
 
         void showHwmInfo (HardwareMonitor &hwm, byte hwmScreenId);
+
+        void printLightingProfile (byte profile);
     };
 
 #endif
