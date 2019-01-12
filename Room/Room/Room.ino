@@ -28,21 +28,27 @@ int main ()
     {
     // Microcontroller initialization
     init ();
-    // This reduces the flashes while initializing
-    digitalWrite (RELAY_TORCHERE, HIGH);
-    digitalWrite (RELAY_LAMP, HIGH);
-    
+
     // Random initialization
     srand (analogRead (NC));
+
+    // Initialization of the controller
+    digitalWrite (RELAY_TORCHERE, HIGH);
+    digitalWrite (RELAY_LAMP, HIGH);
+    LightController controller;
+    controller.setProfile (LightController::full);
+    randomizeParameters (controller);
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
 
+    // Window initialization
     WindowController window;
     window.setAutoMode (true);
 
-    byte nrfBuf [16] = {};
-    RF24 nrf (48, 49);
+    // NRF initialization
+    byte nrfBuf [NRF_BUF_SIZE] = {};
+    RF24 nrf (NRF_CE, NRF_CSN);
     nrf.begin ();
     nrf.powerUp ();
     nrf.startListening ();
@@ -50,32 +56,19 @@ int main ()
     nrf.setChannel (0x57);
     nrf.setPayloadSize (16);
     
-    // Initialization of controller and strip
-    LightController controller;
-    controller.setProfile (LightController::full);
-
-    controller.setLedMode (StripController::fade_switch_random);
-    controller.setLedTableMode (StripController::sync);
-    controller.setLedAnimationSpeedVU (-20.f);
-    controller.setLedAnimationSpeed (-0.25f);
-    controller.setLedAnimationFrequency (0.5f);
-    controller.setLedAnalyzerAnimationFrequency (40);
-    controller.setLedAnalyzerAnimationOffset (HUE_RED);
-    controller.setLedColor (CRGB::White);
-    
+    // Analyzer initialization
     Analyzer analyzer;
     
-    Button button_left (BUTT_LEFT);
-    Button button_mid (BUTT_MIDL);
-    Button button_right (BUTT_RGHT);
-
+    // Screen initialization
     HardwareMonitor hwm;
     UI ui;
 
+    // Capacitive sensors initialization
     DoorCapSensor cs_door (CAP_SENSOR_DOOR);
-    LampCapSensor cs_lamp (40, 42, 
-                           600,
-                           1100);
+    LampCapSensor cs_lamp (CS_LAMP_TX_PIN, 
+                           CS_LAMP_RX_PIN,
+                           CS_LAMP_OFF_TH,
+                           CS_LAMP_ON_TH);
     
     long prev_t = millis ();
 
@@ -83,8 +76,8 @@ int main ()
         {
         // Clock
         // Creates constant dt (limits the UPS)
-        while (millis () - prev_t < 40)
-            {}
+        while (millis () - prev_t < (1000 / UPS_SYSTEM));
+        // Counts real delay
         float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
         // !Clock
@@ -98,12 +91,6 @@ int main ()
             controller.setLedTableMode (StripController::sync);
         // !Analyzer
         
-        // Buttons
-        button_left.update ();
-        button_mid.update ();
-        button_right.update ();
-        // !Buttons
-
         // Capacitive sensors
         cs_door.update (dt);
         cs_lamp.update (controller.getLampState ());

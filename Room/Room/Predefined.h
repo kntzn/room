@@ -190,6 +190,20 @@
 // ----------------------------------------
 
 // ----------------------------------------
+// Capacitive sensor
+
+// Lamp cap sensor thresholds
+#define CS_LAMP_OFF_TH 600
+#define CS_LAMP_ON_TH 1100
+
+// Door cap sensor threshold
+#define DOOR_CAP_TH 45
+
+// !Capacitive sensor
+// ----------------------------------------
+
+
+// ----------------------------------------
 // Hardware Monitor
 #define SERIAL_HW_MONITOR Serial1
 
@@ -199,6 +213,17 @@
 // !Hardware Monitor
 // ----------------------------------------
 
+
+// ----------------------------------------
+// NRF
+#define NRF_CE 48
+#define NRF_CSN 49
+
+#define NRF_BUF_SIZE 16
+// !NRF
+// ----------------------------------------
+
+
 // ----------------------------------------
 // Other
 #define BAUD_RATE_SERIAL 9600
@@ -206,14 +231,15 @@
 // Updates of the screen per second
 #define UPS_SCREEN 1
 
-// Door cap sensor threshold
-#define DOOR_CAP_TH 45
+// Global UPS of the controller
+#define UPS_SYSTEM 25
 
 // !Other
 // ----------------------------------------
 
+
+// ----------------------------------------
 // Pinout
-// Not connected pin used to generate random seed
 #define NC A9
 
 #define CAP_SENSOR_DOOR A8
@@ -228,6 +254,9 @@
 #define RELAY_LAMP 33
 #define RELAY_TORCHERE 31
 
+#define CS_LAMP_TX_PIN 40
+#define CS_LAMP_RX_PIN 42
+
 #define JACK_INPUT A0
 #define JACK_INPUT_FREQ JACK_INPUT
 #define ANALYZER_SIGNAL_AVAIL A1
@@ -236,11 +265,13 @@
 #define LIGHT_SENSOR_OUTSIDE A2
 #define LIGHT_SENSOR_INSIDE A3
 
+#define TEMPERTURE_SENSOR_PIN 41
 #define CURRENT_SENSOR_PIN A6
 #define VOLTAGE_SENSOR_PIN A7
-#define TEMPERTURE_SENSOR_PIN 41
 
 #define HWM_AUTO_BRIGHTNESS_PIN 2
+// !Pinout
+// ----------------------------------------
 
 #endif // !PREDEFINED_OFF
 
