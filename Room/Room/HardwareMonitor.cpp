@@ -35,9 +35,9 @@ void HardwareMonitor::listenSerial ()
         char aChar = SERIAL_HW_MONITOR.read ();
 
         // Debug
-        Serial.print (aChar);
+        /*Serial.print (aChar);
         if (aChar == ';')
-            Serial.println ();
+            Serial.println ();*/
 
         if (aChar != 'E')
             {
@@ -45,7 +45,7 @@ void HardwareMonitor::listenSerial ()
             index++;
             raw_input [index] = '\0';
             }
-
+        
 
 
         else
