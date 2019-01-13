@@ -42,21 +42,13 @@ class HardwareMonitor
             RAMload = 20,
             RAMavail = 21,
 
-            GPUcoreFreq = 22,
-            GPUmemFreq = 23,
-            GPUshaderFreq = 24,
-            GPUcoreLoad = 25,
-            GPUmemCtrlrLoad = 26,
-            GPUvidEngLoad = 27,
-            GPUmemLoad = 28,
+            GPUmemTotal = 22,
+            GPUmemUsed = 23,
+            GPUmemFree = 24,
+            
+            HardDisk = 25,
 
-            GPUmemFree = 29,
-            GPUmemUsed = 30,
-            GPUmemTotal = 31,
-
-            HardDisk = 32,
-
-            nParameters = 33
+            nParameters = 26
             };
 
     private:
@@ -82,6 +74,7 @@ class HardwareMonitor
 
         float getCPUload ();
         float getCPUtemp ();
+        float getGPUload ();
 
     };
 

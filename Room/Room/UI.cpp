@@ -120,20 +120,20 @@ void UI::showHwmInfo (HardwareMonitor & hwm, byte hwmScreenId)
                 lcd.print ("CPU:");
                 lcd.print (hwm.getCPUtemp (), 0);
                 lcd.print ("C   ");
-                lcd.setCursor (6, 0);
-                lcd.print ("  LOAD:");
+                lcd.setCursor (8, 0);
+                lcd.print ("LOAD:");
                 lcd.print (hwm.getCPUload (), 0);
                 lcd.print ("%   ");
 
                 // GPU
                 lcd.setCursor (0, 1);
                 lcd.print ("GPU:");
-                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUmemLoad), 0);
+                lcd.print (hwm.getGPUload (), 0);
                 lcd.print ("% ");
 
                 // RAM
-                lcd.setCursor (6, 1);
-                lcd.print ("  RAM:");
+                lcd.setCursor (8, 1);
+                lcd.print ("RAM:");
                 lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMload), 1);
                 lcd.setCursor (15, 1);
                 lcd.print ("G");
