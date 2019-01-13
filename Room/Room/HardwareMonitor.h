@@ -61,9 +61,9 @@ class HardwareMonitor
 
     private:
         bool lastState;
-        char raw_input [270];
+        char raw_input [400];
         byte index;
-        int params [static_cast <int> (paramId::nParameters)];
+        float params [static_cast <int> (paramId::nParameters)];
         float brightnessLevel;
         long lastHWMupdate;
         
@@ -77,11 +77,11 @@ class HardwareMonitor
 
         void update ();
 
-        int getParameter (paramId id);
+        float getParameter (paramId id);
         bool available ();
 
-        int getCPUload ();
-        int getCPUtemp ();
+        float getCPUload ();
+        float getCPUtemp ();
 
     };
 

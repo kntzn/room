@@ -86,7 +86,7 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     if (scrUpdAvail)
         {
         scrUpdAvail = false;
-        Serial.println (__LINE__);
+        //Serial.println (__LINE__);
 
         lastScreenUpdate = millis ();
 
@@ -118,25 +118,25 @@ void UI::showHwmInfo (HardwareMonitor & hwm, byte hwmScreenId)
                 // CPU
                 lcd.setCursor (0, 0);
                 lcd.print ("CPU:");
-                lcd.print (hwm.getCPUtemp ());
+                lcd.print (hwm.getCPUtemp (), 0);
                 lcd.print ("C   ");
-                lcd.setCursor (8, 0);
-                lcd.print ("LOAD:");
-                lcd.print (hwm.getCPUload ());
+                lcd.setCursor (6, 0);
+                lcd.print ("  LOAD:");
+                lcd.print (hwm.getCPUload (), 0);
                 lcd.print ("%   ");
 
                 // GPU
                 lcd.setCursor (0, 1);
                 lcd.print ("GPU:");
-                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUmemLoad));
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::GPUmemLoad), 0);
                 lcd.print ("% ");
 
                 // RAM
-                lcd.setCursor (8, 1);
-                lcd.print ("RAM:");
-                lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMload) / 1000.f, 1);
-                lcd.setCursor (14, 1);
-                lcd.print ("GB");
+                lcd.setCursor (6, 1);
+                lcd.print ("  RAM:");
+                lcd.print (hwm.getParameter (HardwareMonitor::paramId::RAMload), 1);
+                lcd.setCursor (15, 1);
+                lcd.print ("G");
 
                 break;
             default:

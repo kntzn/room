@@ -458,10 +458,8 @@ void StripController::mainStrip_fade_random_mode ()
         newColorReady = true;
         }
     if (newColorReady)
-        {
         fadeSwitchColor = CRGB (CHSV (rand (), MAX_SATURATION, MAX_BRIGHTNESS));
-        Serial.println (__LINE__);
-        }
+        
     
     for (int i = 0; i < N_LEDS_MAIN; i++)
         {

@@ -24,6 +24,7 @@ HardwareMonitor::HardwareMonitor () :
 
 void HardwareMonitor::listenSerial ()
     {
+    
     while (SERIAL_HW_MONITOR.available () > 0)
         {
         digitalWrite (LED_BUILTIN, HIGH);
@@ -32,12 +33,16 @@ void HardwareMonitor::listenSerial ()
         lastHWMupdate = millis ();
 
         char aChar = SERIAL_HW_MONITOR.read ();
+        Serial.print (aChar);
+        if (aChar == ';')
+            Serial.println ();
 
         if (aChar != 'E')
             {
             raw_input [index] = aChar;
             index++;
             raw_input [index] = '\0';
+            
             }
         else
             {
@@ -47,7 +52,7 @@ void HardwareMonitor::listenSerial ()
             while ((str = strtok_r (p, ";", &p)) != NULL)
                 {
                 converted_string = str;
-                params [index] = converted_string.toInt ();
+                params [index] = converted_string.toFloat ();
                 
                 index++;
                 }
@@ -70,7 +75,7 @@ void HardwareMonitor::update ()
         //lastUpdate = millis ();
     }
 
-int HardwareMonitor::getParameter (paramId id)
+float HardwareMonitor::getParameter (paramId id)
     {
     if (paramId::lowVal      < id &&
         paramId::nParameters > id)
@@ -88,7 +93,7 @@ bool HardwareMonitor::available ()
     return avail;
     }
 
-int HardwareMonitor::getCPUload ()
+float HardwareMonitor::getCPUload ()
     {
     return (getParameter (HardwareMonitor::paramId::loadCore0) +
             getParameter (HardwareMonitor::paramId::loadCore1) +
@@ -96,7 +101,7 @@ int HardwareMonitor::getCPUload ()
             getParameter (HardwareMonitor::paramId::loadCore3)) / 4;
     }
 
-int HardwareMonitor::getCPUtemp ()
+float HardwareMonitor::getCPUtemp ()
     {
     int core0 = getParameter (HardwareMonitor::paramId::tempCore0);
     int core1 = getParameter (HardwareMonitor::paramId::tempCore1);
