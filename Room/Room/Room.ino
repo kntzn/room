@@ -36,7 +36,7 @@ int main ()
     digitalWrite (RELAY_TORCHERE, HIGH);
     digitalWrite (RELAY_LAMP, HIGH);
     LightController controller;
-    controller.setProfile (LightController::full);
+    controller.setProfile (LightController::fullWhite);
     randomizeParameters (controller);
 
     // Serial initialization

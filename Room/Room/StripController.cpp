@@ -291,6 +291,7 @@ void StripController::setMode (byte newMode)
         leds_main_copy [i] = leds_main [i];
 
     fadeSwitchColor = CRGB::Red;
+    rainbow_offset = rainbow_offset = 0.f;
     switchedColorFlag = false;
     mode = newMode;
 
@@ -416,14 +417,19 @@ void StripController::mainStrip_fade_switch_mode ()
     float brightness = (1 - cosf (double ((2 * PI)*rainbow_offset))) / 2.f;
 
     // Generates new color at low brightness
-    if (rainbow_offset > 1.0 ||
-        rainbow_offset < -1.0)
+    bool newColorReady = false;
+    if (rainbow_offset > 1.0)
         {
-        if (rainbow_offset > 0)
-            rainbow_offset -= 1.0;
-        else
-            rainbow_offset += 1.0;
-
+        rainbow_offset -= int (rainbow_offset);
+        newColorReady = true;
+        }
+    if (rainbow_offset < -1.0)
+        {
+        rainbow_offset += int (rainbow_offset);
+        newColorReady = true;
+        }
+    if (newColorReady)
+        {
         if (fadeSwitchColor == CRGB (CRGB::Red))
             fadeSwitchColor = CRGB::Yellow;
         else if (fadeSwitchColor == CRGB (CRGB::Yellow))
@@ -450,16 +456,20 @@ void StripController::mainStrip_fade_random_mode ()
     float brightness = (1 - cosf (double ((2 * PI)*rainbow_offset))) / 2.f;
     
     // Generates new color at low brightness
-    if (rainbow_offset > 1.0 ||
-        rainbow_offset < -1.0)
+    bool newColorReady = false;
+    if (rainbow_offset > 1.0)
         {
-        if (rainbow_offset > 0)
-            rainbow_offset -= 1.0;
-        else
-            rainbow_offset += 1.0;
-        
-        fadeSwitchColor = CRGB (CHSV (rand (), MAX_SATURATION, MAX_BRIGHTNESS));        
+        rainbow_offset -= int (rainbow_offset);
+        newColorReady = true;
         }
+    if (rainbow_offset < -1.0)
+        {
+        rainbow_offset += int (rainbow_offset);
+        newColorReady = true;
+        }
+    if (newColorReady)
+        fadeSwitchColor = CRGB (CHSV (rand (), MAX_SATURATION, MAX_BRIGHTNESS));
+        
     
     for (int i = 0; i < N_LEDS_MAIN; i++)
         {
