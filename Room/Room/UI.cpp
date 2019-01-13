@@ -78,13 +78,16 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         }
 
     // Updates the screen every 1/UPS_SCREEN seconds
-    if (millis () - lastScreenUpdate > 1000 / (UPS_SCREEN) && on)
+    if (((millis () - lastScreenUpdate) > (1000 / (UPS_SCREEN))) &&
+        on)
         scrUpdAvail = true;
 
     // Updates the screen
     if (scrUpdAvail)
         {
         scrUpdAvail = false;
+        Serial.println (__LINE__);
+
         lastScreenUpdate = millis ();
 
         if (on)

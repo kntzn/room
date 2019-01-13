@@ -36,8 +36,10 @@ int main ()
     digitalWrite (RELAY_TORCHERE, HIGH);
     digitalWrite (RELAY_LAMP, HIGH);
     LightController controller;
-    controller.setProfile (LightController::fullWhite);
-    randomizeParameters (controller);
+    controller.setProfile (LightController::full);
+    controller.setLedMode (StripController::fade_switch_random);
+    controller.setLedAnimationSpeed (-0.05f);
+    //randomizeParameters (controller);
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);

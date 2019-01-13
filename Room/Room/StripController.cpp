@@ -418,14 +418,9 @@ void StripController::mainStrip_fade_switch_mode ()
 
     // Generates new color at low brightness
     bool newColorReady = false;
-    if (rainbow_offset > 1.0)
+    if (rainbow_offset > 1.0 || rainbow_offset < -1.0)
         {
         rainbow_offset -= int (rainbow_offset);
-        newColorReady = true;
-        }
-    if (rainbow_offset < -1.0)
-        {
-        rainbow_offset += int (rainbow_offset);
         newColorReady = true;
         }
     if (newColorReady)
@@ -457,19 +452,16 @@ void StripController::mainStrip_fade_random_mode ()
     
     // Generates new color at low brightness
     bool newColorReady = false;
-    if (rainbow_offset > 1.0)
+    if (rainbow_offset > 1.0 || rainbow_offset < -1.0)
         {
         rainbow_offset -= int (rainbow_offset);
         newColorReady = true;
         }
-    if (rainbow_offset < -1.0)
-        {
-        rainbow_offset += int (rainbow_offset);
-        newColorReady = true;
-        }
     if (newColorReady)
+        {
         fadeSwitchColor = CRGB (CHSV (rand (), MAX_SATURATION, MAX_BRIGHTNESS));
-        
+        Serial.println (__LINE__);
+        }
     
     for (int i = 0; i < N_LEDS_MAIN; i++)
         {
