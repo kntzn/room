@@ -46,23 +46,25 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         {
         screenId--;
         scrUpdAvail = true;
-        Serial.println (__LINE__);
         }
     if (rButton.getState () == Button::Rlsd)
         {
         screenId++;
         scrUpdAvail = true;
-        Serial.println (__LINE__);
         }
-    if (mButton.getState () == Button::Hold)
+    if (mButton.getState () == Button::Hold && !on)
         {
-        on = !on;
+        on = true;
         scrUpdAvail = true;
-        Serial.println (__LINE__);
         }
     if (!on && mButton.getState () == Button::Rlsd)
         ctrlr.setProfile (screenId);
-        
+    if (mButton.getState () == Button::Rlsd && on)
+        {
+        on = false;
+        scrUpdAvail = true;
+        }
+    
 
     // Constrains screenId
     if (on)
@@ -89,8 +91,7 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     if (scrUpdAvail)
         {
         scrUpdAvail = false;
-        Serial.println (__LINE__);
-
+        
         lastScreenUpdate = millis ();
 
         if (on)
@@ -118,6 +119,9 @@ void UI::showHwmInfo (HardwareMonitor & hwm, byte hwmScreenId)
         switch (static_cast <hwmScreens> (hwmScreenId))
             {
             case hwmScreens::MAIN_SCR:
+            case hwmScreens::CPU_SCR:
+            case hwmScreens::GPU_SCR:
+            case hwmScreens::MEM_SCR:
                 // CPU load
                 lcd.setCursor (6, 0);
                 lcd.print ("  LOAD:");
