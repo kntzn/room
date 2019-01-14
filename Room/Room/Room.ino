@@ -43,6 +43,7 @@ int main ()
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
+    pinMode (AVAIL_TO_READ, OUTPUT);
 
     // Window initialization
     WindowController window;
@@ -116,7 +117,10 @@ int main ()
             controller.setTorchereState (!controller.getTorchereState ());
             }
 
+
+        digitalWrite (AVAIL_TO_READ, LOW);
         controller.update (dt);
+        digitalWrite (AVAIL_TO_READ, HIGH);
         // !Light controller
 
         // Hardware monitor

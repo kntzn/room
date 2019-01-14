@@ -243,7 +243,7 @@
 #define BLOCK_LED_G 4
 #define BLOCK_LED_B 5
 
-#define AVAL_TO_READ 23
+#define AVAIL_TO_READ 23
 #define HWM_AVAILABLE 25
 
 #define BUTT_RGHT 27
