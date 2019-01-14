@@ -13,7 +13,6 @@ void setup()
     {
     Serial.begin (9600);
     Serial1.begin (9600);
-
     pinMode (3, INPUT);
 
     pinMode (LED_BUILTIN, OUTPUT);
@@ -28,6 +27,6 @@ void loop()
     digitalWrite (LED_BUILTIN, !digitalRead (3));
 
     if (Serial.available ())
-        if (digitalRead (3) == LOW)
+        if (digitalRead (3) == HIGH)
             Serial1.print (char (Serial.read ()));
     }

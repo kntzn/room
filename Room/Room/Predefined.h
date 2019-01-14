@@ -197,7 +197,7 @@
 #define CS_LAMP_ON_TH 1100
 
 // Door cap sensor threshold
-#define DOOR_CAP_TH 45
+#define DOOR_CAP_TH 60
 
 // !Capacitive sensor
 // ----------------------------------------
@@ -216,9 +216,6 @@
 
 // ----------------------------------------
 // NRF
-#define NRF_CE 48
-#define NRF_CSN 49
-
 #define NRF_BUF_SIZE 16
 // !NRF
 // ----------------------------------------
@@ -240,36 +237,54 @@
 
 // ----------------------------------------
 // Pinout
-#define NC A9
+#define HWM_AUTO_BRIGHTNESS_PIN 2
 
-#define CAP_SENSOR_DOOR A8
+#define BLOCK_LED_R 3
+#define BLOCK_LED_G 4
+#define BLOCK_LED_B 5
 
-#define BUTT_LEFT 29
-#define BUTT_MIDL 27
-#define BUTT_RGHT 25
+#define AVAL_TO_READ 23
+#define HWM_AVAILABLE 25
 
-#define STRIP_DATA_MAIN 35
-#define STRIP_DATA_TABLE 37
+#define BUTT_RGHT 27
+#define BUTT_MIDL 29
+#define BUTT_LEFT 31
 
 #define RELAY_LAMP 33
-#define RELAY_TORCHERE 31
+#define RELAY_TORCHERE 35
+
+#define STRIP_DATA_MAIN 37
+#define STRIP_DATA_TABLE 39
 
 #define CS_LAMP_TX_PIN 40
 #define CS_LAMP_RX_PIN 42
+
+#define DHT_PIN 41
+
+#define TEMPERTURE_SENSOR_PIN 43
+
+#define WINDOW_OUTPUT 47
+
+#define NRF_CE 48
+#define NRF_CSN 49
 
 #define JACK_INPUT A0
 #define JACK_INPUT_FREQ JACK_INPUT
 #define ANALYZER_SIGNAL_AVAIL A1
 
-#define WINDOW_OUTPUT 47
+#define LIGHT_SENSOR_INSIDE_TORCHERE A4
 #define LIGHT_SENSOR_OUTSIDE A2
 #define LIGHT_SENSOR_INSIDE A3
 
-#define TEMPERTURE_SENSOR_PIN 41
-#define CURRENT_SENSOR_PIN A6
+#define CURRENT_SENSOR_PIN A5
+
+#define CAP_SENSOR_DOOR A6
+
 #define VOLTAGE_SENSOR_PIN A7
 
-#define HWM_AUTO_BRIGHTNESS_PIN 2
+#define NC A9
+
+
 // !Pinout
 // ----------------------------------------
 
