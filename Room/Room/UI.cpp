@@ -5,9 +5,10 @@
 #include "UI.h"
 
 UI::UI () :
-    on (false), 
+    on (false),
     scrUpdAvail (true),
     screenId (0),
+    prev_screenId (0),
     brightnessLevel (0.f),
     lastScreenUpdate (0),
     lButton (BUTT_LEFT),
@@ -42,15 +43,18 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     rButton.update ();
 
     // Buttons' actions
-    if (lButton.getState () == Button::Rlsd)
+    if (!on)
         {
-        screenId--;
-        scrUpdAvail = true;
-        }
-    if (rButton.getState () == Button::Rlsd)
-        {
-        screenId++;
-        scrUpdAvail = true;
+        if (lButton.getState () == Button::Rlsd)
+            {
+            screenId--;
+            scrUpdAvail = true;
+            }
+        if (rButton.getState () == Button::Rlsd)
+            {
+            screenId++;
+            scrUpdAvail = true;
+            }
         }
     if (mButton.getState () == Button::Hold && !on)
         {
@@ -59,27 +63,20 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         }
     if (!on && mButton.getState () == Button::Rlsd)
         ctrlr.setProfile (screenId);
+
     if (mButton.getState () == Button::Rlsd && on)
         {
         on = false;
         scrUpdAvail = true;
         }
     
-
     // Constrains screenId
     if (on)
         {
-        if (screenId <= byte (hwmScreens::MIN_VAL))
-            screenId = byte (hwmScreens::MIN_VAL) + 1;
-        if (screenId >= byte (hwmScreens::MAX_VAL))
-            screenId = byte (hwmScreens::MAX_VAL) - 1;
         }
     else
         {
-        if (screenId < 0)
-            screenId = LightController::n_profiles - 1;
-        if (screenId > LightController::n_profiles - 1)
-            screenId = 0;
+        screenId = (screenId + LightController::n_profiles) % LightController::n_profiles;
         }
 
     // Updates the screen every 1/UPS_SCREEN seconds
@@ -95,7 +92,7 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         lastScreenUpdate = millis ();
 
         if (on)
-            showHwmInfo (hwm, screenId);
+            showHwmInfo (hwm, hwmScreens::MAIN_SCR);
         else
             printLightingProfile (screenId);
 
@@ -105,7 +102,7 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
 
     }
 
-void UI::showHwmInfo (HardwareMonitor & hwm, byte hwmScreenId)
+void UI::showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId)
     {
     if (!hwm.available ())
         {
@@ -116,7 +113,7 @@ void UI::showHwmInfo (HardwareMonitor & hwm, byte hwmScreenId)
         }
     else
         {
-        switch (static_cast <hwmScreens> (hwmScreenId))
+        switch (hwmScreenId)
             {
             case hwmScreens::MAIN_SCR:
             case hwmScreens::CPU_SCR:

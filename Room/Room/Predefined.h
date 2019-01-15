@@ -193,11 +193,11 @@
 // Capacitive sensor
 
 // Lamp cap sensor thresholds
-#define CS_LAMP_OFF_TH 600
-#define CS_LAMP_ON_TH 1100
+#define CS_LAMP_OFF_TH 500
+#define CS_LAMP_ON_TH 900
 
 // Door cap sensor threshold
-#define DOOR_CAP_TH 60
+#define DOOR_CAP_TH 120
 
 // !Capacitive sensor
 // ----------------------------------------

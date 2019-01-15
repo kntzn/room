@@ -29,7 +29,7 @@ class UI
             MAX_VAL
             };
         bool on, scrUpdAvail;
-        signed char screenId;
+        signed char screenId, prev_screenId;
         float brightnessLevel;
         unsigned long lastScreenUpdate;
         Button lButton, mButton, rButton;
@@ -41,7 +41,7 @@ class UI
 
         void update (HardwareMonitor &hwm, LightController &ctrlr);
 
-        void showHwmInfo (HardwareMonitor &hwm, byte hwmScreenId);
+        void showHwmInfo (HardwareMonitor & hwm, hwmScreens hwmScreenId);
 
         void printLightingProfile (byte profile);
     };
