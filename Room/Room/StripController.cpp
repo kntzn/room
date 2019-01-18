@@ -343,6 +343,23 @@ void StripController::setSectionColor (CRGB newColor, byte sec_id)
     if (sec_id < 3)
         currColor3sections [sec_id] = newColor;
     }
+void StripController::randomize ()
+    {
+    setRainbowFrequency (float (rand () % 60001 -
+                         30000) / 60000.f);
+    setRainbowSpeed (float (rand () % 50001 -
+                     25000) / 100000.f);
+    setColor (CRGB (CHSV (rand (),
+              MAX_SATURATION,
+              MAX_BRIGHTNESS)));
+    byte mode = 0;
+    while (mode == StripController::mainStripMode::off ||
+           mode == StripController::mainStripMode::night ||
+           mode == StripController::mainStripMode::rise)
+        mode = rand () % StripController::n_modes;
+
+    setMode (mode);
+    }
 void StripController::setRainbowFrequency (float newFreq)
     {
     rainbow_freq = newFreq;
@@ -378,11 +395,6 @@ void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
     {
     for (int i = 0; i < SPECTRUM_SIZE; i++)
         frequency_full [i] = newFreqVal [i];
-    }
-
-void StripController::setFreeze (bool freeze)
-    {
-    freezed = freeze;
     }
 
 // Modes defenitions

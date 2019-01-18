@@ -122,9 +122,9 @@ void LightController::setProfile (byte mode)
         }
     }
 
-void LightController::setLedFreeze (bool freeze)
+void LightController::randomizeLeds ()
     {
-    LED.setFreeze (freeze);
+    LED.randomize ();
     }
 
 void LightController::setLedMode (byte newMode)

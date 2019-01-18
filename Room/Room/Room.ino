@@ -13,6 +13,7 @@
 #include "LightController.h"
 #include "Predefined.h"
 #include "Button.h"
+#include "PowerSupply.h"
 
 #include "HardwareMonitor.h"
 #include "Analyzer.h"
@@ -22,7 +23,6 @@
 #include <CapacitiveSensor.h>
 #include "UI.h"
 
-void randomizeParameters (LightController &controller);
 
 int main ()
     {
@@ -73,6 +73,11 @@ int main ()
                            CS_LAMP_OFF_TH,
                            CS_LAMP_ON_TH);
     
+    // Power supply
+    PowerSupply pSupply (CURRENT_SENSOR_PIN, 
+                         VOLTAGE_SENSOR_PIN, 
+                         TEMPERTURE_SENSOR_PIN);
+
     long prev_t = millis ();
 
     while (true)
@@ -102,7 +107,7 @@ int main ()
         // NRF24L01
         while (nrf.available ())
             {
-            nrf.read (nrfBuf, 16);
+            nrf.read (nrfBuf, NRF_BUF_SIZE);
 
             Serial.println (int (nrfBuf [0]));
             }
@@ -133,32 +138,4 @@ int main ()
         }
 
     return 0;
-    }
-
-// TODO:
-
-// Cap sensor for lamp
-
-
-// Cap buttons
-// Hardware Monitor
-
-// XOR (HWM, Mode != mono)
-
-void randomizeParameters (LightController & controller)
-    {
-    controller.setLedAnimationFrequency (float (rand () % 60001 -
-                                            30000) / 60000.f);
-    controller.setLedAnimationSpeed (float (rand () % 50001 -
-                                            25000) / 100000.f);
-    controller.setLedColor (CRGB (CHSV (rand(), 
-                                        MAX_SATURATION,
-                                        MAX_BRIGHTNESS)));
-    byte mode = 0;
-    while (mode == StripController::mainStripMode::off ||
-            mode == StripController::mainStripMode::night ||
-            mode == StripController::mainStripMode::rise)
-        mode = rand () % StripController::n_modes;
-
-    controller.setLedMode (mode);
     }

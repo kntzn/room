@@ -108,8 +108,6 @@ class StripController
         // ----------------------------------------
         // Internal Variables
 
-        bool freezed = false;
-
         // Night mode activation time
         unsigned long int mode_activation_time = 0;
         
@@ -192,6 +190,8 @@ class StripController
         void setColor (CRGB newColor);
         void setSectionColor (CRGB newColor, byte sec_id);
 
+        void randomize ();
+
         void setRainbowFrequency (float newFreq);
         void setRainbowSpeed (float newSpeed);
         void setPaletteSpeed (float newSpeed);
@@ -202,8 +202,6 @@ class StripController
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
         void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);
-
-        void setFreeze (bool freeze);
     };
 
 #endif
