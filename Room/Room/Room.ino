@@ -75,8 +75,7 @@ int main ()
     
     // Power supply
     PowerSupply pSupply (CURRENT_SENSOR_PIN, 
-                         VOLTAGE_SENSOR_PIN, 
-                         TEMPERTURE_SENSOR_PIN);
+                         VOLTAGE_SENSOR_PIN);
 
     long prev_t = millis ();
 

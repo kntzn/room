@@ -10,18 +10,14 @@
 #endif
 
 #include "Predefined.h"
-#include <OneWire.h>
-#include <DallasTemperature.h>
 
 class PowerSupply
     {
     private:
-        DallasTemperature DS18B20;
-
         byte pinVoltage;
         byte pinCurrent;
 
-        float voltage, current, power, temperature;
+        float voltage, current, power;
 
         long aver_analog (uint8_t pin, size_t times = 10);
         
@@ -30,14 +26,13 @@ class PowerSupply
         float voltage_prec (byte pin);
     
     public:
-        PowerSupply (byte pinI, byte pinV, byte pinT);
+        PowerSupply (byte pinI, byte pinV);
     
         void update ();
 
         float getVoltage     ();
         float getCurrent     ();
         float getPower       ();
-        float getTemperature ();
 
     };
 
