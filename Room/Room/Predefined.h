@@ -250,33 +250,33 @@
 #define BUTT_MIDL 29
 #define BUTT_LEFT 31
 
-#define RELAY_LAMP 33
-#define RELAY_TORCHERE 35
+#define RELAY_LAMP 33 // checked
+#define RELAY_TORCHERE 35 // checked
 
-#define STRIP_DATA_MAIN 37
-#define STRIP_DATA_TABLE 39
+#define STRIP_DATA_MAIN 37 // checked
+#define STRIP_DATA_TABLE 39 // checked
 
-#define DHT_PIN 41
+#define DHT_PIN 41 
 
 #define CS_LAMP_TX_PIN 45
 #define CS_LAMP_RX_PIN 43
 
-#define WINDOW_OUTPUT 47
+#define WINDOW_OUTPUT 47 // checked
 
 #define NRF_CE 48
 #define NRF_CSN 49
 
-#define JACK_INPUT A0
-#define JACK_INPUT_FREQ JACK_INPUT
-#define ANALYZER_SIGNAL_AVAIL A1
+#define JACK_INPUT A0 // checked
+#define JACK_INPUT_FREQ JACK_INPUT 
+#define ANALYZER_SIGNAL_AVAIL A1 // checked
 
-#define LIGHT_SENSOR_OUTSIDE A2
+#define LIGHT_SENSOR_OUTSIDE A2 
 #define LIGHT_SENSOR_INSIDE A3
 #define LIGHT_SENSOR_INSIDE_TORCHERE A4
 
 #define CURRENT_SENSOR_PIN A5
 
-#define CAP_SENSOR_DOOR A6
+#define CAP_SENSOR_DOOR A6 // checked
 
 #define VOLTAGE_SENSOR_PIN A7
 

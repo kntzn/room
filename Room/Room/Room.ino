@@ -101,16 +101,19 @@ int main ()
         // Capacitive sensors
         cs_door.update (dt);
         cs_lamp.update (controller.getLampState ());
+
         // !Capacitive sensors
         
         // NRF24L01
+        /*
         while (nrf.available ())
             {
             nrf.read (nrfBuf, NRF_BUF_SIZE);
 
             Serial.println (int (nrfBuf [0]));
             }
-        
+        */
+
         // Light controller
         if (cs_lamp.getState () == LampCapSensor::Hold)
             {
@@ -120,7 +123,7 @@ int main ()
             {
             controller.setTorchereState (!controller.getTorchereState ());
             }
-
+        
 
         digitalWrite (AVAIL_TO_READ, LOW);
         controller.update (dt);

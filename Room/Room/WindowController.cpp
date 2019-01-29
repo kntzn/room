@@ -118,6 +118,10 @@ void WindowController::listenBrightness ()
         inside.update ();
         outside.update ();
 
+        Serial.print ("Out: ");
+        Serial.print (outside.getValue ());
+        Serial.print (" In: ");
+        Serial.println (inside.getValue ());
         if (outside.getValue () < inside.getBrightness () - BRIGHTNESS_TH)
             setMode (state::closed_in);
         else

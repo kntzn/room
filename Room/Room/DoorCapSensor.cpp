@@ -28,9 +28,9 @@ void LampCapSensor::update (bool isActive)
     bool active = (value > threshold);
     
     // Debug
-    /*Serial.print (value);
+    Serial.print (value);
     Serial.print (' ');
-    Serial.println (threshold);*/
+    Serial.println (threshold);
 
     if (active)
         {
@@ -109,9 +109,9 @@ void DoorCapSensor::update (float dt)
     bool currentState = bool (analogResult > smoothAverage + DOOR_CAP_TH);
     
     // Debug
-    Serial.print (analogResult);
+    /*Serial.print (analogResult);
     Serial.print (' ');
-    Serial.println (smoothAverage + DOOR_CAP_TH);
+    Serial.println (smoothAverage + DOOR_CAP_TH);*/
 
     float delta = analogResult - smoothAverage;
 
