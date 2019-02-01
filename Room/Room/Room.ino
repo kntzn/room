@@ -136,7 +136,7 @@ int main ()
         ui.update (hwm, controller);
         
         // Window controller
-        window.update ();
+        window.update (controller);
         }
 
     return 0;

@@ -12,6 +12,7 @@
 
 #include <Servo.h>
 
+#include "LightController.h"
 #include "Predefined.h"
 
 class BrightnessListener
@@ -51,9 +52,9 @@ class WindowController
         void setMode (state newMode);
         void setAutoMode (bool isAuto);
         
-        void update ();
+        void update (LightController &ctrlr);
 
-        void listenBrightness ();
+        void listenBrightness (LightController &ctrlr);
 
 
     };

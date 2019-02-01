@@ -237,11 +237,11 @@
 
 // ----------------------------------------
 // Pinout
-#define HWM_AUTO_BRIGHTNESS_PIN 2
+#define HWM_AUTO_BRIGHTNESS_PIN 5
 
-#define BLOCK_LED_R 3
-#define BLOCK_LED_G 4
-#define BLOCK_LED_B 5
+#define BLOCK_LED_R 2
+#define BLOCK_LED_G 3
+#define BLOCK_LED_B 4
 
 #define AVAIL_TO_READ 23
 #define HWM_AVAILABLE 25

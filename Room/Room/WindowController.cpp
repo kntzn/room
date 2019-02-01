@@ -67,10 +67,10 @@ void WindowController::setAutoMode (bool isAuto)
     autoMode = isAuto;
     }
 
-void WindowController::update ()
+void WindowController::update (LightController &ctrlr)
     {
     // Updates the mode if autoMode is enabled
-    listenBrightness ();
+    listenBrightness (ctrlr);
 
     // Moves the blind to initial position (closed)
     if (millis () - millis_init < (FULL_OPEN_TIME * 1000))
@@ -111,18 +111,21 @@ void WindowController::update ()
         }
     }
 
-void WindowController::listenBrightness ()
+void WindowController::listenBrightness (LightController &ctrlr)
     {
     if (autoMode)
         {
         inside.update ();
         outside.update ();
 
-        Serial.print ("Out: ");
+        /*Serial.print ("Out: ");
         Serial.print (outside.getValue ());
         Serial.print (" In: ");
-        Serial.println (inside.getValue ());
-        if (outside.getValue () < inside.getBrightness () - BRIGHTNESS_TH)
+        Serial.println (inside.getBrightness ());*/
+
+        int insideValue = (ctrlr.getLampState () || ctrlr.getTorchereState ()) ? 500 : 0;
+
+        if (outside.getValue () < insideValue - BRIGHTNESS_TH)
             setMode (state::closed_in);
         else
             setMode (state::opened);
