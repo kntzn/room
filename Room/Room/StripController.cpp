@@ -397,6 +397,11 @@ void StripController::setFreqValues (float newFreqVal [SPECTRUM_SIZE])
         frequency_full [i] = newFreqVal [i];
     }
 
+CRGB StripController::getFirstLEDcolor ()
+    {
+    return leds_main [0];
+    }
+
 // Modes defenitions
 void StripController::mainStrip_off_mode ()
     {

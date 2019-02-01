@@ -104,6 +104,8 @@ class LightController
 
         bool getTorchereState ();
         bool getLampState ();
+
+        CRGB getFirstLEDcolor ();
     };
 
 

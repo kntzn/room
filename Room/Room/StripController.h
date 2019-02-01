@@ -202,6 +202,8 @@ class StripController
         void setVU_val (int newVU_val);
         void setFreq3values (float newFreqVal [3]);
         void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);
+
+        CRGB getFirstLEDcolor ();
     };
 
 #endif

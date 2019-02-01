@@ -19,6 +19,11 @@ UI::UI () :
     lcd.init ();
     lcd.backlight ();
     pinMode (HWM_AUTO_BRIGHTNESS_PIN, OUTPUT);
+
+    // Block's underlight
+    pinMode (BLOCK_LED_R, OUTPUT);
+    pinMode (BLOCK_LED_B, OUTPUT);
+    pinMode (BLOCK_LED_G, OUTPUT);
     }
 
 void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
@@ -36,6 +41,11 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     brightnessLevel = 0.05f * measuredBrightness + 0.95f * float (measuredBrightness);
     analogWrite (HWM_AUTO_BRIGHTNESS_PIN,
                  map (brightnessLevel, 0, 400, 0, 255));
+
+    // Underlight
+    analogWrite (BLOCK_LED_R, ctrlr.getFirstLEDcolor ().r);
+    analogWrite (BLOCK_LED_G, ctrlr.getFirstLEDcolor ().g);
+    analogWrite (BLOCK_LED_B, ctrlr.getFirstLEDcolor ().b);
 
     // Buttons 
     lButton.update ();

@@ -189,3 +189,8 @@ bool LightController::getLampState ()
     {
     return Lamp.getState ();
     }
+
+CRGB LightController::getFirstLEDcolor ()
+    {
+    return LED.getFirstLEDcolor ();
+    }
