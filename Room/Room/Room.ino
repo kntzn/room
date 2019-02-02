@@ -37,8 +37,9 @@ int main ()
     digitalWrite (RELAY_LAMP, HIGH);
     LightController controller;
     controller.setProfile (LightController::full);
-    controller.setLedMode (StripController::fade_switch_random);
-    controller.setLedAnimationSpeed (-0.05f);
+    controller.setLedColor (CRGB::Green);
+    controller.setLedMode (StripController::fade_smooth);
+    controller.setLedAnimationSpeed (0.5f);
     //randomizeParameters (controller);
 
     // Serial initialization
@@ -92,8 +93,13 @@ int main ()
         // Analyzer
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
-        if (analyzer.connected () && analyzer.signalAvailable ())
-            controller.setLedTableMode (StripController::FREQ_FULL);
+
+        bool analyzer_conn = analyzer.connected ();
+        bool analyzer_avail = analyzer.signalAvailable ();
+        //Serial.println (analyzer_avail);
+
+        if (analyzer_conn && analyzer_avail)
+            controller.setLedTableMode (StripController::VU_rain);
         else
             controller.setLedTableMode (StripController::sync);
         // !Analyzer

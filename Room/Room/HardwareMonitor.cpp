@@ -45,9 +45,6 @@ void HardwareMonitor::listenSerial ()
             index++;
             raw_input [index] = '\0';
             }
-        
-
-
         else
             {
             char *p = raw_input;
@@ -97,7 +94,8 @@ float HardwareMonitor::getParameter (paramId id)
 
 bool HardwareMonitor::available ()
     {
-    bool avail = (millis () - lastHWMupdate < HWM_TIMEOUT * 1000);
+    bool avail = (millis () - lastHWMupdate < HWM_TIMEOUT * 1000 &&
+                  digitalRead (HWM_AVAILABLE));
 
     return avail;
     }

@@ -28,9 +28,9 @@ void LampCapSensor::update (bool isActive)
     bool active = (value > threshold);
     
     // Debug
-    Serial.print (value);
+    /*Serial.print (value);
     Serial.print (' ');
-    Serial.println (threshold);
+    Serial.println (threshold);*/
 
     if (active)
         {

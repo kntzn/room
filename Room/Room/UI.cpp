@@ -35,12 +35,17 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         measuredBrightness += analogRead (LIGHT_SENSOR_INSIDE);
     measuredBrightness /= N_MES;
 
+    Serial.println (measuredBrightness);
+
     // Creates value limit
     measuredBrightness = constrain (measuredBrightness, 50, 400);
     // Filters the value
     brightnessLevel = 0.05f * measuredBrightness + 0.95f * float (measuredBrightness);
     analogWrite (HWM_AUTO_BRIGHTNESS_PIN,
                  map (brightnessLevel, 0, 400, 0, 255));
+
+    Serial.println (map (brightnessLevel, 0, 400, 0, 255));
+
 
     // Underlight
     analogWrite (BLOCK_LED_R, ctrlr.getFirstLEDcolor ().r);
@@ -73,6 +78,10 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         }
     if (!on && mButton.getState () == Button::Rlsd)
         ctrlr.setProfile (screenId);
+    if (lButton.getState () == Button::Hold)
+        {
+        ctrlr.randomizeLeds ();
+        }
 
     if (mButton.getState () == Button::Rlsd && on)
         {

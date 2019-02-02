@@ -237,18 +237,18 @@
 
 // ----------------------------------------
 // Pinout
-#define HWM_AUTO_BRIGHTNESS_PIN 5
-
 #define BLOCK_LED_R 2
 #define BLOCK_LED_G 3
 #define BLOCK_LED_B 4
 
+#define HWM_AUTO_BRIGHTNESS_PIN 6 // checked
+
 #define AVAIL_TO_READ 23
 #define HWM_AVAILABLE 25
 
-#define BUTT_RGHT 27
-#define BUTT_MIDL 29
-#define BUTT_LEFT 31
+#define BUTT_LEFT 27 // checked
+#define BUTT_MIDL 29 // checked
+#define BUTT_RGHT 31 // checked
 
 #define RELAY_LAMP 33 // checked
 #define RELAY_TORCHERE 35 // checked
@@ -258,8 +258,8 @@
 
 #define DHT_PIN 41 
 
-#define CS_LAMP_TX_PIN 45
-#define CS_LAMP_RX_PIN 43
+#define CS_LAMP_TX_PIN 45 // checked
+#define CS_LAMP_RX_PIN 43 // checked
 
 #define WINDOW_OUTPUT 47 // checked
 
@@ -270,8 +270,8 @@
 #define JACK_INPUT_FREQ JACK_INPUT 
 #define ANALYZER_SIGNAL_AVAIL A1 // checked
 
-#define LIGHT_SENSOR_OUTSIDE A2 
-#define LIGHT_SENSOR_INSIDE A3
+#define LIGHT_SENSOR_OUTSIDE A2 // checked
+#define LIGHT_SENSOR_INSIDE A3 // checked
 #define LIGHT_SENSOR_INSIDE_TORCHERE A4
 
 #define CURRENT_SENSOR_PIN A5

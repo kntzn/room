@@ -12,7 +12,7 @@ Analyzer::Analyzer ()
     sbi (ADCSRA, ADPS0);
 
     //updateLowPassVU ();
-    volume_low_pass = 350;
+    volume_low_pass = 410;
     }
 
 
@@ -39,12 +39,19 @@ float Analyzer::measureVol ()
             volume = measured;
         }
 
-    //Serial.println (volume);
+    
 
     volume -= volume_low_pass;
 
+    Serial.print ("Vol: ");
+    Serial.print (volume);
+    Serial.print (" ");
+    Serial.println (volume_low_pass);
+
     if (volume > volume_low_pass * 0.05f)
         lastSignal = millis ();
+    else if (volume < 0)
+        volume = 0.f;
 
     return volume;
     }

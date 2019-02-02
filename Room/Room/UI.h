@@ -24,7 +24,6 @@ class UI
         Button lButton, mButton, rButton;
         LiquidCrystal_I2C lcd;
         
-
     public:
         UI ();
 
