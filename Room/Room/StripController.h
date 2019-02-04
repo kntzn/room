@@ -62,6 +62,8 @@ class StripController
         // ----------------------------------------
         // Parameters
 
+        // Linearization flag
+        bool linearization = false;
         // Speed of rainbow palette (palette_offset)
         float palette_speed = 0.1f;
         // Speed of rainbow (rainbow_offset)
@@ -165,6 +167,8 @@ class StripController
         void mainStrip_RVD_RND_mode ();
         void mainStrip_fade_smooth_mode ();
 
+        void linearize ();
+
         // ----------------------------------------
         // Display function
         // Shows the array
@@ -184,6 +188,8 @@ class StripController
         void update (float dt);
 
         // ----------SETTERS and GETTERS-----------
+        void setLinearization (bool lin);
+
         void setMode (byte newMode);
         void setTableMode (byte newMode); 
         
