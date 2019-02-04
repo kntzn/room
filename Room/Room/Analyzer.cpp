@@ -12,17 +12,19 @@ Analyzer::Analyzer ()
     sbi (ADCSRA, ADPS0);
 
     //updateLowPassVU ();
-    volume_low_pass = 410;
+    volume_low_pass = 450;
     }
 
 
 
 void Analyzer::update (float dt)
     {
+    // Auto low-pass
+    if (!connected ())
+        updateLowPassVU ();
+
     // Measuring the volume 
     VU_out = VUmeter ();
-
-
 
     // Dividing the sound into freqencies
     analyzer (dt);

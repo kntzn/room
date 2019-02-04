@@ -26,7 +26,8 @@ UI::UI () :
     pinMode (BLOCK_LED_G, OUTPUT);
     }
 
-void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
+void UI::update (HardwareMonitor & hwm, LightController & ctrlr,
+                 Analyzer &anlzr)
     {
     // Auto brightness (finally, i've done it)
     // Measures average value
@@ -81,6 +82,10 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     if (lButton.getState () == Button::Hold)
         {
         ctrlr.randomizeLeds ();
+        }
+    if (rButton.getState () == Button::Hold)
+        {
+        anlzr.updateLowPassVU ();
         }
 
     if (mButton.getState () == Button::Rlsd && on)

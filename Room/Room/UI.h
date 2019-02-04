@@ -27,7 +27,9 @@ class UI
     public:
         UI ();
 
-        void update (HardwareMonitor &hwm, LightController &ctrlr);
+        void update (HardwareMonitor &hwm, 
+                     LightController &ctrlr,
+                     Analyzer &anlzr);
 
         void showHwmInfo (HardwareMonitor & hwm);
 

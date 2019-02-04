@@ -28,6 +28,7 @@ int main ()
     {
     // Microcontroller initialization
     init ();
+    
 
     // Random initialization
     srand (analogRead (NC));
@@ -91,6 +92,7 @@ int main ()
         // !Clock
         
         // Analyzer
+        
         analyzer.update (dt);
         controller.syncWithAnalyzer (analyzer, dt);
 
@@ -139,7 +141,7 @@ int main ()
         // Hardware monitor
         hwm.update ();
         // UI
-        ui.update (hwm, controller);
+        ui.update (hwm, controller, analyzer);
         
         // Window controller
         window.update (controller);
