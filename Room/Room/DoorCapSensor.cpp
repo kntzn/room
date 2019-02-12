@@ -29,12 +29,12 @@ void LampCapSensor::update (bool isActive)
     bool active = (value > threshold);
     
     // Debug
-    /*Serial.print (value);
+    Serial.print (value);
     Serial.print (' ');
     Serial.print (threshold);
     Serial.print (' ');
     Serial.print ((end - start) / 1000.f);
-    Serial.println ("ms");*/
+    Serial.println ("ms");
 
     if (active)
         {
@@ -86,98 +86,169 @@ byte LampCapSensor::getState ()
 
 
 
-
-
-
-
-DoorCapSensor::DoorCapSensor (byte pin_input) :
-    flag (false),
-    toggle (false),
-    nSwtch (0),
-    smoothAverage (0),
-    sensorPin (pin_input),
-    lastSwitchMillis (millis ())
+void DoorCapSensor::reset ()
     {
-    pinMode (pin_input, INPUT);
+    flag = false;
+    state = buttonState::Prsd;
     }
 
-void DoorCapSensor::update (float dt)
+DoorCapSensor::DoorCapSensor ()
     {
-    // PART 0:
-    // is sensor activated?
-    
-    int analogResult = analogRead (CAP_SENSOR_DOOR);
+    }
 
-    smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
+void DoorCapSensor::update ()
+    {
+    long int value = analogRead (CAP_SENSOR_DOOR);
+
     
-    bool currentState = bool (analogResult > smoothAverage + DOOR_CAP_TH);
-    
+
+    bool active = (value > DOOR_CAP_TH);
+
     // Debug
-    Serial.print (analogResult);
+    /*Serial.print (value);
     Serial.print (' ');
-    Serial.print (smoothAverage + DOOR_CAP_TH);
+    Serial.println (DOOR_CAP_TH);*/
 
-    float delta = analogResult - smoothAverage;
-
-    if (risemax < delta)
+    if (active)
         {
-        risemax = delta;
-        lasRiseMaxUpd = millis ();
-        }
-    if (millis () - lasRiseMaxUpd > 5000)
-        risemax = 0;
-
-    Serial.print (" riseMax: ");
-    Serial.println (risemax);
-
-    // PART 1:
-    // triggers
-
-    if (currentState == true)
-        {
-        if (!flag)
+        if (flag == false)
             {
             flag = true;
-            toggle = true;
+            last_press = millis ();
+            state = buttonState::Prs;
+            }
+        else
+            {
+            if (millis () - last_press > HOLD_TIME)
+                {
+                if (hold_flag == false)
+                    {
+                    hold_flag = true;
+                    state = buttonState::Hold;
+                    }
+                else
+                    state = buttonState::Unpr;
+                }
+
+            else
+                state = buttonState::Prsd;
             }
         }
     else
         {
-        flag = false;
-        }
-    
-    }
-
-bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
-    {
-    if (toggle == true)
-        {
-        toggle = false;
-    
-        if (millis () - lastSwitchMillis > 500)
+        if (flag == true && hold_flag == false)
             {
-            lastSwitchMillis = millis ();
-            
-            nSwtch++;
-
-            return true;
+            flag = false;
+            state = buttonState::Rlsd;
             }
         else
             {
-            lastSwitchMillis = millis ();
-            return false;
+            state = buttonState::Unpr;
+            hold_flag = false;
+            flag = false;
             }
+
         }
 
-    return false;
     }
 
-int DoorCapSensor::nSwitches ()
+byte DoorCapSensor::getState ()
     {
-    return nSwtch;
+    return state;
     }
 
-float DoorCapSensor::getMaxRise ()
-    {
-    return risemax;
-    }
+
+
+//
+//
+//DoorCapSensor::DoorCapSensor (byte pin_input) :
+//    flag (false),
+//    toggle (false),
+//    nSwtch (0),
+//    smoothAverage (0),
+//    sensorPin (pin_input),
+//    lastSwitchMillis (millis ())
+//    {
+//    pinMode (pin_input, INPUT);
+//    }
+//
+//void DoorCapSensor::update (float dt)
+//    {
+//    // PART 0:
+//    // is sensor activated?
+//    
+//    int analogResult = analogRead (CAP_SENSOR_DOOR);
+//
+//    smoothAverage = 0.1*float (analogRead (CAP_SENSOR_DOOR)) + 0.9 *smoothAverage;
+//    
+//    bool currentState = bool (analogResult > smoothAverage + DOOR_CAP_TH);
+//    
+//    // Debug
+//    Serial.print (analogResult);
+//    Serial.print (' ');
+//    Serial.print (smoothAverage + DOOR_CAP_TH);
+//
+//    float delta = analogResult - smoothAverage;
+//
+//    if (risemax < delta)
+//        {
+//        risemax = delta;
+//        lasRiseMaxUpd = millis ();
+//        }
+//    if (millis () - lasRiseMaxUpd > 5000)
+//        risemax = 0;
+//
+//    Serial.print (" riseMax: ");
+//    Serial.println (risemax);
+//
+//    // PART 1:
+//    // triggers
+//
+//    if (currentState == true)
+//        {
+//        if (!flag)
+//            {
+//            flag = true;
+//            toggle = true;
+//            }
+//        }
+//    else
+//        {
+//        flag = false;
+//        }
+//    
+//    }
+//
+//bool DoorCapSensor::itIsTimeToSwitchIsntIt ()
+//    {
+//    if (toggle == true)
+//        {
+//        toggle = false;
+//    
+//        if (millis () - lastSwitchMillis > 500)
+//            {
+//            lastSwitchMillis = millis ();
+//            
+//            nSwtch++;
+//
+//            return true;
+//            }
+//        else
+//            {
+//            lastSwitchMillis = millis ();
+//            return false;
+//            }
+//        }
+//
+//    return false;
+//    }
+//
+//int DoorCapSensor::nSwitches ()
+//    {
+//    return nSwtch;
+//    }
+//
+//float DoorCapSensor::getMaxRise ()
+//    {
+//    return risemax;
+//    }
