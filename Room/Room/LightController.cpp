@@ -122,6 +122,11 @@ void LightController::setProfile (byte mode)
         }
     }
 
+void LightController::setLedLinear (bool lin)
+    {
+    LED.setLinearization (lin);
+    }
+
 void LightController::randomizeLeds ()
     {
     LED.randomize ();

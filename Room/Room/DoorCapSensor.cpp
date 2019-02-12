@@ -18,9 +18,10 @@ LampCapSensor::LampCapSensor (byte b_pin0, byte b_pin1,
 
 void LampCapSensor::update (bool isActive)
     {
-    long start = millis ();
+    long start = micros ();
     long int value = cs.capacitiveSensor (60);
- 
+    long end = micros ();
+
     long int threshold = th1;
     if (!isActive)
         threshold = th0;
@@ -30,7 +31,10 @@ void LampCapSensor::update (bool isActive)
     // Debug
     /*Serial.print (value);
     Serial.print (' ');
-    Serial.println (threshold);*/
+    Serial.print (threshold);
+    Serial.print (' ');
+    Serial.print ((end - start) / 1000.f);
+    Serial.println ("ms");*/
 
     if (active)
         {
@@ -109,9 +113,9 @@ void DoorCapSensor::update (float dt)
     bool currentState = bool (analogResult > smoothAverage + DOOR_CAP_TH);
     
     // Debug
-    /*Serial.print (analogResult);
+    Serial.print (analogResult);
     Serial.print (' ');
-    Serial.println (smoothAverage + DOOR_CAP_TH);*/
+    Serial.print (smoothAverage + DOOR_CAP_TH);
 
     float delta = analogResult - smoothAverage;
 
@@ -122,6 +126,9 @@ void DoorCapSensor::update (float dt)
         }
     if (millis () - lasRiseMaxUpd > 5000)
         risemax = 0;
+
+    Serial.print (" riseMax: ");
+    Serial.println (risemax);
 
     // PART 1:
     // triggers

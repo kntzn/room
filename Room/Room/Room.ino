@@ -40,8 +40,9 @@ int main ()
     controller.setProfile (LightController::full);
     controller.setLedColor (CRGB::Green);
     controller.setLedMode (StripController::fade_smooth);
-    controller.setLedAnimationSpeed (0.5f);
+    controller.setLedAnimationSpeed (0.05f);
     //randomizeParameters (controller);
+    controller.setLedLinear (false);
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);

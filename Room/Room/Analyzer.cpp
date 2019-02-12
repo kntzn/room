@@ -45,11 +45,11 @@ float Analyzer::measureVol ()
 
     volume -= volume_low_pass;
 
-    Serial.print ("Vol: ");
+    /*Serial.print ("Vol: ");
     Serial.print (volume);
     Serial.print (" ");
     Serial.println (volume_low_pass);
-
+*/
     if (volume > volume_low_pass * 0.05f)
         lastSignal = millis ();
     else if (volume < 0)

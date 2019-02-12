@@ -118,12 +118,14 @@ void WindowController::listenBrightness (LightController &ctrlr)
         inside.update ();
         outside.update ();
 
+        
+        int insideValue = (ctrlr.getLampState () || ctrlr.getTorchereState ()) ? 500 : 0;
+
         /*Serial.print ("Out: ");
         Serial.print (outside.getValue ());
         Serial.print (" In: ");
-        Serial.println (inside.getBrightness ());*/
+        Serial.println (insideValue);*/
 
-        int insideValue = (ctrlr.getLampState () || ctrlr.getTorchereState ()) ? 500 : 0;
 
         if (outside.getValue () < insideValue - BRIGHTNESS_TH)
             setMode (state::closed_in);
