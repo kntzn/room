@@ -20,13 +20,16 @@ UI::UI () :
     lcd.backlight ();
     pinMode (HWM_AUTO_BRIGHTNESS_PIN, OUTPUT);
 
+    int cloud = 0;
+
     // Block's underlight
     pinMode (BLOCK_LED_R, OUTPUT);
     pinMode (BLOCK_LED_B, OUTPUT);
     pinMode (BLOCK_LED_G, OUTPUT);
     }
 
-void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
+void UI::update (HardwareMonitor & hwm, LightController & ctrlr,
+                 Analyzer &anlzr)
     {
     // Auto brightness (finally, i've done it)
     // Measures average value
@@ -35,7 +38,7 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
         measuredBrightness += analogRead (LIGHT_SENSOR_INSIDE);
     measuredBrightness /= N_MES;
 
-    Serial.println (measuredBrightness);
+    //Serial.println (measuredBrightness);
 
     // Creates value limit
     measuredBrightness = constrain (measuredBrightness, 50, 400);
@@ -44,7 +47,7 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     analogWrite (HWM_AUTO_BRIGHTNESS_PIN,
                  map (brightnessLevel, 0, 400, 0, 255));
 
-    Serial.println (map (brightnessLevel, 0, 400, 0, 255));
+    //Serial.println (map (brightnessLevel, 0, 400, 0, 255));
 
 
     // Underlight
@@ -81,6 +84,10 @@ void UI::update (HardwareMonitor & hwm, LightController & ctrlr)
     if (lButton.getState () == Button::Hold)
         {
         ctrlr.randomizeLeds ();
+        }
+    if (rButton.getState () == Button::Hold)
+        {
+        anlzr.updateLowPassVU ();
         }
 
     if (mButton.getState () == Button::Rlsd && on)

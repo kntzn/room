@@ -66,6 +66,7 @@ class LightController
         // ---------------------------
         // Led strip parameters setters
 
+        void setLedLinear (bool lin);
         // randomizes leds' parameters
         void randomizeLeds ();
         // Sets the mode of main led strip

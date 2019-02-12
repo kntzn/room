@@ -28,6 +28,7 @@ int main ()
     {
     // Microcontroller initialization
     init ();
+    
 
     // Random initialization
     srand (analogRead (NC));
@@ -39,8 +40,9 @@ int main ()
     controller.setProfile (LightController::full);
     controller.setLedColor (CRGB::Green);
     controller.setLedMode (StripController::fade_smooth);
-    controller.setLedAnimationSpeed (0.5f);
+    controller.setLedAnimationSpeed (0.05f);
     //randomizeParameters (controller);
+    controller.setLedLinear (false);
 
     // Serial initialization
     Serial.begin (BAUD_RATE_SERIAL);
@@ -68,7 +70,7 @@ int main ()
     UI ui;
 
     // Capacitive sensors initialization
-    DoorCapSensor cs_door (CAP_SENSOR_DOOR);
+    DoorCapSensor cs_door;
     LampCapSensor cs_lamp (CS_LAMP_TX_PIN, 
                            CS_LAMP_RX_PIN,
                            CS_LAMP_OFF_TH,
@@ -88,6 +90,7 @@ int main ()
         // Counts real delay
         float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
+        
         // !Clock
         
         // Analyzer
@@ -96,8 +99,7 @@ int main ()
 
         bool analyzer_conn = analyzer.connected ();
         bool analyzer_avail = analyzer.signalAvailable ();
-        //Serial.println (analyzer_avail);
-
+        
         if (analyzer_conn && analyzer_avail)
             controller.setLedTableMode (StripController::VU_rain);
         else
@@ -105,7 +107,7 @@ int main ()
         // !Analyzer
         
         // Capacitive sensors
-        cs_door.update (dt);
+        cs_door.update ();
         cs_lamp.update (controller.getLampState ());
 
         // !Capacitive sensors
@@ -125,7 +127,7 @@ int main ()
             {
             controller.setLampState (!controller.getLampState ());
             }
-        if (cs_door.itIsTimeToSwitchIsntIt ())
+        if (cs_door.getState () == DoorCapSensor::Hold)
             {
             controller.setTorchereState (!controller.getTorchereState ());
             }
@@ -138,9 +140,10 @@ int main ()
 
         // Hardware monitor
         hwm.update ();
-        // UI
-        ui.update (hwm, controller);
         
+        // UI
+        ui.update (hwm, controller, analyzer);
+
         // Window controller
         window.update (controller);
         }

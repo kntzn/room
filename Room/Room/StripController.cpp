@@ -231,14 +231,13 @@ void StripController::update (float dt)
     
         }
     
-    //if (freezed == false)
-        //display ();
+    if (linearization)
+        linearize ();
     }
 
     
 void StripController::display () 
-    { 
-    
+    {
     LEDS.show ();
     }
 
@@ -277,6 +276,11 @@ CRGB StripController::Wheel (byte WheelPos)
         WheelPos -= 170;
         return CRGB (WheelPos * 3, 255 - WheelPos * 3, 0);
         }
+    }
+
+void StripController::setLinearization (bool lin)
+    {
+    linearization = lin;
     }
 
 // Setters
@@ -761,5 +765,33 @@ void StripController::mainStrip_fade_smooth_mode ()
                                 currColor.b * (1.f - k) + nextColor.b * k);
 
         leds_main [i] = leds_color;
+        }
+    }
+
+void StripController::linearize ()
+    {
+    for (int i = 0; i < N_LEDS_TABLE; i++)
+        {
+        byte r = leds_table [i].r;
+        byte g = leds_table [i].g;
+        byte b = leds_table [i].b;
+
+        r = 255.f * (1 - (log10 (256 - r) / log10 (256)));
+        g = 255.f * (1 - (log10 (256 - g) / log10 (256)));
+        b = 255.f * (1 - (log10 (256 - b) / log10 (256)));
+
+        leds_table [i] = CRGB (r, g, b);
+        }
+    for (int i = 0; i < N_LEDS_MAIN; i++)
+        {
+        byte r = leds_main [i].r;
+        byte g = leds_main [i].g;
+        byte b = leds_main [i].b;
+
+        r = 255.f * (1 - (log10 (256 - r) / log10 (256)));
+        g = 255.f * (1 - (log10 (256 - g) / log10 (256)));
+        b = 255.f * (1 - (log10 (256 - b) / log10 (256)));
+
+        leds_main [i] = CRGB (r, g, b);
         }
     }

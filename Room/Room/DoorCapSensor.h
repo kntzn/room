@@ -50,32 +50,62 @@ class LampCapSensor
         byte getState ();
     };
 
-
 class DoorCapSensor
     {
-    private:
-        bool toggle;
-        bool flag;
-        byte sensorPin;
-        int nSwtch;
-        float smoothAverage;
-
-        float risemax = 0;
-        
-        long lasRiseMaxUpd = 0;
-
-        unsigned long lastSwitchMillis;
     public:
-        DoorCapSensor (byte pin_input);
+        enum buttonState
+            {
+            Unpr,
+            Rlsd,
+            Prs,
+            Prsd,
+            Hold
+            };
 
-        void update (float dt);
+    private:
+        bool flag = false;
+        bool hold_flag = false;
+        byte state = 0;
+        float averageValue = 0.f;
+        unsigned long int last_press = 0;
 
-        bool itIsTimeToSwitchIsntIt ();
+        void reset ();
 
-        int nSwitches ();
+    public:
+        DoorCapSensor ();
 
-        float getMaxRise ();
+        void update ();
+        byte getState ();
     };
+
+
+//
+//
+//class DoorCapSensor
+//    {
+//    private:
+//        bool toggle;
+//        bool flag;
+//        byte sensorPin;
+//        int nSwtch;
+//        float smoothAverage;
+//
+//        float risemax = 0;
+//        
+//        long lasRiseMaxUpd = 0;
+//
+//        unsigned long lastSwitchMillis;
+//    public:
+//        DoorCapSensor (byte pin_input);
+//
+//        void update (float dt);
+//
+//        bool itIsTimeToSwitchIsntIt ();
+//
+//        int nSwitches ();
+//
+//        float getMaxRise ();
+//    };
 
 
 #endif

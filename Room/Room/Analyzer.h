@@ -26,6 +26,7 @@ class Analyzer
         // ----------------------------------------
         // Parameters
 
+
         // level of noise if VU mode
         int low_pass_filter_VU = 0;
         
@@ -57,6 +58,8 @@ class Analyzer
 
         // Last recorded signal time
         long lastSignal = millis ();
+        // Previous connected () state
+        bool prevConnected = false;
 
         // ----------------------------------------
         // Communication
