@@ -20,8 +20,10 @@ Analyzer::Analyzer ()
 void Analyzer::update (float dt)
     {
     // Auto low-pass
-    if (!connected ())
+    if (!connected () && prevConnected == true)
         updateLowPassVU ();
+    prevConnected = connected ();
+    
 
     // Measuring the volume 
     VU_out = VUmeter ();
@@ -40,8 +42,6 @@ float Analyzer::measureVol ()
         if (volume < measured) 
             volume = measured;
         }
-
-    
 
     volume -= volume_low_pass;
 
