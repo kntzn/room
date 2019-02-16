@@ -41,6 +41,7 @@ int main ()
     controller.setLedColor (CRGB::Green);
     controller.setLedMode (StripController::fade_smooth);
     controller.setLedAnimationSpeed (0.05f);
+    controller.setLedAnimationSpeedVU (-10.f);
     //randomizeParameters (controller);
     controller.setLedLinear (false);
 
@@ -101,9 +102,11 @@ int main ()
         bool analyzer_avail = analyzer.signalAvailable ();
         
         if (analyzer_conn && analyzer_avail)
-            controller.setLedTableMode (StripController::VU_rain);
+            controller.setLedTableMode (StripController::VU_full);
         else
+            {
             controller.setLedTableMode (StripController::sync);
+            }
         // !Analyzer
         
         // Capacitive sensors

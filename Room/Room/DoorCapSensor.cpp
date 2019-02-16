@@ -29,12 +29,12 @@ void LampCapSensor::update (bool isActive)
     bool active = (value > threshold);
     
     // Debug
-    Serial.print (value);
+    /*Serial.print (value);
     Serial.print (' ');
     Serial.print (threshold);
     Serial.print (' ');
     Serial.print ((end - start) / 1000.f);
-    Serial.println ("ms");
+    Serial.println ("ms");*/
 
     if (active)
         {
@@ -46,7 +46,7 @@ void LampCapSensor::update (bool isActive)
             }
         else
             {
-            if (millis () - last_press > HOLD_TIME)
+            if (millis () - last_press > HOLD_TIME_CAP)
                 {
                 if (hold_flag == false)
                     {
@@ -99,9 +99,7 @@ DoorCapSensor::DoorCapSensor ()
 void DoorCapSensor::update ()
     {
     long int value = analogRead (CAP_SENSOR_DOOR);
-
     
-
     bool active = (value > DOOR_CAP_TH);
 
     // Debug
@@ -119,7 +117,7 @@ void DoorCapSensor::update ()
             }
         else
             {
-            if (millis () - last_press > HOLD_TIME)
+            if (millis () - last_press > HOLD_TIME_CAP / 2)
                 {
                 if (hold_flag == false)
                     {

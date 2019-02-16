@@ -11,11 +11,11 @@
 
 
 // Number of leds
-#define N_LEDS_MAIN 164
+#define N_LEDS_MAIN 163
 #define N_LEDS_TABLE 42
 
 #define N_SEC 3
-#define N_LEDS_SEC_0 53
+#define N_LEDS_SEC_0 52
 #define N_LEDS_SEC_1 39
 #define N_LEDS_SEC_2 72
 
@@ -102,7 +102,9 @@
 // Average volume smoothness
 #define AVER_VOLUME_SMOOTH 0.990f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.85f
+#define SMOOTH_VU 0.9f
+// VU bar fade smooth
+#define VU_FADE 0.9f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer
@@ -193,11 +195,11 @@
 // Capacitive sensor
 
 // Lamp cap sensor thresholds
-#define CS_LAMP_OFF_TH 350
+#define CS_LAMP_OFF_TH 500
 #define CS_LAMP_ON_TH 700
 
 // Door cap sensor threshold
-#define DOOR_CAP_TH 200
+#define DOOR_CAP_TH 600
 
 // !Capacitive sensor
 // ----------------------------------------

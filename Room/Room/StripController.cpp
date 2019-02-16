@@ -18,7 +18,8 @@ void StripController::update (float dt)
     rainbow_offset += rainbow_speed*dt;
     
     // Main strip modes switch
-    switch (mode)
+    if (table_mode != VU_full)
+        switch (mode)
         {
         case off:
             mainStrip_off_mode ();
@@ -68,14 +69,11 @@ void StripController::update (float dt)
             mainStrip_fade_smooth_mode ();
             break;
             }
+
         default:
             break;
         }
     
-    // VU_bright mode sets it's own brightness
-    // Otherwise, brightness is maximal
-    if (mode != VU_bright)
-        LEDS.setBrightness (MAX_BRIGHTNESS);
     
     switch (table_mode)
         {
@@ -84,10 +82,109 @@ void StripController::update (float dt)
             sync_strips ();
             break;
             }
-        case VU_bright:
+        case VU_full:
             {
-            sync_strips ();
-            LEDS.setBrightness (map (VU_val, 0, ANALOG_VU_MAX, 0, VU_BRIGHTNESS_MAX - VU_BRIGHTNESS_MIN) + VU_BRIGHTNESS_MIN);
+            float len = float ((N_LEDS_TABLE + 2) / 2) * (float (VU_val) / ANALOG_VU_MAX);
+
+            for (int i = N_LEDS_TABLE / 2; i >= 0; i--)
+                {
+                float brightness = (len > 1.f) ?
+                    1.f :
+                    ((len > 0.f) ?
+                     float (len) - int (len) :
+                     0.f);
+
+                len--;
+
+                if (brightness != 0)
+                    leds_table [i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_TABLE / 2),
+                                           MAX_SATURATION,
+                                           MAX_BRIGHTNESS * brightness);
+                else
+                    leds_table [i] = CRGB (leds_table [i].r * VU_FADE,
+                                           leds_table [i].g * VU_FADE,
+                                           leds_table [i].b * VU_FADE);
+
+                leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
+                }
+
+            
+                {
+                float len0 = float ((N_LEDS_SEC_0 + 2) / 2) * (float (VU_val) / ANALOG_VU_MAX);
+
+                for (int i = N_LEDS_SEC_0 / 2; i >= 0; i--)
+                    {
+                    float brightness = (len0 > 1.f) ?
+                        1.f :
+                        ((len0 > 0.f) ?
+                         float (len0) - int (len0) :
+                         0.f);
+
+                    len0--;
+                    if (brightness != 0)
+                        leds_main [i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_SEC_0 / 2),
+                                              MAX_SATURATION,
+                                              MAX_BRIGHTNESS * brightness);
+                    else
+                        leds_main [i] = CRGB (leds_main [i].r * VU_FADE,
+                                              leds_main [i].g * VU_FADE,
+                                              leds_main [i].b * VU_FADE);
+
+
+                    leds_main [N_LEDS_SEC_0 - i - 1] = leds_main [i];
+                    }
+
+                float len1 = float ((N_LEDS_SEC_1 + 2) / 2) * (float (VU_val) / ANALOG_VU_MAX);
+
+                for (int i = N_LEDS_SEC_1 / 2; i >= 0; i--)
+                    {
+                    float brightness = (len1 > 1.f) ?
+                        1.f :
+                        ((len1 > 0.f) ?
+                         float (len1) - int (len1) :
+                         0.f);
+
+                    len1--;
+                    
+                    if (brightness != 0)
+                        leds_main [N_LEDS_SEC_0 + i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_SEC_1 / 2),
+                                                             MAX_SATURATION,
+                                                             MAX_BRIGHTNESS * brightness);
+                    else
+                        leds_main [N_LEDS_SEC_0 + i] = 
+                            CRGB (leds_main [N_LEDS_SEC_0 + i].r * VU_FADE,
+                                  leds_main [N_LEDS_SEC_0 + i].g * VU_FADE,
+                                  leds_main [N_LEDS_SEC_0 + i].b * VU_FADE);
+
+                    leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 - i - 1] = leds_main [N_LEDS_SEC_0 + i];
+                    }
+
+                float len2 = float ((N_LEDS_SEC_2 + 2) / 2) * (float (VU_val) / ANALOG_VU_MAX);
+
+                for (int i = N_LEDS_SEC_2 / 2; i >= 0; i--)
+                    {
+                    float brightness = (len2 > 1.f) ?
+                        1.f :
+                        ((len2 > 0.f) ?
+                         float (len2) - int (len2) :
+                         0.f);
+
+                    len2--;
+
+                    if (brightness != 0)
+                        leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 + i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_SEC_1 / 2),
+                                                                            MAX_SATURATION,
+                                                                            MAX_BRIGHTNESS * brightness);
+                    else
+                        leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 + i] =
+                            CRGB (leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 + i].r * VU_FADE,
+                                  leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 + i].g * VU_FADE,
+                                  leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 + i].b * VU_FADE);
+
+                    leds_main [N_LEDS_MAIN - i - 1] =
+                        leds_main [i + N_LEDS_SEC_0 + N_LEDS_SEC_1];
+                    }
+                }
             break;
             }
         case VU:
@@ -96,18 +193,18 @@ void StripController::update (float dt)
 
             for (int i = N_LEDS_TABLE / 2; i >= 0; i--)
                 {
-                float brightness = (len > 1.f) ? 
-                                   1.f :
-                                   ((len > 0.f) ? 
-                                    float (len) - int (len) :
-                                    0.f);
+                float brightness = (len > 1.f) ?
+                    1.f :
+                    ((len > 0.f) ?
+                     float (len) - int (len) :
+                     0.f);
 
                 len--;
 
-                leds_table [i] = CHSV (HSV_VU_START + HSV_VU_END * i / (N_LEDS_TABLE / 2), 
+                leds_table [i] = CHSV (HSV_VU_START + HSV_VU_END * i / (N_LEDS_TABLE / 2),
                                        MAX_SATURATION,
                                        MAX_BRIGHTNESS * brightness);
-                    
+
                 leds_table [N_LEDS_TABLE - i - 1] = leds_table [i];
                 }
 
