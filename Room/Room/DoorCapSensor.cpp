@@ -56,14 +56,22 @@ void LampCapSensor::update (bool isActive)
         if (active)
             state = 3;
 
+    if (state == 3)
+        if (!active)
+            state = 4;
 
+    if (state == 4)
+        if (!active)
+            state = 0;
+
+    Serial.println (state);
     }
 
 byte LampCapSensor::getState ()
     {
     if (state == 3)
         {
-        state = 0;
+        state = 4;
         return true;
         }
     else
