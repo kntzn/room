@@ -210,6 +210,8 @@ class StripController
         void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);
 
         CRGB getFirstLEDcolor ();
+
+        byte getMode ();
     };
 
 #endif

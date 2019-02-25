@@ -4,7 +4,7 @@
 void LampCapSensor::reset ()
     {
     flag = false;
-    state = buttonState::Prsd;
+    state = 0;
     }
 
 LampCapSensor::LampCapSensor (byte b_pin0, byte b_pin1, 
@@ -38,50 +38,36 @@ void LampCapSensor::update (bool isActive)
 
     if (active)
         {
-        if (flag == false)
-            {
-            flag = true;
-            last_press = millis ();
-            state = buttonState::Prs;
-            }
-        else
-            {
-            if (millis () - last_press > HOLD_TIME_CAP)
-                {
-                if (hold_flag == false)
-                    {
-                    hold_flag = true;
-                    state = buttonState::Hold;
-                    }
-                else
-                    state = buttonState::Unpr;
-                }
-
-            else
-                state = buttonState::Prsd;
-            }
+        last_press = millis ();
         }
-    else
-        {
-        if (flag == true && hold_flag == false)
-            {
-            flag = false;
-            state = buttonState::Rlsd;
-            }
-        else
-            {
-            state = buttonState::Unpr;
-            hold_flag = false;
-            flag = false;
-            }
+    
+    if (millis () - last_press > 300)
+        state = 0;
 
-        }
+    if (state == 0)
+        if (active)
+            state = 1;
+    
+    if (state == 1)
+        if (!active)
+            state = 2;
+
+    if (state == 2)
+        if (active)
+            state = 3;
+
 
     }
 
 byte LampCapSensor::getState ()
     {
-    return state;
+    if (state == 3)
+        {
+        state = 0;
+        return true;
+        }
+    else
+        return false;
     }
 
 

@@ -503,6 +503,11 @@ CRGB StripController::getFirstLEDcolor ()
     return leds_main [0];
     }
 
+byte StripController::getMode ()
+    {
+    return mode;
+    }
+
 // Modes defenitions
 void StripController::mainStrip_off_mode ()
     {

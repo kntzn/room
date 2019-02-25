@@ -129,7 +129,7 @@ int main ()
         
 
         // Light controller
-        if (cs_lamp.getState () == LampCapSensor::Hold)
+        if (cs_lamp.getState () == true)
             {
             controller.setLampState (!controller.getLampState ());
             }

@@ -21,14 +21,7 @@
 class LampCapSensor
     {
     public:
-        enum buttonState
-            {
-            Unpr,
-            Rlsd,
-            Prs,
-            Prsd,
-            Hold
-            };
+        
 
     private:
         bool flag = false;
