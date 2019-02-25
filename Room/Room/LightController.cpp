@@ -130,6 +130,7 @@ void LightController::setLedLinear (bool lin)
 void LightController::randomizeLeds ()
     {
     LED.randomize ();
+    lastAnimationMode = LED.getMode ();
     }
 
 void LightController::setLedMode (byte newMode)

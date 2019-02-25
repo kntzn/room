@@ -13,22 +13,15 @@
 
 #include <CapacitiveSensor.h>
 
-#ifndef HOLD_TIME
-#define HOLD_TIME 1000
+#ifndef HOLD_TIME_CAP
+#define HOLD_TIME_CAP 500
 #endif // !HOLD_TIME
 
 
 class LampCapSensor
     {
     public:
-        enum buttonState
-            {
-            Unpr,
-            Rlsd,
-            Prs,
-            Prsd,
-            Hold
-            };
+        
 
     private:
         bool flag = false;

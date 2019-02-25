@@ -41,6 +41,7 @@ int main ()
     controller.setLedColor (CRGB::Green);
     controller.setLedMode (StripController::fade_smooth);
     controller.setLedAnimationSpeed (0.05f);
+    controller.setLedAnimationSpeedVU (-5.f);
     //randomizeParameters (controller);
     controller.setLedLinear (false);
 
@@ -87,6 +88,7 @@ int main ()
         // Clock
         // Creates constant dt (limits the UPS)
         while (millis () - prev_t < (1000 / UPS_SYSTEM));
+
         // Counts real delay
         float dt = (float (millis ()) - prev_t) / 1000.f;
         prev_t = millis ();
@@ -101,9 +103,11 @@ int main ()
         bool analyzer_avail = analyzer.signalAvailable ();
         
         if (analyzer_conn && analyzer_avail)
-            controller.setLedTableMode (StripController::VU_rain);
+            controller.setLedTableMode (StripController::VU_full);
         else
+            {
             controller.setLedTableMode (StripController::sync);
+            }
         // !Analyzer
         
         // Capacitive sensors
@@ -122,8 +126,10 @@ int main ()
             }
         */
 
+        
+
         // Light controller
-        if (cs_lamp.getState () == LampCapSensor::Hold)
+        if (cs_lamp.getState () == true)
             {
             controller.setLampState (!controller.getLampState ());
             }

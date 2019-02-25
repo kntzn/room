@@ -4,7 +4,7 @@
 void LampCapSensor::reset ()
     {
     flag = false;
-    state = buttonState::Prsd;
+    state = 0;
     }
 
 LampCapSensor::LampCapSensor (byte b_pin0, byte b_pin1, 
@@ -29,59 +29,53 @@ void LampCapSensor::update (bool isActive)
     bool active = (value > threshold);
     
     // Debug
-    Serial.print (value);
+    /*Serial.print (value);
     Serial.print (' ');
     Serial.print (threshold);
     Serial.print (' ');
     Serial.print ((end - start) / 1000.f);
-    Serial.println ("ms");
+    Serial.println ("ms");*/
 
     if (active)
         {
-        if (flag == false)
-            {
-            flag = true;
-            last_press = millis ();
-            state = buttonState::Prs;
-            }
-        else
-            {
-            if (millis () - last_press > HOLD_TIME)
-                {
-                if (hold_flag == false)
-                    {
-                    hold_flag = true;
-                    state = buttonState::Hold;
-                    }
-                else
-                    state = buttonState::Unpr;
-                }
-
-            else
-                state = buttonState::Prsd;
-            }
+        last_press = millis ();
         }
-    else
-        {
-        if (flag == true && hold_flag == false)
-            {
-            flag = false;
-            state = buttonState::Rlsd;
-            }
-        else
-            {
-            state = buttonState::Unpr;
-            hold_flag = false;
-            flag = false;
-            }
+    
+    if (millis () - last_press > 300)
+        state = 0;
 
-        }
+    if (state == 0)
+        if (active)
+            state = 1;
+    
+    if (state == 1)
+        if (!active)
+            state = 2;
 
+    if (state == 2)
+        if (active)
+            state = 3;
+
+    if (state == 3)
+        if (!active)
+            state = 4;
+
+    if (state == 4)
+        if (!active)
+            state = 0;
+
+    Serial.println (state);
     }
 
 byte LampCapSensor::getState ()
     {
-    return state;
+    if (state == 3)
+        {
+        state = 4;
+        return true;
+        }
+    else
+        return false;
     }
 
 
@@ -99,9 +93,7 @@ DoorCapSensor::DoorCapSensor ()
 void DoorCapSensor::update ()
     {
     long int value = analogRead (CAP_SENSOR_DOOR);
-
     
-
     bool active = (value > DOOR_CAP_TH);
 
     // Debug
@@ -119,7 +111,7 @@ void DoorCapSensor::update ()
             }
         else
             {
-            if (millis () - last_press > HOLD_TIME)
+            if (millis () - last_press > HOLD_TIME_CAP / 2)
                 {
                 if (hold_flag == false)
                     {

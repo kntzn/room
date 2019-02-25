@@ -43,7 +43,7 @@ class StripController
             sync,
             VU,
             VU_rain,
-            VU_bright,
+            VU_full,
             FREQ_5,
             FREQ_3,
             FREQ_FULL
@@ -210,6 +210,8 @@ class StripController
         void setFreqValues (float newFreqVal [SPECTRUM_SIZE]);
 
         CRGB getFirstLEDcolor ();
+
+        byte getMode ();
     };
 
 #endif
