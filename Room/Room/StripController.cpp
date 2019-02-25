@@ -96,7 +96,7 @@ void StripController::update (float dt)
 
                 len--;
 
-                if (brightness != 0)
+                if (brightness == 1.f)
                     leds_table [i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_TABLE / 2),
                                            MAX_SATURATION,
                                            MAX_BRIGHTNESS * brightness);
@@ -121,7 +121,7 @@ void StripController::update (float dt)
                          0.f);
 
                     len0--;
-                    if (brightness != 0)
+                    if (brightness == 1.f)
                         leds_main [i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_SEC_0 / 2),
                                               MAX_SATURATION,
                                               MAX_BRIGHTNESS * brightness);
@@ -146,7 +146,7 @@ void StripController::update (float dt)
 
                     len1--;
                     
-                    if (brightness != 0)
+                    if (brightness == 1.f)
                         leds_main [N_LEDS_SEC_0 + i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_SEC_1 / 2),
                                                              MAX_SATURATION,
                                                              MAX_BRIGHTNESS * brightness);
@@ -171,7 +171,7 @@ void StripController::update (float dt)
 
                     len2--;
 
-                    if (brightness != 0)
+                    if (brightness == 1.f)
                         leds_main [N_LEDS_SEC_0 + N_LEDS_SEC_1 + i] = CHSV (palette_offset + HSV_VU_END * i / (N_LEDS_SEC_1 / 2),
                                                                             MAX_SATURATION,
                                                                             MAX_BRIGHTNESS * brightness);

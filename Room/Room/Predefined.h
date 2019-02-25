@@ -102,9 +102,9 @@
 // Average volume smoothness
 #define AVER_VOLUME_SMOOTH 0.990f
 // Smoothness of volume bar
-#define SMOOTH_VU 0.9f
+#define SMOOTH_VU 0.85f
 // VU bar fade smooth
-#define VU_FADE 0.9f
+#define VU_FADE 0.8f
 // Power of signal
 #define EXP 1
 // Maximum signal from analyzer
